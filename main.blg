@@ -1,0 +1,63 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: main.aux
+A level-1 auxiliary file: cover.aux
+A level-1 auxiliary file: acknowledgements.aux
+A level-1 auxiliary file: contents.aux
+A level-1 auxiliary file: chapter1.aux
+A level-1 auxiliary file: chapter2.aux
+A level-1 auxiliary file: chapter3.aux
+A level-1 auxiliary file: chapter4.aux
+A level-1 auxiliary file: chapter5.aux
+A level-1 auxiliary file: bibliography.aux
+The style file: abbrvnat-quote.bst
+A level-1 auxiliary file: appendix1.aux
+Database file #1: bibliography.bib
+Warning--I didn't find a database entry for "csed-guzdial"
+Warning--I didn't find a database entry for "brown-1992"
+Warning--I didn't find a database entry for "welch"
+Warning--I didn't find a database entry for "dow09"
+Warning--I didn't find a database entry for "sandoval"
+Warning--I didn't find a database entry for "REESE"
+You've used 1 entry,
+            2811 wiz_defined-function locations,
+            626 strings with 4878 characters,
+and the built_in function-call counts, 415 in all, are:
+= -- 35
+> -- 22
+< -- 1
++ -- 7
+- -- 6
+* -- 26
+:= -- 70
+add.period$ -- 3
+call.type$ -- 1
+change.case$ -- 4
+chr.to.int$ -- 1
+cite$ -- 2
+duplicate$ -- 21
+empty$ -- 36
+format.name$ -- 9
+if$ -- 86
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 1
+newline$ -- 13
+num.names$ -- 5
+pop$ -- 12
+preamble$ -- 1
+purify$ -- 4
+quote$ -- 0
+skip$ -- 16
+stack$ -- 0
+substring$ -- 2
+swap$ -- 1
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 6
+warning$ -- 0
+while$ -- 3
+width$ -- 0
+write$ -- 19
+(There were 6 warnings)

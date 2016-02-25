@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.1.14)  24 FEB 2016 15:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.1.14)  25 FEB 2016 14:44
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -370,61 +370,11 @@ and I'll forget about whatever was undefined.
 ]
 \openout2 = `contents.aux'.
 
-(./contents.tex (./main.toc
-! Misplaced alignment tab character &.
-<argument> \numberline {2.4}Bootstrap &
-                                        AngularJS
-l.13 ...\numberline {2.4}Bootstrap & AngularJS}{3}
-                                                  
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-[4
+(./contents.tex (./main.toc [4
 
 
 
-]
-! Misplaced alignment tab character &.
-<argument> \numberline {4.6}Issues &
-                                     Known Bugs
-l.27 ...}{\numberline {4.6}Issues & Known Bugs}{5}
-                                                  
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-! Misplaced alignment tab character &.
-<argument> \numberline {5.5}Issues &
-                                     Known Bugs
-l.33 ...}{\numberline {5.5}Issues & Known Bugs}{6}
-                                                  
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-! Misplaced alignment tab character &.
-<argument> \numberline {6.3}Design Updates &
-                                             Improvements
-l.37 ...ine {6.3}Design Updates & Improvements}{7}
-                                                  
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-)
+])
 \tf@toc=\write3
 \openout3 = `main.toc'.
 
@@ -464,28 +414,11 @@ Missing character: There is no ù in font cmr12!
 
 
 
-]
-
-Package natbib Warning: Citation `schon92' on page 2 undefined on input line 12
-.
-
-) [2]
+]) [2]
 \openout2 = `chapter2.aux'.
 
 (./chapter2.tex
 Chapter 2.
-! Misplaced alignment tab character &.
-<argument> Bootstrap &
-                       AngularJS
-l.7 \section{Bootstrap & AngularJS}
-                                   
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
 ) [3
 
 
@@ -504,18 +437,6 @@ Chapter 3.
 
 (./chapter4.tex
 Chapter 4.
-! Misplaced alignment tab character &.
-<argument> Issues &
-                    Known Bugs
-l.10 \section{Issues & Known Bugs}
-                                  
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
 ) [5
 
 
@@ -525,18 +446,6 @@ might try typing `S' now just to see what is salvageable.
 
 (./chapter5.tex
 Chapter 5.
-! Misplaced alignment tab character &.
-<argument> Issues &
-                    Known Bugs
-l.11 \section{Issues & Known Bugs}
-                                  
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
 ) [6
 
 
@@ -546,18 +455,6 @@ might try typing `S' now just to see what is salvageable.
 
 (./chapter6.tex
 Chapter 6.
-! Misplaced alignment tab character &.
-<argument> Design Updates &
-                            Improvements
-l.5 \section{Design Updates & Improvements}
-                                           
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
 ) [7
 
 
@@ -565,36 +462,29 @@ might try typing `S' now just to see what is salvageable.
 ]
 \openout2 = `bibliography.aux'.
 
-(./bibliography.tex (./main.bbl
-
-Package natbib Warning: Empty `thebibliography' environment on input line 8.
-
-)) [8
+(./bibliography.tex (./main.bbl)) [8
 
 
 
-]
-
-Package natbib Warning: There were undefined citations.
-
-(./main.aux (./cover.aux) (./acknowledgements.aux) (./contents.aux) (./chapter1
-.aux) (./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.aux) (./ch
-apter6.aux) (./bibliography.aux)) ) 
+] (./main.aux (./cover.aux) (./acknowledgements.aux) (./contents.aux) (./chapte
+r1.aux) (./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.aux) (./
+chapter6.aux) (./bibliography.aux)) ) 
 Here is how much of TeX's memory you used:
- 5749 strings out of 493085
- 83176 string characters out of 6136917
- 195964 words of memory out of 5000000
- 9025 multiletter control sequences out of 15000+600000
- 10360 words of font info for 52 fonts, out of 8000000 for 9000
+ 5760 strings out of 493085
+ 83320 string characters out of 6136917
+ 195991 words of memory out of 5000000
+ 9031 multiletter control sequences out of 15000+600000
+ 10925 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,11n,43p,1231b,278s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr12.pfb>
-Output written on main.pdf (17 pages, 49476 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmti12.pfb>
+Output written on main.pdf (17 pages, 60855 bytes).
 PDF statistics:
- 67 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
+ 71 PDF objects out of 1000 (max. 8388607)
+ 48 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 10241 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 12289 words of extra memory for PDF output out of 14400 (max. 10000000)
 

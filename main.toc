@@ -6,11 +6,11 @@
 \contentsline {section}{\numberline {1.5}Research Objectives}{2}
 \contentsline {section}{\numberline {1.6}Existing Technology}{2}
 \contentsline {section}{\numberline {1.7}Thesis Map}{2}
-\contentsline {chapter}{\numberline {2}Libraries and Existing Code}{3}
+\contentsline {chapter}{\numberline {2}Libraries \& Existing Code}{3}
 \contentsline {section}{\numberline {2.1}OctoPrint}{3}
 \contentsline {section}{\numberline {2.2}G-Code Viewer}{3}
 \contentsline {section}{\numberline {2.3}CuraEngine}{3}
-\contentsline {section}{\numberline {2.4}Bootstrap & AngularJS}{3}
+\contentsline {section}{\numberline {2.4}Bootstrap \& AngularJS}{3}
 \contentsline {section}{\numberline {2.5}JavaEE}{3}
 \contentsline {chapter}{\numberline {3}Methodology}{4}
 \contentsline {section}{\numberline {3.1}Research Design}{4}
@@ -24,15 +24,15 @@
 \contentsline {section}{\numberline {4.3}OctoPrint Integration}{5}
 \contentsline {section}{\numberline {4.4}2D Model Viewer Integration}{5}
 \contentsline {section}{\numberline {4.5}Other Planned Integrations}{5}
-\contentsline {section}{\numberline {4.6}Issues & Known Bugs}{5}
+\contentsline {section}{\numberline {4.6}Issues \& Known Bugs}{5}
 \contentsline {chapter}{\numberline {5}Server Side}{6}
 \contentsline {section}{\numberline {5.1}JavaEE 7}{6}
 \contentsline {section}{\numberline {5.2}ProcessBuilder}{6}
 \contentsline {section}{\numberline {5.3}CuraEngine Integration}{6}
 \contentsline {section}{\numberline {5.4}REST API}{6}
-\contentsline {section}{\numberline {5.5}Issues & Known Bugs}{6}
+\contentsline {section}{\numberline {5.5}Issues \& Known Bugs}{6}
 \contentsline {chapter}{\numberline {6}Discussion}{7}
 \contentsline {section}{\numberline {6.1}Usability Testing}{7}
 \contentsline {section}{\numberline {6.2}Data Gathering}{7}
-\contentsline {section}{\numberline {6.3}Design Updates & Improvements}{7}
+\contentsline {section}{\numberline {6.3}Design Updates \& Improvements}{7}
 \contentsline {section}{\numberline {6.4}Future Work}{7}

@@ -1,4 +1,5 @@
 #!/bin/bash
-pdflatex --shell-escape --interaction=nonstopmode $1
-bibtex $1
-pdflatex --shell-escape --interaction=nonstopmode --interaction=batchmode $1
+pdflatex --shell-escape --interaction=nonstopmode main.tex 
+bibtex main.aux
+pdflatex --shell-escape --interaction=nonstopmode --interaction=batchmode main.tex
+pdflatex --shell-escape --interaction=nonstopmode --interaction=batchmode main.tex

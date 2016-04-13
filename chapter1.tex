@@ -22,7 +22,12 @@ This file is then loaded to an SD card or sent via a print server similar to the
 Once the G-code file has been loaded all that is left is to hit print either manually using the printers interface for the SD card or by hitting print on the network interface for the file that was uploaded.
 
 %Diagram of the basic 3D printing process to aid in the above explanation.
-\includegraphics[width=\linewidth]{basic-process-3D-printing}
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=\linewidth]{basic-process-3D-printing}
+  \caption{(a) High level view of the normal 3D printing process. (b) High level view of proposed new process using WebSlicer.}
+\end{figure}
+
 
 \section{The RepRap Idea}
 \paragraph{}
@@ -86,11 +91,10 @@ This review stage is critical for anyone who is printing something that will tak
 % ideally this should be an ordered list similar to the index except more broad and with descriptions
 \paragraph{}
 \begin{itemize}
-\item Chapter 2 Design Decisions.
-\item Chapter 3 Software architecture. 
-\item Chapter 4 Client Side. 
-\item Chapter 5  
-\item Chapter 6  
-\item Chapter 7  
+\item Chapter 2, Existing libraries and why I chose them.
+\item Chapter 3, Software architecture. 
+\item Chapter 4, Client side in detail. 
+\item Chapter 5, Server side in detail.
+\item Chapter 6, Discussion about usability testing and further improvements.
 \end{itemize}
 

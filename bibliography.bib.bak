@@ -1,4 +1,4 @@
-% This file was created with JabRef 2.10.
+% This file was created with JabRef 2.10b2.
 % Encoding: UTF-8
 
 
@@ -17,5 +17,30 @@
 
   Owner                    = {mike},
   Timestamp                = {2016.04.08}
+}
+
+@Electronic{hitzeViewer-2015,
+  Title                    = {gCodeViewer},
+  Author                   = {Nils Hitze},
+  Month                    = {January},
+  Organization             = {github},
+  Url                      = {https://github.com/hudbrog/gCodeViewer},
+  Year                     = {2015},
+
+  Owner                    = {mike},
+  Timestamp                = {2016.04.13}
+}
+
+@Book{mastering3Dprinting,
+  Title                    = {Mastering 3D Printing},
+  Author                   = {Joan Horvath},
+  Editor                   = {Joan Horvath},
+  Publisher                = {Apress},
+  Year                     = {2014},
+
+  Doi                      = {10.1007/978-1-4842-0025-4_6},
+  Owner                    = {mike},
+  Timestamp                = {2016.04.12},
+  Url                      = {http://link.springer.com/chapter/10.1007/978-1-4842-0025-4_6}
 }
 

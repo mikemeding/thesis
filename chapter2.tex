@@ -1,8 +1,63 @@
 \chapter{Libraries \& Existing Code}
 
 % Talk about what each one is and why I chose to include it in my research
-\section{OctoPrint}
-\section{G-Code Viewer}
 \section{CuraEngine}
+\paragraph{}
+CuraEngine is the back end of a larger application called Cura.
+Cura is an open source 3D print slicer designed by Ultimaker and is part of their software suite for their Ultimaker line of 3D printers.
+It will be talked about extensively in latter portions of this paper as it is the main portion of the back end of WebSlicer.
+
+\paragraph{}
+The reason for choosing to use CuraEngine as my main slicing engine is that it has the most clear separation between application and interface.
+Another option was to use Slicer which is much older and has better documentation but is unfortunately written on windows and would require a large amount of extra effort to get working properly for my needs.
+CuraEngine is also platform agnostic as it is written in C++ and uses one library called protobuf which is its main interface library for the Cura application.
+
 \section{Bootstrap \& AngularJS}
+\paragraph{}
+When structuring a website for optimal layout and scalability there are few better options than using the combination of Bootstrap and AngularJS.
+Bootstrap is a client side CSS library which includes most commonly used CSS options such as buttons and input fields and styles them all accordingly.
+Additionally, Bootstrap has excellent support for reactive web design.
+This means that your website is capable of dynamically resizing and moving content on demand.
+\paragraph{}
+AngularJS is a framework which allows for easy development of dynamic web pages.
+It contains many ways to logically separate your code similar to popular object oriented programming languages like Java or C++.
+AngularJS also adds many missing features that make JavaScript development difficult such as dependency injection from one component to another.
+
+\paragraph{}
+The combination of Bootstrap for the unified look, responsiveness, and mobile support combined with the power of AngularJS as a framework make it the easy choice for any kind of complex web application.
+This was the primary reasoning for choosing these resources for WebSlicer in addition to their online support communities which are as vast as their capabilities.
+
 \section{JavaEE}
+\paragraph{}
+JavaEE is a layer built on top of JavaSE the standard Java development environment.
+This additional layer provides many important architectural interfaces such as being able to put code into EJB containers or web containers for deployment of large applications which may have many containers. \cite{pilgrim-2013}
+It also provides frameworks for working with RESTful web services which streamlines the creation of a useful application API.
+
+\paragraph{}
+There are many other server side frameworks which have support for RESTful web services but most lack any kind of real scalability like that provided in JavaEE.
+Another reason for choosing JavaEE as a framework is that it provides the full platform cross compatibility which is standard in Java.
+This framework also runs inside of an application server called WildFly which is legendary for its reliability for web based applications.
+
+\section{OctoPrint}
+\paragraph{}
+OctoPrint is a small server that connects a Raspberry Pi to a 3D printer and serves printer info and files to the printer remotely.
+The Raspberry Pi serves a small webpage which allows you to easily keep track of the temperature of the printer and the current print progress.
+This interface allows for a web based connection between your remote g-code files and the local printer. \cite{mastering3Dprinting}
+OctoPrint also contains its own API which makes for easy integration into other web applications.
+
+\paragraph{}
+The fact that OctoPrint is so easily integrated into other web based applications made it a logical choice for integration with WebSlicer.
+Integrating with OctoPrint would allow for one touch printing by allowing me to send g-code files directly to a connected OctoPrint server.
+The only interaction that is required of the user is to connect their OctoPrint server which is done by simply indicating the address at which the server can be reached at.
+Additionally, users are required to include an API key to allow for other applications to directly access the servers API.
+ 
+\section{G-Code Visualizer}
+\paragraph{}
+When building the g-code visualizer it seemed logical to find one which already existed and worked well to include in my project.
+I came across an open source project called gCodeViewer originally written by Nils Hitze which would work perfectly for my needs. \cite{hitzeViewer-2015}
+This project was written in pure JavaScript and would be seemingly easy to integrate with WebSlicer.
+
+\paragraph{}
+Unfortunately this could not have been farther from the truth as many of the libraries that were needed to make this code needed to be updated.
+Additionally, I wished to integrate this code into my existing AngularJS framework which turned out to be much more challenging than anticipated.
+This meant that what remained from the existing open source project was very small when all was said and done.

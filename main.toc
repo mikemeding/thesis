@@ -1,51 +1,62 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}
 \contentsline {paragraph}{}{1}
 \contentsline {paragraph}{}{1}
-\contentsline {section}{\numberline {1.1}The RepRap Idea}{4}
+\contentsline {section}{\numberline {1.1}The RepRap Idea}{3}
+\contentsline {paragraph}{}{3}
+\contentsline {section}{\numberline {1.2}Sudden Growth Of 3D Printing}{3}
+\contentsline {paragraph}{}{3}
+\contentsline {section}{\numberline {1.3}Purpose of This Research}{3}
+\contentsline {paragraph}{}{3}
+\contentsline {section}{\numberline {1.4}Research Objectives}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {section}{\numberline {1.2}Sudden Growth Of 3D Printing}{4}
+\contentsline {subsection}{\numberline {1.4.1}See a model, get a model}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {section}{\numberline {1.3}Purpose of This Research}{4}
+\contentsline {subsection}{\numberline {1.4.2}Wrap CuraEngine}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {section}{\numberline {1.4}Research Objectives}{5}
+\contentsline {subsection}{\numberline {1.4.3}Design intuitive web interface}{4}
+\contentsline {paragraph}{}{4}
+\contentsline {section}{\numberline {1.5}Existing Technology}{5}
 \contentsline {paragraph}{}{5}
-\contentsline {subsection}{\numberline {1.4.1}See a model, get a model}{5}
+\contentsline {section}{\numberline {1.6}Thesis Map}{5}
 \contentsline {paragraph}{}{5}
-\contentsline {subsection}{\numberline {1.4.2}Wrap CuraEngine}{5}
-\contentsline {paragraph}{}{5}
-\contentsline {subsection}{\numberline {1.4.3}Design intuitive web interface}{5}
-\contentsline {paragraph}{}{5}
-\contentsline {section}{\numberline {1.5}Existing Technology}{6}
+\contentsline {chapter}{\numberline {2}Libraries \& Existing Code}{6}
+\contentsline {section}{\numberline {2.1}CuraEngine}{6}
 \contentsline {paragraph}{}{6}
-\contentsline {section}{\numberline {1.6}Thesis Map}{6}
 \contentsline {paragraph}{}{6}
-\contentsline {chapter}{\numberline {2}Libraries \& Existing Code}{7}
-\contentsline {section}{\numberline {2.1}OctoPrint}{7}
-\contentsline {section}{\numberline {2.2}G-Code Viewer}{7}
-\contentsline {section}{\numberline {2.3}CuraEngine}{7}
-\contentsline {section}{\numberline {2.4}Bootstrap \& AngularJS}{7}
-\contentsline {section}{\numberline {2.5}JavaEE}{7}
-\contentsline {chapter}{\numberline {3}Methodology}{8}
-\contentsline {section}{\numberline {3.1}Research Design}{8}
-\contentsline {section}{\numberline {3.2}Key Challenges}{8}
-\contentsline {section}{\numberline {3.3}Working Procedure}{8}
-\contentsline {section}{\numberline {3.4}Web Interface}{8}
-\contentsline {section}{\numberline {3.5}Slicing Engine}{8}
-\contentsline {chapter}{\numberline {4}Client Side}{9}
-\contentsline {section}{\numberline {4.1}Basic Run-down}{9}
-\contentsline {section}{\numberline {4.2}AngularJS}{9}
-\contentsline {section}{\numberline {4.3}OctoPrint Integration}{9}
-\contentsline {section}{\numberline {4.4}2D Model Viewer Integration}{9}
-\contentsline {section}{\numberline {4.5}Other Planned Integrations}{9}
-\contentsline {section}{\numberline {4.6}Issues \& Known Bugs}{9}
-\contentsline {chapter}{\numberline {5}Server Side}{10}
-\contentsline {section}{\numberline {5.1}JavaEE 7}{10}
-\contentsline {section}{\numberline {5.2}ProcessBuilder}{10}
-\contentsline {section}{\numberline {5.3}CuraEngine Integration}{10}
-\contentsline {section}{\numberline {5.4}REST API}{10}
-\contentsline {section}{\numberline {5.5}Issues \& Known Bugs}{10}
-\contentsline {chapter}{\numberline {6}Discussion}{11}
-\contentsline {section}{\numberline {6.1}Usability Testing}{11}
-\contentsline {section}{\numberline {6.2}Data Gathering}{11}
-\contentsline {section}{\numberline {6.3}Design Updates \& Improvements}{11}
-\contentsline {section}{\numberline {6.4}Future Work}{11}
+\contentsline {section}{\numberline {2.2}Bootstrap \& AngularJS}{6}
+\contentsline {paragraph}{}{6}
+\contentsline {paragraph}{}{7}
+\contentsline {paragraph}{}{7}
+\contentsline {section}{\numberline {2.3}JavaEE}{7}
+\contentsline {paragraph}{}{7}
+\contentsline {paragraph}{}{7}
+\contentsline {section}{\numberline {2.4}OctoPrint}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {section}{\numberline {2.5}G-Code Visualizer}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {chapter}{\numberline {3}Methodology}{9}
+\contentsline {section}{\numberline {3.1}Research Design}{9}
+\contentsline {section}{\numberline {3.2}Key Challenges}{9}
+\contentsline {section}{\numberline {3.3}Working Procedure}{9}
+\contentsline {section}{\numberline {3.4}Web Interface}{9}
+\contentsline {section}{\numberline {3.5}Slicing Engine}{9}
+\contentsline {chapter}{\numberline {4}Client Side}{10}
+\contentsline {section}{\numberline {4.1}Basic Run-down}{10}
+\contentsline {section}{\numberline {4.2}AngularJS}{10}
+\contentsline {section}{\numberline {4.3}OctoPrint Integration}{10}
+\contentsline {section}{\numberline {4.4}2D Model Viewer Integration}{10}
+\contentsline {section}{\numberline {4.5}Other Planned Integrations}{10}
+\contentsline {section}{\numberline {4.6}Issues \& Known Bugs}{10}
+\contentsline {chapter}{\numberline {5}Server Side}{11}
+\contentsline {section}{\numberline {5.1}JavaEE 7}{11}
+\contentsline {section}{\numberline {5.2}ProcessBuilder}{11}
+\contentsline {section}{\numberline {5.3}CuraEngine Integration}{11}
+\contentsline {section}{\numberline {5.4}REST API}{11}
+\contentsline {section}{\numberline {5.5}Issues \& Known Bugs}{11}
+\contentsline {chapter}{\numberline {6}Discussion}{12}
+\contentsline {section}{\numberline {6.1}Usability Testing}{12}
+\contentsline {section}{\numberline {6.2}Data Gathering}{12}
+\contentsline {section}{\numberline {6.3}Design Updates \& Improvements}{12}
+\contentsline {section}{\numberline {6.4}Future Work}{12}

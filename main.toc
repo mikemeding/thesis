@@ -54,20 +54,21 @@
 \contentsline {section}{\numberline {3.4}Review and Usability Testing}{12}
 \contentsline {paragraph}{}{12}
 \contentsline {chapter}{\numberline {4}Client Side}{13}
-\contentsline {section}{\numberline {4.1}Basic Run-down}{13}
-\contentsline {section}{\numberline {4.2}AngularJS}{13}
-\contentsline {section}{\numberline {4.3}OctoPrint Integration}{13}
-\contentsline {section}{\numberline {4.4}2D Model Viewer Integration}{13}
-\contentsline {section}{\numberline {4.5}Other Planned Integrations}{13}
-\contentsline {section}{\numberline {4.6}Issues \& Known Bugs}{13}
-\contentsline {chapter}{\numberline {5}Server Side}{14}
-\contentsline {section}{\numberline {5.1}JavaEE 7}{14}
-\contentsline {section}{\numberline {5.2}ProcessBuilder}{14}
-\contentsline {section}{\numberline {5.3}CuraEngine Integration}{14}
-\contentsline {section}{\numberline {5.4}REST API}{14}
-\contentsline {section}{\numberline {5.5}Issues \& Known Bugs}{14}
-\contentsline {chapter}{\numberline {6}Discussion}{15}
-\contentsline {section}{\numberline {6.1}Usability Testing}{15}
-\contentsline {section}{\numberline {6.2}Data Gathering}{15}
-\contentsline {section}{\numberline {6.3}Design Updates \& Improvements}{15}
-\contentsline {section}{\numberline {6.4}Future Work}{15}
+\contentsline {section}{\numberline {4.1}AngularJS}{13}
+\contentsline {section}{\numberline {4.2}High Level View}{13}
+\contentsline {paragraph}{}{13}
+\contentsline {section}{\numberline {4.3}OctoPrint Integration}{15}
+\contentsline {section}{\numberline {4.4}2D Model Viewer Integration}{15}
+\contentsline {section}{\numberline {4.5}Other Planned Integrations}{15}
+\contentsline {section}{\numberline {4.6}Issues \& Known Bugs}{15}
+\contentsline {chapter}{\numberline {5}Server Side}{16}
+\contentsline {section}{\numberline {5.1}JavaEE 7}{16}
+\contentsline {section}{\numberline {5.2}ProcessBuilder}{16}
+\contentsline {section}{\numberline {5.3}CuraEngine Integration}{16}
+\contentsline {section}{\numberline {5.4}REST API}{16}
+\contentsline {section}{\numberline {5.5}Issues \& Known Bugs}{16}
+\contentsline {chapter}{\numberline {6}Discussion}{17}
+\contentsline {section}{\numberline {6.1}Usability Testing}{17}
+\contentsline {section}{\numberline {6.2}Data Gathering}{17}
+\contentsline {section}{\numberline {6.3}Design Updates \& Improvements}{17}
+\contentsline {section}{\numberline {6.4}Future Work}{17}

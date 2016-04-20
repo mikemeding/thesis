@@ -3,18 +3,11 @@
 
 \section{Research Design} 
 \paragraph{}
-This project is a mixture of both research and design implementation.
-The research portion of this project will focus on linking C++ code to a larger java based project and rendering 3D models in real time in the browser.
-Many of the components listed above will be helpful in this process.
+This thesis is a mixture of both research and design implementation.
+The research portion of this project focused on linking an existing C++ application (CuraEngine) into a larger JavaEE based project.
+In this research we also had a small group of people run though some beta testing of the application and logged their observations.
 
-\section{Key Challenges} 
-\paragraph{}
-One of the most difficult portions of this research will be getting the flow of data, both to and from the slicing engine.
-This will be challenging as it involves streaming potentially large files to and from a web interface and displaying that data in real time.
-Another key challenge of this research will be the integration of the web based G-code viewer into the page. 
-Much of the 3D rendering will require advanced web technologies such as React and d3.js as well as graphics hardware acceleration from the users computer system.
-
-%Diagram of the basic 3D printing process to aid in the above explanation.
+%Diagram of how the user interacts with WebSlicer from a high level .
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=\linewidth]{slicer-detailed-view}
@@ -24,10 +17,12 @@ Much of the 3D rendering will require advanced web technologies such as React an
 
 \section{Working procedure}
 \paragraph{}
+% this needs way more info
 As shown in Figure \ref{fig:slicer-detailed-view}, the application will have 3 major components that all need to work together in a cycle until the user decides that the output is what they desire.
 
 \subsection{Web Interface}
 \paragraph{}
+%update this to final version. no more "i anticipate"
 I anticipate that it will include a set of forms for collecting the users settings for their printer and account tracking info so that they may retain certain settings. 
 Additionally, I would like to include a gcode editor which will allow users to edit specific portions of their gcode and see the resulting output in the viewer. 
 This does not include the actual slicing engine which must be driven and accessed independently.
@@ -41,6 +36,7 @@ Thus, this portion of the project will require deploying CuraEngine at a cloud p
 
 \subsection{Web Tool Path Viewer}
 \paragraph{}
+%expand this with more detail
 After configuring and generating the G-code representation for a 3D model, there still must be a way to review visually how the slicing engine actually will split up the model. 
 
 \subsection{Final Steps}
@@ -50,4 +46,5 @@ If the user has access to a print server such as OctoPrint, they may opt to copy
 
 \section{Review and Usability Testing}
 \paragraph{}
-After running throguh all steps of the working procedure running through a round of usability testing was pertinant as no good design should go unreviewed.
+After running through all steps of the working procedure it was then necessary to test WebSlicer by running a small beta test. 
+This beta test consisted of a small group of users with varying familiarity with 3D printing to test how easy WebSlicer is to use through a series of simple tasks.

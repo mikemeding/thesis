@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: main.aux
 A level-1 auxiliary file: cover.aux
@@ -14,48 +14,49 @@ A level-1 auxiliary file: bibliography.aux
 The style file: abbrvnat-quote.bst
 Database file #1: bibliography.bib
 Warning--entry type for "hitzeViewer-2015" isn't style-file defined
---line 22 of file bibliography.bib
+--line 35 of file bibliography.bib
+Warning--can't use both author and editor fields in freeman-2014
 Warning--can't use both author and editor fields in mastering3Dprinting
 Warning--can't use both author and editor fields in pilgrim-2013
-You've used 5 entries,
+You've used 6 entries,
             2811 wiz_defined-function locations,
-            646 strings with 5464 characters,
-and the built_in function-call counts, 1555 in all, are:
-= -- 152
-> -- 50
-< -- 5
-+ -- 20
-- -- 15
-* -- 93
-:= -- 253
-add.period$ -- 13
-call.type$ -- 5
-change.case$ -- 15
-chr.to.int$ -- 5
-cite$ -- 12
-duplicate$ -- 88
-empty$ -- 147
-format.name$ -- 20
-if$ -- 331
+            652 strings with 5561 characters,
+and the built_in function-call counts, 1878 in all, are:
+= -- 186
+> -- 60
+< -- 6
++ -- 24
+- -- 18
+* -- 113
+:= -- 304
+add.period$ -- 17
+call.type$ -- 6
+change.case$ -- 18
+chr.to.int$ -- 6
+cite$ -- 15
+duplicate$ -- 107
+empty$ -- 177
+format.name$ -- 24
+if$ -- 402
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 6
-newline$ -- 31
-num.names$ -- 20
-pop$ -- 47
+missing$ -- 8
+newline$ -- 37
+num.names$ -- 24
+pop$ -- 56
 preamble$ -- 1
-purify$ -- 15
+purify$ -- 18
 quote$ -- 0
-skip$ -- 64
+skip$ -- 76
 stack$ -- 0
-substring$ -- 10
-swap$ -- 8
+substring$ -- 12
+swap$ -- 10
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 45
-warning$ -- 2
-while$ -- 15
+type$ -- 51
+warning$ -- 3
+while$ -- 18
 width$ -- 0
-write$ -- 65
-(There were 3 warnings)
+write$ -- 79
+(There were 4 warnings)

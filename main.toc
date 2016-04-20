@@ -23,52 +23,61 @@
 \contentsline {section}{\numberline {2.1}CuraEngine}{6}
 \contentsline {paragraph}{}{6}
 \contentsline {paragraph}{}{6}
-\contentsline {section}{\numberline {2.2}Bootstrap \& AngularJS}{6}
+\contentsline {section}{\numberline {2.2}Client Side Libraries}{6}
 \contentsline {paragraph}{}{6}
+\contentsline {subsection}{\numberline {2.2.1}Bootstrap}{7}
 \contentsline {paragraph}{}{7}
+\contentsline {subsection}{\numberline {2.2.2}AngularJS}{7}
 \contentsline {paragraph}{}{7}
-\contentsline {section}{\numberline {2.3}JavaEE}{7}
-\contentsline {paragraph}{}{7}
-\contentsline {paragraph}{}{7}
+\contentsline {section}{\numberline {2.3}JavaEE}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {paragraph}{}{8}
 \contentsline {section}{\numberline {2.4}OctoPrint}{8}
 \contentsline {paragraph}{}{8}
-\contentsline {paragraph}{}{8}
-\contentsline {section}{\numberline {2.5}G-Code Visualizer}{8}
-\contentsline {paragraph}{}{8}
-\contentsline {paragraph}{}{8}
-\contentsline {chapter}{\numberline {3}Methodology}{9}
-\contentsline {section}{\numberline {3.1}Research Design}{9}
 \contentsline {paragraph}{}{9}
-\contentsline {section}{\numberline {3.2}Key Challenges}{9}
+\contentsline {section}{\numberline {2.5}G-Code Visualizer}{9}
 \contentsline {paragraph}{}{9}
-\contentsline {section}{\numberline {3.3}Working procedure}{11}
-\contentsline {paragraph}{}{11}
-\contentsline {subsection}{\numberline {3.3.1}Web Interface}{11}
-\contentsline {paragraph}{}{11}
-\contentsline {subsection}{\numberline {3.3.2}Slicing Engine}{11}
-\contentsline {paragraph}{}{11}
-\contentsline {subsection}{\numberline {3.3.3}Web Tool Path Viewer}{11}
-\contentsline {paragraph}{}{11}
-\contentsline {subsection}{\numberline {3.3.4}Final Steps}{11}
-\contentsline {paragraph}{}{11}
-\contentsline {section}{\numberline {3.4}Review and Usability Testing}{12}
+\contentsline {paragraph}{}{9}
+\contentsline {chapter}{\numberline {3}Methodology}{10}
+\contentsline {section}{\numberline {3.1}Research Design}{10}
+\contentsline {paragraph}{}{10}
+\contentsline {section}{\numberline {3.2}Key Challenges}{10}
+\contentsline {paragraph}{}{10}
+\contentsline {subsection}{\numberline {3.2.1}ProcessBuilder Deadlock}{10}
+\contentsline {paragraph}{}{10}
+\contentsline {subsection}{\numberline {3.2.2}Visualizer Integration}{10}
+\contentsline {paragraph}{}{10}
+\contentsline {subsection}{\numberline {3.2.3}Interpolating Settings}{10}
 \contentsline {paragraph}{}{12}
-\contentsline {chapter}{\numberline {4}Client Side}{13}
-\contentsline {section}{\numberline {4.1}AngularJS}{13}
-\contentsline {section}{\numberline {4.2}High Level View}{13}
+\contentsline {section}{\numberline {3.3}Working procedure}{12}
+\contentsline {paragraph}{}{12}
+\contentsline {subsection}{\numberline {3.3.1}Web Interface}{12}
+\contentsline {paragraph}{}{12}
+\contentsline {subsection}{\numberline {3.3.2}Slicing Engine}{12}
+\contentsline {paragraph}{}{12}
+\contentsline {subsection}{\numberline {3.3.3}Web Tool Path Viewer}{12}
+\contentsline {paragraph}{}{12}
+\contentsline {subsection}{\numberline {3.3.4}Final Steps}{12}
+\contentsline {paragraph}{}{12}
+\contentsline {section}{\numberline {3.4}Review and Usability Testing}{13}
 \contentsline {paragraph}{}{13}
-\contentsline {section}{\numberline {4.3}OctoPrint Integration}{15}
-\contentsline {section}{\numberline {4.4}2D Model Viewer Integration}{15}
-\contentsline {section}{\numberline {4.5}Other Planned Integrations}{15}
-\contentsline {section}{\numberline {4.6}Issues \& Known Bugs}{15}
-\contentsline {chapter}{\numberline {5}Server Side}{16}
-\contentsline {section}{\numberline {5.1}JavaEE 7}{16}
-\contentsline {section}{\numberline {5.2}ProcessBuilder}{16}
-\contentsline {section}{\numberline {5.3}CuraEngine Integration}{16}
-\contentsline {section}{\numberline {5.4}REST API}{16}
-\contentsline {section}{\numberline {5.5}Issues \& Known Bugs}{16}
-\contentsline {chapter}{\numberline {6}Discussion}{17}
-\contentsline {section}{\numberline {6.1}Usability Testing}{17}
-\contentsline {section}{\numberline {6.2}Data Gathering}{17}
-\contentsline {section}{\numberline {6.3}Design Updates \& Improvements}{17}
-\contentsline {section}{\numberline {6.4}Future Work}{17}
+\contentsline {chapter}{\numberline {4}Client Side}{14}
+\contentsline {section}{\numberline {4.1}AngularJS}{14}
+\contentsline {section}{\numberline {4.2}High Level View}{14}
+\contentsline {paragraph}{}{14}
+\contentsline {section}{\numberline {4.3}OctoPrint Integration}{16}
+\contentsline {section}{\numberline {4.4}2D Model Viewer Integration}{16}
+\contentsline {section}{\numberline {4.5}Other Planned Integrations}{16}
+\contentsline {section}{\numberline {4.6}Issues \& Known Bugs}{16}
+\contentsline {chapter}{\numberline {5}Server Side}{17}
+\contentsline {section}{\numberline {5.1}JavaEE 7}{17}
+\contentsline {section}{\numberline {5.2}ProcessBuilder}{17}
+\contentsline {section}{\numberline {5.3}CuraEngine Integration}{17}
+\contentsline {section}{\numberline {5.4}REST API}{17}
+\contentsline {section}{\numberline {5.5}Issues \& Known Bugs}{17}
+\contentsline {chapter}{\numberline {6}Discussion}{18}
+\contentsline {section}{\numberline {6.1}Usability Testing}{18}
+\contentsline {section}{\numberline {6.2}Data Gathering}{18}
+\contentsline {section}{\numberline {6.3}Design Updates \& Improvements}{18}
+\contentsline {section}{\numberline {6.4}Future Work}{18}

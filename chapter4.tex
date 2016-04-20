@@ -1,6 +1,7 @@
 \chapter{Client Side}
 
 \section{AngularJS}
+% explain the specifics of angular that apply here such as the digest cycle
 % Talk about my specific implementation. Especially the structure.
 % TODO: a good figure is needed to describe my specific implementation. None exists currently.
 
@@ -17,6 +18,8 @@
 \paragraph{}
 As shown in Figure \ref{fig:settings-data-flow}, the client side of this applicaiton has a lengthy flow of data.
 This data flow starts with loading a static JSON (JavaScript Object Notation) file which describes the settings in a pattern as shown in Listing \ref{lst:json-settings}.
+
+% JSON settings example listing
 \begin{lstlisting}[language=json, label={lst:json-settings}, caption=A sample from a static settings file in JSON format.]
 {
     "setting": "layer_height",
@@ -28,11 +31,28 @@ This data flow starts with loading a static JSON (JavaScript Object Notation) fi
 }
 \end{lstlisting}
 
-\section{OctoPrint Integration}
-\section{2D Model Viewer Integration}
+A directive called curasettings takes this static JSON file and splits it up so that for each setting object a field can exist in the template.
+AngularJS provides this functionality through the use of an ng-repeat which is written in a similar fashion to that of a for loop in Python.
+
+%TODO: include listing of sample ng-repeat from template.
+%TODO: talk about data binding with settings object
+
+\section{Key Challenges}
+\subsection{Visualizer Integration}
+\paragraph{}
+%talk about original design vs final design
+%what does the web worker do?
+\subsection{Interpolating Settings}
+\paragraph{}
+%talk about having to get in contact with ultimaker development team about how settings worked
+
+
 \section{Other Planned Integrations}
-% Be somewhat brief here
+%thingiverse / youmagine
 
 \section{Issues \& Known Bugs}
-
+%minimum viable product.
+%no login
+%display gcode crashes browser
+%no 3D view of model
 

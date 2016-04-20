@@ -1,15 +1,39 @@
 \chapter{Client Side}
 
-\section{AngularJS Structure}
-% explain the specifics of angular that apply here such as the digest cycle
-% Talk about my specific implementation. Especially the structure.
+\section{AngularJS, a bit of background}
 \paragraph{}
+To understand the structure of WebSlicer a few things must be known about how AngularJS applications are structured and a bit about how AngularJS itself works.
+\cite{meding-2016}, has more detailed explanations of each angular componenet than those that follow should the reader need more detail than that provided.
+\subsection{Controllers \& Data Binding}
+% talk about digest cycle here
+\paragraph{}
+% use my paper about all of these items to paraphrase.
+
+\subsection{Factories \& Services}
+\paragraph{}
+\subsection{Directives}
+\paragraph{}
+
+\section{WebSlicer AngularJS Structure}
+% Talk about my specific implementation. Especially the structure.
+\paragraph{}%app.js
+The AngularJS structure of WebSlicer is shown in Figure \ref{fig:client-side-structure}.
+Flow through this diagram starts with the app.js node which represents the main controller of the application.
+This can be thought of as a main function in C++.
+The main control variables are also inside of app.js which are similar to global variables.
+Variables in this controller are used to store the current settings, file pointer, and output gcode.
+
+\paragraph{}%index.html
+Figure \ref{fig:client-side-structure} also shows that index.html is large hub and as WebSlicer is a single page web application this is the only static HTML file.
+Index.html has several other functions such as bringing in all libraries and including the custom directives.
+
+
 
 % this figure describes my full angular structure on the client
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=\linewidth]{Client-Side-Structure}
-  \caption{Full structure of my client side components in AngularJS}
+  \caption{Full AngularJS structure breakdown}
   \label{fig:client-side-structure}
 \end{figure}
 

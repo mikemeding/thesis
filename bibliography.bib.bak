@@ -1,4 +1,4 @@
-% This file was created with JabRef 2.10b2.
+% This file was created with JabRef 2.10.
 % Encoding: UTF-8
 
 
@@ -55,6 +55,18 @@
   Owner                    = {mike},
   Timestamp                = {2016.04.12},
   Url                      = {http://link.springer.com/chapter/10.1007/978-1-4842-0025-4_6}
+}
+
+@Article{meding-2016,
+  Title                    = {Why AngularJS is the Future of Web Design},
+  Author                   = {Michael Meding},
+  Journal                  = {none},
+  Year                     = {2016},
+
+  Comment                  = {this was a paper written for IWS2 and is relevant to my research in chapter3},
+  Owner                    = {mike},
+  Timestamp                = {2016.04.20},
+  Url                      = {http://weblab.cs.uml.edu/~mmeding/514s2016/paper2/paper2.pdf}
 }
 
 @Book{pilgrim-2013,

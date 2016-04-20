@@ -1,19 +1,19 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.2.3)  20 APR 2016 13:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.4.7)  20 APR 2016 16:06
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
 **main.tex
 (./main.tex
-LaTeX2e <2011/06/27>
-Babel <3.9h> and hyphenation patterns for 78 languages loaded.
+LaTeX2e <2016/02/01>
+Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
 (./mitthesis.cls
 Document Class: mitthesis 1999/10/20
 \vithesis=\count79
 Uppercase cover page.
 (/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
-Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+Document Class: report 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
-File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count80
 \c@chapter=\count81
@@ -37,36 +37,36 @@ Thesis document copyright MIT unless otherwise (manually) specified
 \@abstractreader=\box29
 \c@savepage=\count89
 ) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2013/01/14 v2.14 AMS math features
+Package: amsmath 2016/03/03 v2.15a AMS math features
 \@mathmargin=\skip43
 For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
-Package: amstext 2000/06/29 v2.01
+Package: amstext 2000/06/29 v2.01 AMS text
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
-File: amsgen.sty 1999/11/30 v2.0
+File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks14
 \ex@=\dimen103
 )) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
-Package: amsbsy 1999/11/29 v1.2d
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen104
 ) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
 \inf@bad=\count90
-LaTeX Info: Redefining \frac on input line 210.
+LaTeX Info: Redefining \frac on input line 199.
 \uproot@=\count91
 \leftroot@=\count92
-LaTeX Info: Redefining \overline on input line 306.
+LaTeX Info: Redefining \overline on input line 297.
 \classnum@=\count93
 \DOTSCASE@=\count94
-LaTeX Info: Redefining \ldots on input line 378.
-LaTeX Info: Redefining \dots on input line 381.
-LaTeX Info: Redefining \cdots on input line 466.
+LaTeX Info: Redefining \ldots on input line 394.
+LaTeX Info: Redefining \dots on input line 397.
+LaTeX Info: Redefining \cdots on input line 518.
 \Mathstrutbox@=\box30
 \strutbox@=\box31
 \big@size=\dimen105
-LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OML on input line 630.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
 \macc@depth=\count95
 \c@MaxMatrixCols=\count96
 \dotsspace@=\muskip10
@@ -87,12 +87,12 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \multlinegap=\skip44
 \multlinetaggap=\skip45
 \mathdisplay@stack=\toks18
-LaTeX Info: Redefining \[ on input line 2665.
-LaTeX Info: Redefining \] on input line 2666.
+LaTeX Info: Redefining \[ on input line 2735.
+LaTeX Info: Redefining \] on input line 2736.
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.sty
 Package: microtype 2013/05/23 v2.5a Micro-typographical refinements (RS)
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks19
 )
 \MT@toks=\toks20
@@ -112,15 +112,15 @@ Package microtype Info: Loading configuration file microtype.cfg.
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.cfg
 File: microtype.cfg 2013/05/23 v2.5a microtype main configuration file (RS)
 )) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
-Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 ) (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
 File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
-Package graphics Info: Driver file: pdftex.def on input line 91.
+Package graphics Info: Driver file: pdftex.def on input line 95.
 (/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
@@ -137,7 +137,7 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 ) (/usr/share/texlive/texmf-dist/tex/latex/rotating/rotating.sty
 Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
 (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
 \c@r@tfl@t=\count105
 \rotFPtop=\skip47
@@ -186,15 +186,15 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \lst@lineno=\count116
 \lst@maxwidth=\dimen132
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2013/08/26 1.5b (Carsten Heinz)
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 \c@lstnumber=\count117
 \lst@skipnumbers=\count118
 \lst@framebox=\box34
 ) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
-File: listings.cfg 2013/08/26 1.5b listings configuration
+File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
-Package: listings 2013/08/26 1.5b (Carsten Heinz)
-(/usr/share/texmf/tex/latex/xcolor/xcolor.sty
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+(/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
@@ -210,28 +210,31 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 ) (/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pdfpages.sty
-Package: pdfpages 2013/08/25 v0.4v Insert pages of external PDF documents (AM)
+Package: pdfpages 2015/09/18 v0.5d Insert pages of external PDF documents (AM)
 (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
-Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count119
 \calc@Bcount=\count120
 \calc@Adimen=\dimen133
 \calc@Bdimen=\dimen134
 \calc@Askip=\skip51
 \calc@Bskip=\skip52
-LaTeX Info: Redefining \setlength on input line 76.
-LaTeX Info: Redefining \addtolength on input line 77.
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count121
 \calc@Cskip=\skip53
 ) (/usr/share/texlive/texmf-dist/tex/latex/eso-pic/eso-pic.sty
-Package: eso-pic 2013/10/06 v2.0d eso-pic (RN)
+Package: eso-pic 2015/07/21 v2.0g eso-pic (RN)
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/atbegshi.sty
 Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
-))) (/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pppdftex.def
-File: pppdftex.def 2013/08/25 v0.4v Pdfpages driver for pdfTeX (AM)
+)))
+\AM@pagewidth=\dimen135
+\AM@pageheight=\dimen136
+(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pppdftex.def
+File: pppdftex.def 2015/09/18 v0.5d Pdfpages driver for pdfTeX (AM)
 )
 \AM@pagebox=\box35
 \AM@toc@title=\toks23
@@ -280,13 +283,13 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 ) (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count123
-\scratchdimen=\dimen135
+\scratchdimen=\dimen137
 \scratchbox=\box37
 \nofMPsegments=\count124
 \nofMParguments=\count125
 \everyMPshowfont=\toks24
 \MPscratchCnt=\count126
-\MPscratchDim=\dimen136
+\MPscratchDim=\dimen138
 \MPnumerator=\count127
 \makeMPintoPDFobject=\count128
 \everyMPtoPDFconversion=\toks25
@@ -328,6 +331,15 @@ e
 ))
 \c@lstlisting=\count129
 \AtBeginShipoutBox=\box38
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/pdflscape.sty
+Package: pdflscape 2008/08/11 v0.10 Display of landscape pages in PDF (HO)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 80.
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+))
 \openout2 = `cover.aux'.
 
 (./cover.tex
@@ -386,27 +398,27 @@ and I'll forget about whatever was undefined.
 
 
 
-])
+] [5])
 \tf@toc=\write3
 \openout3 = `main.toc'.
 
-[5] (./main.lof)
+[6] (./main.lof)
 \tf@lof=\write4
 \openout4 = `main.lof'.
 
-[6
+[7
 
 ] (./main.lot)
 \tf@lot=\write5
 \openout5 = `main.lot'.
 
-[7
+[8
 
 ] (./main.lol)
 \tf@lol=\write6
 \openout6 = `main.lol'.
 
-) [8
+) [9
 
 ]
 \openout2 = `chapter1.aux'.
@@ -429,7 +441,7 @@ Missing character: There is no ù in font cmr12!
 
 
 
-] <./diagrams/basic-process-3D-printing.jpg, id=39, 801.99625pt x 670.505pt>
+] <./diagrams/basic-process-3D-printing.jpg, id=42, 801.99625pt x 670.505pt>
 File: ./diagrams/basic-process-3D-printing.jpg Graphic file (type jpg)
 <use ./diagrams/basic-process-3D-printing.jpg>
 Package pdftex.def Info: ./diagrams/basic-process-3D-printing.jpg used on input
@@ -438,7 +450,7 @@ Package pdftex.def Info: ./diagrams/basic-process-3D-printing.jpg used on input
 [2 <./diagrams/basic-process-3D-printing.jpg>] [3] [4]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 94.
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 94.
@@ -456,7 +468,7 @@ Chapter 2.
 
 (./chapter3.tex
 Chapter 3.
-<./diagrams/slicer-detailed-view.jpg, id=67, 819.06pt x 1059.96pt>
+<./diagrams/slicer-detailed-view.jpg, id=70, 819.06pt x 1059.96pt>
 File: ./diagrams/slicer-detailed-view.jpg Graphic file (type jpg)
 <use ./diagrams/slicer-detailed-view.jpg>
 Package pdftex.def Info: ./diagrams/slicer-detailed-view.jpg used on input line
@@ -475,44 +487,44 @@ LaTeX Warning: Text page 11 contains only floats.
 
 (./chapter4.tex
 Chapter 4.
-<./diagrams/Client-Side-Structure.jpeg, id=77, 614.295pt x 794.97pt>
+[13
+
+
+
+] <./diagrams/Client-Side-Structure.jpeg, id=83, 614.295pt x 794.97pt>
 File: ./diagrams/Client-Side-Structure.jpeg Graphic file (type jpg)
 <use ./diagrams/Client-Side-Structure.jpeg>
 Package pdftex.def Info: ./diagrams/Client-Side-Structure.jpeg used on input li
-ne 11.
+ne 35.
 (pdftex.def)             Requested size: 433.62pt x 561.15749pt.
-<./diagrams/Settings-Data-Flow.jpeg, id=78, 614.295pt x 794.97pt>
+<./diagrams/Settings-Data-Flow.jpeg, id=84, 614.295pt x 794.97pt>
 File: ./diagrams/Settings-Data-Flow.jpeg Graphic file (type jpg)
 <use ./diagrams/Settings-Data-Flow.jpeg>
 Package pdftex.def Info: ./diagrams/Settings-Data-Flow.jpeg used on input line 
-20.
+46.
 (pdftex.def)             Requested size: 433.62pt x 561.15749pt.
 Package microtype Info: Loading generic settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 32.
+LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 58.
 
-LaTeX Font Info:    No file OMScmtt.fd. on input line 32.
+LaTeX Font Info:    No file OMScmtt.fd. on input line 58.
 
 LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbraceleft' on input line 32.
+(Font)              for symbol `textbraceleft' on input line 58.
 
-[13
+[14] [15 <./diagrams/Client-Side-Structure.jpeg>]
 
+LaTeX Warning: Text page 16 contains only floats.
 
-
-] [14 <./diagrams/Client-Side-Structure.jpeg>]
-
-LaTeX Warning: Text page 15 contains only floats.
-
-[15 <./diagrams/Settings-Data-Flow.jpeg>]) [16]
+[16 <./diagrams/Settings-Data-Flow.jpeg>]) [17]
 \openout2 = `chapter5.aux'.
 
 (./chapter5.tex
 Chapter 5.
-) [17
+) [18
 
 
 
@@ -521,14 +533,14 @@ Chapter 5.
 
 (./chapter6.tex
 Chapter 6.
-) [18
+) [19
 
 
 
 ]
 \openout2 = `bibliography.aux'.
 
-(./bibliography.tex (./main.bbl)) [19
+(./bibliography.tex (./main.bbl)) [20
 
 
 
@@ -540,23 +552,23 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 7050 strings out of 493304
- 102194 string characters out of 6139872
- 248620 words of memory out of 5000000
- 10229 multiletter control sequences out of 15000+600000
- 12281 words of font info for 79 fonts, out of 8000000 for 9000
- 957 hyphenation exceptions out of 8191
- 38i,12n,43p,1077b,1695s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 7113 strings out of 493029
+ 103374 string characters out of 6136235
+ 252001 words of memory out of 5000000
+ 10355 multiletter control sequences out of 15000+600000
+ 12379 words of font info for 81 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 38i,11n,43p,1077b,1214s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on main.pdf (29 pages, 929850 bytes).
+Output written on main.pdf (31 pages, 931347 bytes).
 PDF statistics:
- 125 PDF objects out of 1000 (max. 8388607)
- 83 compressed objects within 1 object stream
+ 132 PDF objects out of 1000 (max. 8388607)
+ 88 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  12821 words of extra memory for PDF output out of 14400 (max. 10000000)
 

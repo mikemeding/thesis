@@ -1,4 +1,4 @@
-\begin{thebibliography}{6}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -30,6 +30,11 @@ J.~Horvath.
 \newblock \emph{Mastering 3D Printing}.
 \newblock Apress, 2014.
 \newblock \doi{10.1007/978-1-4842-0025-4_6}.
+
+\bibitem[Meding(2016)]{meding-2016}
+M.~Meding.
+\newblock ``Why AngularJS is the Future of Web Design.''.
+\newblock 2016, UMass Lowell, 2016.
 
 \bibitem[Pilgrim(2013)]{pilgrim-2013}
 P.~A. Pilgrim.

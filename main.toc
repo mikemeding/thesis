@@ -59,34 +59,43 @@
 \contentsline {paragraph}{}{13}
 \contentsline {subsection}{\numberline {4.1.1}Controllers \& Data Binding}{13}
 \contentsline {paragraph}{}{13}
-\contentsline {subsection}{\numberline {4.1.2}Factories \& Services}{13}
-\contentsline {paragraph}{}{13}
-\contentsline {subsection}{\numberline {4.1.3}Directives}{13}
-\contentsline {paragraph}{}{13}
+\contentsline {subsection}{\numberline {4.1.2}Factories \& Services}{14}
+\contentsline {paragraph}{}{14}
+\contentsline {subsection}{\numberline {4.1.3}Directives}{14}
+\contentsline {paragraph}{}{14}
 \contentsline {section}{\numberline {4.2}WebSlicer AngularJS Structure}{14}
-\contentsline {paragraph}{}{14}
-\contentsline {paragraph}{}{14}
-\contentsline {section}{\numberline {4.3}Settings Flow}{14}
-\contentsline {paragraph}{}{14}
-\contentsline {paragraph}{}{14}
-\contentsline {section}{\numberline {4.4}Key Challenges}{17}
-\contentsline {subsection}{\numberline {4.4.1}Visualizer Integration}{17}
-\contentsline {paragraph}{}{17}
-\contentsline {subsection}{\numberline {4.4.2}Interpolating Settings}{17}
-\contentsline {paragraph}{}{17}
-\contentsline {section}{\numberline {4.5}Other Planned Integrations}{17}
-\contentsline {section}{\numberline {4.6}Issues \& Known Bugs}{17}
-\contentsline {chapter}{\numberline {5}Server Side}{18}
-\contentsline {section}{\numberline {5.1}JavaEE 7}{18}
-\contentsline {section}{\numberline {5.2}ProcessBuilder}{18}
-\contentsline {section}{\numberline {5.3}CuraEngine Integration}{18}
-\contentsline {section}{\numberline {5.4}REST API}{18}
-\contentsline {section}{\numberline {5.5}Key Challenges}{18}
-\contentsline {subsection}{\numberline {5.5.1}ProcessBuilder Deadlock}{18}
+\contentsline {subsection}{\numberline {4.2.1}app.js}{14}
+\contentsline {subsection}{\numberline {4.2.2}index.html}{15}
+\contentsline {subsection}{\numberline {4.2.3}Settings}{16}
+\contentsline {paragraph}{}{16}
 \contentsline {paragraph}{}{18}
-\contentsline {section}{\numberline {5.6}Issues \& Known Bugs}{18}
-\contentsline {chapter}{\numberline {6}Discussion}{19}
-\contentsline {section}{\numberline {6.1}Usability Testing}{19}
-\contentsline {section}{\numberline {6.2}Data Gathering}{19}
-\contentsline {section}{\numberline {6.3}Design Updates \& Improvements}{19}
-\contentsline {section}{\numberline {6.4}Future Work}{19}
+\contentsline {paragraph}{}{18}
+\contentsline {subsection}{\numberline {4.2.4}Gcode Visualizer}{18}
+\contentsline {paragraph}{}{18}
+\contentsline {paragraph}{}{19}
+\contentsline {section}{\numberline {4.3}Key Challenges}{19}
+\contentsline {subsection}{\numberline {4.3.1}Visualizer Integration}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {subsection}{\numberline {4.3.2}Interpolating Settings}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {section}{\numberline {4.4}Other Planned Integrations}{20}
+\contentsline {subsection}{\numberline {4.4.1}OctoPrint}{20}
+\contentsline {paragraph}{}{20}
+\contentsline {subsection}{\numberline {4.4.2}Thingiverse \& YouMagine}{20}
+\contentsline {paragraph}{}{20}
+\contentsline {section}{\numberline {4.5}Issues \& Known Bugs}{20}
+\contentsline {paragraph}{}{20}
+\contentsline {chapter}{\numberline {5}Server Side}{22}
+\contentsline {section}{\numberline {5.1}JavaEE 7}{22}
+\contentsline {section}{\numberline {5.2}ProcessBuilder}{22}
+\contentsline {section}{\numberline {5.3}CuraEngine Integration}{22}
+\contentsline {section}{\numberline {5.4}REST API}{22}
+\contentsline {section}{\numberline {5.5}Key Challenges}{22}
+\contentsline {subsection}{\numberline {5.5.1}ProcessBuilder Deadlock}{22}
+\contentsline {paragraph}{}{22}
+\contentsline {section}{\numberline {5.6}Issues \& Known Bugs}{22}
+\contentsline {chapter}{\numberline {6}Discussion}{24}
+\contentsline {section}{\numberline {6.1}Usability Testing}{24}
+\contentsline {section}{\numberline {6.2}Data Gathering}{24}
+\contentsline {section}{\numberline {6.3}Design Updates \& Improvements}{24}
+\contentsline {section}{\numberline {6.4}Future Work}{24}

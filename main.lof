@@ -5,6 +5,7 @@
 \contentsline {figure}{\numberline {3-1}{\ignorespaces High level view of how WebSlicer functions and how users will interact with it}}{11}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4-1}{\ignorespaces Full AngularJS structure breakdown}}{15}
-\contentsline {figure}{\numberline {4-2}{\ignorespaces The flow of data through the application from beginning to end of client side user interaction}}{16}
+\contentsline {figure}{\numberline {4-2}{\ignorespaces The flow of data through the application from beginning to end of client side user interaction}}{17}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {5-1}{\ignorespaces The structure of the server side of WebSlicer}}{23}
 \addvspace {10\p@ }

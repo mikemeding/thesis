@@ -6,49 +6,64 @@
   \label{fig:server-side-structure}
 \end{figure}
 
-\section{JavaEE 7}
-% talk about why its awesome and how i structured my code.
-% give enough background to exalain what is needed
-% maven archetype stuff
+\section{JavaEE Structure}
 \paragraph{}
-The majority of the server side of WebSlicer was written in JavaEE, the structure for which is shown in Figure \ref{fig:server-side-structure}.
+The server side of WebSlicer was written in JavaEE, the structure for which is shown in Figure \ref{fig:server-side-structure}.
 JavaEE was the optimal choice for this application as it allowed for the easiest deployment and was also the easiest to scale.
-To further simplify the process Maven was also used.
+Additionally, JavaEE has a good code packaging mechanism for web and non web based applications alike.
+The web container which is in use for this application exposes a RESTful API on a privately hosted server.
+
+\paragraph{}
+To further simplify the development process Maven was also used.
 Maven is a build tool for Java and has support for deploying complex applications such as those in JavaEE.
-This meant that when a build was completed it was automatically deployed and ready for testing.
+This means that when a build was completed it was automatically deployed and ready for testing.
 
 \section{ProcessBuilder}
-% ignore CuraEngine and talk only about how ProcessBuilder works with diagrams
 \paragraph{}
-At the core of the server side application is a core executable called CuraEngine. 
+At the core of the server side application is an executable called CuraEngine. 
 It is the main executable which is compiled from the open source slicing platform Cura which is written in C++. 
 This presented a problem as all of my server side code is written in Java. 
 ProcessBuilder was the solution to this problem as it is capable of redirecting the input and output streams of a local executable process into my Java server application.
+CuraEngine from Figure \ref{fig:server-side-structure} uses a ProcessBuilder and the PlatformExecutable to create a runnable Java method that is capable of executing like a C++ executable.
+CuraOptions feeds the CuraEngine class with all of the parameters that it needs from the API.
+It gathers the path to the appropriate settings file and includes all of the parameters needed to run the CuraEngine executable.
+% running CuraEngine from the command line example
+\begin{lstlisting}[language=bash, style=thesiscode, label={lst:curaengine-executable}, caption=An example of running CuraEngine C++ executable directly from the command line.]
+CuraEngine slice -v -j {settings.json} -g -e -o {output.gcode} -l {model-file.stl}
+\end{lstlisting}
 
-%include code listing of where the executable would be called. keep it consise.
+\paragraph{}
+An example of running the CuraEngine C++ executable from the command line is shown in Listing \ref{lst:curaengine-executable}.
+When the ProcessBuilder class of WebSlicer recieves a slice command from the API it gathers the arguments listed in brackets and sends them to PlatformExecutable.
+PlatformExecutable then spawns a native process and pipes its input and output streams into the respective Java streams.
+At the same time StreamDrainer spawns a new thread and waits for the output stream that was created by PlatformExecutable.
+StreamDrainer's task is to take the unneeded output from stdout and pipe it into a log file for debugging.
 
-\section{CuraEngine Integration}
-% how it works with ProcessBuilder
+\paragraph{}
+After CuraEngine has finished slicing the current file and PlatformExecutable has returned the REST API, which has been waiting, unblocks and starts reading the output gcode file.
+This file is then packaged and sent back to the client as the response of the "/slice/\{clientId\}/\{modelId\}" command as shown in Table \ref{tab:restapi}.
 
 \section{REST API}
 % my REST API and the reason that I structured it the way I did
-% make a table which shows my API and its mapping then explain each function
+\begin{table}[h]
+  \centering
+    \begin{tabularx}{\textwidth}{ |l|l|X| }
+      \hline
+      Type & Address & Description \\ \hline
+      \hline
+      GET & /ping & A simple ping endpoint used for testing. \\ \hline
+      POST & /setupClient & Sets aside all needed files for a new client and return its unique ID. \\ \hline
+      POST & /importStl/\{clientId\} & Takes a MIME type file stream and imports the file to the clientId specificed in the URL. It also returns a unique identifier for the file. \\ \hline
+      POST & /importSettings/\{clientId\} & Similar to importStl this endpoint takes a settings JSON file and imports it to the specificed clientId \\ \hline
+      POST & /slice/\{clientId\}/\{modelId\} & This is the main slice function of the API. It combines all of the parameters specified by the calls before and returns a gcode file to the user. \\ \hline
+      POST & /testSlice & A test endpoint that requires no parameters and simply returns some arbitary gcode to the user. \\ \hline
+      GET & /getFiles/\{clientId\} & Returns all the model file names and their tracking ID's that are associated with a clientId. \\ \hline
+    \end{tabularx}
+  \caption{Documentation of all exposed endpoints of my RESTful API}
+  \label{tab:restapi}
+\end{table}
+
 \paragraph{}
-\begin{center}
-    \begin{tabular}{ | l | l | l | p{5cm} |}
-    \hline
-    Day & Min Temp & Max Temp & Summary \\ \hline
-    Monday & 11C & 22C & A clear day with lots of sunshine.  
-    However, the strong breeze will bring down the temperatures. \\ \hline
-    Tuesday & 9C & 19C & Cloudy with rain, across many northern regions. Clear spells 
-    across most of Scotland and Northern Ireland, 
-    but rain reaching the far northwest. \\ \hline
-    Wednesday & 10C & 21C & Rain will still linger for the morning. 
-    Conditions will improve by early afternoon and continue 
-    throughout the evening. \\
-    \hline
-    \end{tabular}
-\end{center}
 
 
 \section{Key Challenges}
@@ -93,7 +108,7 @@ Thus, symbolically linking the file to the rescue.
 The output.gcode and settings.json files are dynamically overwritten for every iteration so their existence here is merely to please CuraEngine as it requires these files as arguments when preforming a slice. 
 The user has no grasp of these files and is only able to access their content through the web interface which parses in and out of files.
 
-%listing
+% listing of the file structure that FileTracker creates
 \begin{lstlisting}[language=html, style=thesiscode, label={lst:file-structure}, caption=WebSlicer's underlying file structure supported by FileTracker.]
 webslicer/
 - b1a2a69e-5893-4d7c-aa1f-d639fa3b4ed1/

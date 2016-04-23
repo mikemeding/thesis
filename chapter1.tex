@@ -59,21 +59,21 @@ This research has several milestones which must be met for this thesis to be con
 These milestones are in no particular order.
 However, several of them must be completed before allowing other milestones to be completed as detailed below.
 
-\subsection{See a model, get a model}
-\paragraph{}
-Getting a model directly from a repository, such as Thingiverse, would be ideal for this web interface because it would not require any local storage for a model file.
-A file stored in local storage could be quite large and cause memory problems for the user. 
-
 \subsection{Wrap CuraEngine}
 \paragraph{}
 CuraEngine is an open-source slicing engine designed to take model files in .stl file format and convert them into G-code for 3D printing.
-For this project, wrapping this code and making it callable from the web would be the heart of this application.
+For this project, wrapping this code and making it callable from the web is the heart of this application.
 
 \subsection{Design intuitive web interface}
 \paragraph{}
 This project requires both an intuitive and easy to way to slice a model file for 3D printing.
 This would be done using Bootstrap and AngularJS because they are both scalable and flexible for almost any web design.
-These technologies also allow for small scale and mobile use.
+These technologies also allow for small scale or even mobile use.
+
+\subsection{Run beta testing with actual users}
+\paragraph{}
+No research would be complete without testing the software in question.
+Running a closed beta test of this software is a milestone that must be met as one of the major aspects of this application is its usability.
 
 \section{Existing Technology}
 % Talk about Astroprint 2 and why its not the full solution.
@@ -81,8 +81,8 @@ These technologies also allow for small scale and mobile use.
 %3.1 AstroPrint 2
 AstroPrint is an all included cloud operating system for 3D printers.
 It attempts to encompass the entire package of 3D printing to a dedicated Raspberry Pi, or similar computer system.
-It is also one of the only forays I have found into a cloud based slicing software.
-Unfortunately, their software tries to accomplish too many tasks at once and has become somewhat like a Swiss army knife as it is capable of many tasks but can only do a few tasks well.
+It is also one of the only software platforms that currently exists that attempts to do web based slicing.
+Unfortunately, the AstroPrint software tries to accomplish too many tasks at once and has become somewhat like a Swiss army knife as it is capable of many tasks but can only do a few tasks well.
 Additionally, their cloud based slicing software, while being reasonably fast, lacks any support for reviewing the sliced model.
 This review stage is critical for anyone who is printing something that will take more than a few hours to complete.
 
@@ -91,8 +91,8 @@ This review stage is critical for anyone who is printing something that will tak
 % ideally this should be an ordered list similar to the index except more broad and with descriptions
 \paragraph{}
 \begin{itemize}
-\item Chapter 2, Existing libraries and why I chose them.
-\item Chapter 3, Software architecture. 
+\item Chapter 2, Background and design choices.
+\item Chapter 3, Software architecture review.
 \item Chapter 4, Client side in detail. 
 \item Chapter 5, Server side in detail.
 \item Chapter 6, Discussion about usability testing and further improvements.

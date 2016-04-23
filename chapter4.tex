@@ -3,7 +3,7 @@
 \section{AngularJS, a bit of background}
 \paragraph{}
 To understand the structure of WebSlicer a few things must be known about how AngularJS applications are structured and a bit about how AngularJS itself works.
-\cite{meding-2016}, has more detailed explanations of each angular componenet than those that follow should the reader need more detail than that provided.
+\cite{meding-2016} (2016), has more detailed explanations of each angular componenet than those that follow should the reader need more detail than that provided.
 
 \subsection{Controllers \& Data Binding}
 \paragraph{}
@@ -85,7 +85,7 @@ This data flow starts with loading a static JSON (JavaScript Object Notation) fi
 A directive called curasettings takes this static JSON file and splits it up so that for each setting object an input field exists in the template.
 AngularJS provides this functionality through the use of an ng-repeat which is written in a similar fashion to that of a for loop in Python which is shown in Listing \ref{lst:html-repeat-example}.
 Using a template for a directive in this case also meant that I could have control over many different kinds of fields such as drop downs and number specific inputs.
-The curaengine directive also gave me the logical separation of one static JSON file per tab of settings in the UI which made it easy to find and modify the settings as needed.
+The curaengine directive also gave the logical separation of one static JSON file per tab of settings in the UI which made it simple to find and modify the settings as needed.
 
 \paragraph{}
 The interesting part about how settings work in WebSlicer is how they are tracked after being loaded to the client.

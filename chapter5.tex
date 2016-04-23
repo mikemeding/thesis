@@ -76,7 +76,7 @@ This file is then packaged and sent back to the client as the response of the "/
 \end{figure}
 \paragraph{}
 One of the biggest bugs encountered while developing this project was a thread deadlock issue. 
-The server side code uses java’s ProcessBuilder which builds a system native call to an executable and then pipes the input and output into the input and output pipes of java’s stdio as shown in Figure \ref{fig:deadlock-diagram}.
+The server side code uses Javas ProcessBuilder which builds a system native call to an executable and then pipes the input and output into the input and output pipes of Javas stdio as shown in Figure \ref{fig:deadlock-diagram}.
 This works very well for small platform executable’s with limited I/O but can become problematic when complex native calls such as the curaengine are used.
 
 \paragraph{}
@@ -100,7 +100,7 @@ As soon as the client died those files were lost which is a major inefficiency.
 
 \paragraph{}
 The fdmprinter.json file within the unique client folder is symbolically linked to the fdmprinter.json file within common. 
-The CuraEngine executable requires that all of the settings files rest within the same directory when preforming a slice. 
+The CuraEngine executable requires that all of the settings files rest within the same directory when preforming a slice as shown in Listing \ref{lst:file-structure}.
 This is somewhat problematic with the potential of having this file copied for many clients. 
 Thus, symbolically linking the file to the rescue.
 

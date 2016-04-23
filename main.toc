@@ -3,20 +3,20 @@
 \contentsline {paragraph}{}{1}
 \contentsline {section}{\numberline {1.1}The RepRap Idea}{3}
 \contentsline {paragraph}{}{3}
-\contentsline {section}{\numberline {1.2}Sudden Growth Of 3D Printing}{3}
+\contentsline {section}{\numberline {1.2}Sudden Growth of 3D Printing}{3}
 \contentsline {paragraph}{}{3}
-\contentsline {section}{\numberline {1.3}Purpose of This Research}{3}
+\contentsline {section}{\numberline {1.3}Purpose of this Research}{3}
 \contentsline {paragraph}{}{3}
 \contentsline {section}{\numberline {1.4}Research Objectives}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {subsection}{\numberline {1.4.1}See a model, get a model}{4}
+\contentsline {subsection}{\numberline {1.4.1}Wrap CuraEngine}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {subsection}{\numberline {1.4.2}Wrap CuraEngine}{4}
+\contentsline {subsection}{\numberline {1.4.2}Design intuitive web interface}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {subsection}{\numberline {1.4.3}Design intuitive web interface}{4}
+\contentsline {subsection}{\numberline {1.4.3}Run beta testing with actual users}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {section}{\numberline {1.5}Existing Technology}{5}
-\contentsline {paragraph}{}{5}
+\contentsline {section}{\numberline {1.5}Existing Technology}{4}
+\contentsline {paragraph}{}{4}
 \contentsline {section}{\numberline {1.6}Thesis Map}{5}
 \contentsline {paragraph}{}{5}
 \contentsline {chapter}{\numberline {2}Libraries \& Existing Code}{6}
@@ -49,8 +49,6 @@
 \contentsline {subsection}{\numberline {3.2.2}Slicing Engine}{12}
 \contentsline {paragraph}{}{12}
 \contentsline {subsection}{\numberline {3.2.3}Web Tool Path Viewer}{12}
-\contentsline {paragraph}{}{12}
-\contentsline {subsection}{\numberline {3.2.4}Final Steps}{12}
 \contentsline {paragraph}{}{12}
 \contentsline {section}{\numberline {3.3}Review and Usability Testing}{12}
 \contentsline {paragraph}{}{12}

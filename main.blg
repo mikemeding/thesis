@@ -16,48 +16,48 @@ Database file #1: bibliography.bib
 Warning--entry type for "hitzeViewer-2015" isn't style-file defined
 --line 22 of file bibliography.bib
 Warning--I didn't find a database entry for "freeman-2014"
-Warning--I didn't find a database entry for "meding-2016"
 Warning--can't use both author and editor fields in mastering3Dprinting
+Warning--empty year in meding-2016
 Warning--can't use both author and editor fields in pilgrim-2013
-You've used 5 entries,
+You've used 6 entries,
             2811 wiz_defined-function locations,
-            648 strings with 5487 characters,
-and the built_in function-call counts, 1555 in all, are:
-= -- 152
-> -- 50
-< -- 5
-+ -- 20
-- -- 15
-* -- 93
-:= -- 253
-add.period$ -- 13
-call.type$ -- 5
-change.case$ -- 15
-chr.to.int$ -- 5
-cite$ -- 12
-duplicate$ -- 88
-empty$ -- 147
-format.name$ -- 20
-if$ -- 331
+            652 strings with 5638 characters,
+and the built_in function-call counts, 1815 in all, are:
+= -- 182
+> -- 60
+< -- 6
++ -- 24
+- -- 18
+* -- 108
+:= -- 299
+add.period$ -- 16
+call.type$ -- 6
+change.case$ -- 18
+chr.to.int$ -- 6
+cite$ -- 15
+duplicate$ -- 100
+empty$ -- 164
+format.name$ -- 24
+if$ -- 383
 int.to.chr$ -- 1
 int.to.str$ -- 1
 missing$ -- 6
-newline$ -- 31
-num.names$ -- 20
-pop$ -- 47
+newline$ -- 36
+num.names$ -- 24
+pop$ -- 54
 preamble$ -- 1
-purify$ -- 15
+purify$ -- 18
 quote$ -- 0
-skip$ -- 64
+skip$ -- 72
 stack$ -- 0
-substring$ -- 10
+substring$ -- 12
 swap$ -- 8
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 45
-warning$ -- 2
-while$ -- 15
+type$ -- 56
+warning$ -- 3
+while$ -- 18
 width$ -- 0
-write$ -- 65
+write$ -- 76
 (There were 5 warnings)

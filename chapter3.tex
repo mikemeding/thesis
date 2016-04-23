@@ -5,7 +5,7 @@
 \paragraph{}
 This thesis is a mixture of both research and design implementation.
 The research portion of this project focused on linking an existing C++ application (CuraEngine) into a larger JavaEE based project.
-In this research we also had a small group of people run though some beta testing of the application and logged their observations.
+This research also included running a closed beta test of the software and logging the results.
 
 %Diagram of how the user interacts with WebSlicer from a high level .
 \begin{figure}[!ht]
@@ -22,29 +22,27 @@ As shown in Figure \ref{fig:slicer-detailed-view}, the application will have 3 m
 
 \subsection{Web Interface}
 \paragraph{}
-%update this to final version. no more "i anticipate"
-I anticipate that it will include a set of forms for collecting the users settings for their printer and account tracking info so that they may retain certain settings. 
-Additionally, I would like to include a gcode editor which will allow users to edit specific portions of their gcode and see the resulting output in the viewer. 
+The web interface includes a set of forms for collecting the users settings for their printer and the settings as they relate to printing the model itself.
+This interface also includes an interface so that the user may retain the files they have uploaded for future use.
 This does not include the actual slicing engine which must be driven and accessed independently.
 
 \subsection{Slicing Engine}
 \paragraph{}
 The slicing engine is at the heart of this project. 
 It will include taking uploaded .stl model files by the user and convert them into raw G-code. 
-The engine that carries out the raw geometry calculations is CuraEngine and is written in pure C++, (it is not web friendly). 
-Thus, this portion of the project will require deploying CuraEngine at a cloud provider and then creating a RESTful API to interface with it.
+The engine that carries out the raw geometry calculations is CuraEngine and is written in pure C++.
+Thus, this portion of the project will required deploying CuraEngine on a remote server and creating a RESTful API to interface with it.
 
 \subsection{Web Tool Path Viewer}
 \paragraph{}
 %expand this with more detail
-After configuring and generating the G-code representation for a 3D model, there still must be a way to review visually how the slicing engine actually will split up the model. 
-
-\subsection{Final Steps}
-\paragraph{}
-The final step in the process of this application will be creating links to the finished files where the user can either choose to download the completed G-code file. 
-If the user has access to a print server such as OctoPrint, they may opt to copy/paste the link to it where it will be uploaded automatically for printing using the OctoPrint API.
+After configuring and generating the G-code representation for a 3D model, there still must be a way to review visually how the slicing engine actually will split up the model.
+This is done by loading the resulting gcode from the slicing engine into a web based visualizer.
+The user is then able to view each of the layers and the steps involved in creating each one in detail.
+From Figure \ref{fig:slicer-detailed-view} this process of changing settings, slicing, and reviewing can happen an arbitrary number of times before the user decides they are satisfied with the result.
 
 \section{Review and Usability Testing}
 \paragraph{}
 After running through all steps of the working procedure it was then necessary to test WebSlicer by running a small beta test. 
 This beta test consisted of a small group of users with varying familiarity with 3D printing to test how easy WebSlicer is to use through a series of simple tasks.
+These simple tasks ranged from uploading a file to finding and adjusting the correct setting for a printer.

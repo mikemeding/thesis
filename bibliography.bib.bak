@@ -44,6 +44,17 @@
   Url                      = {http://link.springer.com/chapter/10.1007/978-1-4842-0025-4_6}
 }
 
+@Unpublished{meding-2016,
+  Title                    = {Why AngularJS is the Future of Web Design},
+  Author                   = {Michael Meding},
+  Note                     = {2016 University of Massachusetts Lowell},
+
+  Comment                  = {paper I wrote about angular structure},
+  Owner                    = {mike},
+  Timestamp                = {2016.04.22},
+  Url                      = {http://www.cs.uml.edu/~mmeding/514s2016/paper2/paper2.pdf}
+}
+
 @Book{pilgrim-2013,
   Title                    = {Java EE 7 Developer Handbook},
   Author                   = {Peter A. Pilgrim},

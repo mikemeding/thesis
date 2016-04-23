@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.4.7)  22 APR 2016 17:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.4.7)  22 APR 2016 21:16
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -473,10 +473,6 @@ LaTeX Warning: Text page 11 contains only floats.
 
 (./chapter4.tex
 Chapter 4.
-
-Package natbib Warning: Citation `meding-2016' on page 13 undefined on input li
-ne 6.
-
 [13
 
 
@@ -2060,12 +2056,6 @@ Package pdftex.def Info: ./diagrams/Deadlock-Diagram.jpeg used on input line 73
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
 [25] [26 <./diagrams/Deadlock-Diagram.jpeg>] [27]) [28]
 \openout2 = `chapter6.aux'.
 
@@ -2094,20 +2084,20 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 7668 strings out of 493029
- 110348 string characters out of 6136235
- 295024 words of memory out of 5000000
- 10888 multiletter control sequences out of 15000+600000
+ 7670 strings out of 493029
+ 110392 string characters out of 6136235
+ 296045 words of memory out of 5000000
+ 10890 multiletter control sequences out of 15000+600000
  12477 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,11n,69p,1077b,1623s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,11n,69p,410b,1623s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on main.pdf (41 pages, 1274204 bytes).
+Output written on main.pdf (41 pages, 1273970 bytes).
 PDF statistics:
  168 PDF objects out of 1000 (max. 8388607)
  111 compressed objects within 2 object streams

@@ -1,4 +1,4 @@
-% This file was created with JabRef 2.10b2.
+% This file was created with JabRef 2.10.
 % Encoding: UTF-8
 
 
@@ -17,6 +17,17 @@
 
   Owner                    = {mike},
   Timestamp                = {2016.04.08}
+}
+
+@Book{freeman-2014,
+  Title                    = {Pro AngularJS},
+  Author                   = {Adam Freeman},
+  Editor                   = {James T. DeWolf},
+  Publisher                = {Apress},
+  Year                     = {2014},
+
+  Owner                    = {mike},
+  Timestamp                = {2016.04.24}
 }
 
 @Electronic{hitzeViewer-2015,
@@ -44,15 +55,21 @@
   Url                      = {http://link.springer.com/chapter/10.1007/978-1-4842-0025-4_6}
 }
 
-@Unpublished{meding-2016,
-  Title                    = {Why AngularJS is the Future of Web Design},
-  Author                   = {Michael Meding},
-  Note                     = {2016 University of Massachusetts Lowell},
+@Article{reprap-2011,
+  Title                    = {RepRap – the replicating rapid prototyper},
+  Author                   = {Jones,Rhys and Haufe,Patrick and Sells,Edward and Iravani,Pejman and Olliver,Vik and Palmer,Chris and Bowyer,Adrian},
+  Journal                  = {Robotica},
+  Year                     = {2011},
 
-  Comment                  = {paper I wrote about angular structure},
-  Owner                    = {mike},
-  Timestamp                = {2016.04.22},
-  Url                      = {http://www.cs.uml.edu/~mmeding/514s2016/paper2/paper2.pdf}
+  Month                    = {1},
+  Pages                    = {177--191},
+  Volume                   = {29},
+
+  Doi                      = {10.1017/S026357471000069X},
+  ISSN                     = {1469-8668},
+  Issue                    = {Special Issue 01},
+  Numpages                 = {15},
+  Url                      = {http://journals.cambridge.org/article_S026357471000069X}
 }
 
 @Book{pilgrim-2013,

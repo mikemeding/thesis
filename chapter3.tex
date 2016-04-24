@@ -1,5 +1,7 @@
 \chapter{Methodology}
 % This chapter is for going over my methods and talking about my software architecute and why it looks the way it does.
+\paragraph{}
+This chapter discusses the architecture of WebSlicer. It also serves to justify the design choices that were made. 
 
 \section{Research Design} 
 \paragraph{}
@@ -15,7 +17,7 @@ This research also included running a closed beta test of the software and loggi
   \label{fig:slicer-detailed-view}
 \end{figure}
 
-\section{Working procedure}
+\section{Working Procedure}
 \paragraph{}
 % this needs way more info
 As shown in Figure \ref{fig:slicer-detailed-view}, the application will have 3 major components that all need to work together in a cycle until the user decides that the output is what they desire.
@@ -29,9 +31,10 @@ This does not include the actual slicing engine which must be driven and accesse
 \subsection{Slicing Engine}
 \paragraph{}
 The slicing engine is at the heart of this project. 
-It will include taking uploaded .stl model files by the user and convert them into raw G-code. 
-The engine that carries out the raw geometry calculations is CuraEngine and is written in pure C++.
-Thus, this portion of the project will required deploying CuraEngine on a remote server and creating a RESTful API to interface with it.
+Its purpose is taking uploaded .stl model files from the user and converting them into raw G-code through a process known as slicing.
+An application which is encapsulated and preforms slicing is known as as a slicing engine.
+The engine which carries out the raw geometry calculations for WebSlicer is CuraEngine which is written in C++.
+Thus, this portion of the project required deploying the CuraEngine application on a remote server and creating a RESTful API to interface with it.
 
 \subsection{Web Tool Path Viewer}
 \paragraph{}

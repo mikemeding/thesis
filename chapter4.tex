@@ -1,19 +1,20 @@
 \chapter{Client Side}
+\paragraph{}
+This chapter discusses the client side of WebSlicer in detail. 
+It also includes some necessary background about AngularJS as it will be crucial to understanding latter sections of this chapter.
 
 \section{AngularJS}
 \paragraph{}
 To understand the structure of WebSlicer a few things must be known about how AngularJS applications are structured and a bit about how AngularJS itself works.
-\cite{meding-2016} (2016), has more detailed explanations of each angular componenet than those that follow should the reader need more detail than that provided.
-
 \subsection{Controllers \& Data Binding}
 \paragraph{}
 The controller structure in AngularJS sits in between the view and the JavaScript world acts like the glue between the two.
-From a controller you are allowed access to "scope" variables which are like normal JavaScript variables but have a special two way data binding property.
+From a controller the user is allowed access to "scoped" variables which are like normal JavaScript variables but have a special two way data binding property.
 Two way data binding is one of the most interesting features of AngularJS as it gives the user real time updates as the user interacts with a view.
 In traditional JavaScript a developer has to listen for key events that occur in the browser as the trigger for a sequence of events.
 Angular on the other hand also has a sequence of events but no trigger is required as the sequence of events is triggered automatically.
 This action is known as a digest cycle.
-The secret to this is that AngularJS has a watch for each variable attached to its scope and when any changes to this variable occur they propagate that change to the functions that are associated with that variable.
+The secret to this is that AngularJS has a watch function for each variable attached to its scope and when any changes to this variable occur they propagate that change to the functions that are associated with that variable \citep{freeman-2014}.
 
 \subsection{Factories \& Services}
 \paragraph{}
@@ -29,6 +30,8 @@ Directives also contain support for templates which are just short HTML snippets
 Combine this with the use of the aforementioned design patterns and it creates a very powerful tool to create and organize dynamic content.
 
 \section{WebSlicer AngularJS Structure}
+\paragraph{}
+This section discusses the entire client side structure of WebSlicer when it is broken down into its respective Controllers, Factories, and Directives.
 % this figure describes my full angular structure on the client
 \begin{figure}[!ht]
   \centering
@@ -38,6 +41,7 @@ Combine this with the use of the aforementioned design patterns and it creates a
 \end{figure}
 
 \subsection{app.js}%app.js
+\paragraph{}
 The full graphical AngularJS structure of WebSlicer is shown in Figure \ref{fig:client-side-structure}.
 Flow through this diagram starts with the app.js node which represents the main controller of the application.
 This can be thought of as a main function in C++.
@@ -45,6 +49,7 @@ The main control variables are also inside of app.js which are similar to global
 Variables in this controller are used to store the current settings, file pointer, and output gcode.
 
 \subsection{index.html}%index.html
+\paragraph{}
 Figure \ref{fig:client-side-structure} also shows that index.html is large hub and as WebSlicer is a single page web application this is the only static HTML file.
 Index.html has several other functions such as bringing in all libraries and including the custom directives.
 
@@ -111,6 +116,9 @@ The controller then just goes to the layer height in the array and renders a fra
 As array indexing is nearly instantaneous the visualizer once parsed and loaded runs very quickly to display layers.
 
 \section{Key Challenges}
+\paragraph{}
+Discussed in this section were the most notable challenges that had to be overcome when developing the client side of WebSlicer.
+
 \subsection{Visualizer Integration}
 \paragraph{}
 By far one of the most difficult challenges overcome while writing WebSlicer was the visualizer integration.
@@ -129,6 +137,10 @@ At one point this even required getting in touch with the original developers of
 Documentation for many of the settings was quite bad and in many instances was non existent which further slowed down development.
 
 \section{Other Planned Integrations}
+\paragraph{}
+During the development process often many items do not make it into the final product for various reasons.
+Included in this section are some items which were cut from WebSlicer before beta testing.
+
 \subsection{OctoPrint}
 \paragraph{}
 A feature which was removed at a late state in the process of building this application was an integration with OctoPrint.

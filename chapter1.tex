@@ -1,26 +1,25 @@
 \chapter{Introduction}
 \paragraph{}
 \citep{reprap-2011}
-3D printing, over the past few years, has become immensely popular due in part to its reduction in cost and its easy availability.
-An enthusiast can now go and buy a DIY (do-it-yourself) 3D printer kit for less than \$500.
-However, one major pitfall that remains is the software support which leaves much to be desired.
+Over the past few years, 3D printing, has become immensely popular due in part to its reduction in cost and its easy availability.
+An enthusiast can now purchase a do it yourself (DIY) 3D printer kit for less than \$500 however, one major pitfall that remains is the software support which leaves much to be desired.
 Most of the big name companies that used to hold all of the patents for 3D printers have retained the software patents but not the hardware patents. 
-This creates a gap in knowledge between building the printer and actually running it.
+This creates a gap in knowledge between building the printer and running it.
 This research has served as an exploration of what software existed in the open source for 3D slicing and using that software to build a web based 3D print slicer.
-This effectively will “democratize” the world of 3D printing, much in the same way that Google has democratized the way that we search the web. 
-In an article written by Harvard Business review they theorize that this rise in the popularity of 3D printing will spur an industrial revolution as manufacturing becomes more personalized and decentralized \citep{daveni-2015}.
+This will, effectively “democratize” the world of 3D printing, much in the same way that Google has democratized the way we search the web. 
+In an article written by Harvard Business review, they theorize that this rise in the popularity of 3D printing will spur an industrial revolution as manufacturing becomes more personalized and decentralized \citep{daveni-2015}.
 
 \paragraph{}
-To print something on a 3D printer, there is a multi step process that can be daunting to many first time users. 
+To print something on a 3D printer, there is a multi-step process that can be daunting to many first time users. 
 The first step in the process is to either create or download a model.
-Creating a model can be done with any standard 3D CAD software, such as AutoCAD or SolidWorks.
+Creating a model can be achieved with any standard 3D CAD software, such as AutoCAD or SolidWorks.
 Downloading pre-existing models from an online repository can be done from websites such as Thingiverse or YouMagine.
 Once a model file is obtained, it is time to “slice” the model.
 Slicing is the act of taking this model file and splitting it up into many thin layers that the 3D printer can understand.
-This process can only be done by a dedicated slicing software which can often be complicated to use and difficult to install.
-Once the file has been sliced, the resulting file is a G-code file which is simply a set of movement instructions that the printer head must follow.
+This process can only be executed by a dedicated slicing software which can often be complicated to use and difficult to install.
+Once the file has been sliced, the resulting file is a G-code file, which is simply a set of movement instructions that the printer head must follow.
 This file is then loaded to an SD card or sent via a print server similar to the way that a normal 2D printer is networked.
-Once the G-code file has been loaded all that is left is to hit print either manually using the printers interface for the SD card or by hitting print on the network interface for the file that was uploaded.
+Once the G-code file has been loaded all, that is left is to hit print either manually using the printers interface for the SD card or by hitting print on the network interface for the file that was uploaded.
 
 %Diagram of the basic 3D printing process to aid in the above explanation.
 \begin{figure}[!ht]
@@ -32,35 +31,35 @@ Once the G-code file has been loaded all that is left is to hit print either man
 
 \section{The RepRap Idea}
 \paragraph{}
-The Replication Rapid-Prototyper Project (RepRap) is a movement with the goal of providing Open-source, diy 3D printers at low cost.
+The Replication Rapid-Prototyper Project (RepRap) is a movement with the goal of providing Open-source, diy 3D printers at low cost \citep{reprap-2011}.
 RepRap printers are 3D printers with the additional ability to produce most of the parts necessary to assemble another identical printer.
 This idea also extends outside of hardware but to the software as well.
 Much of the software available for RepRap style printers are open source projects put together by the community.
+Unfortunately, community based software development is slow and leads to hardware that outpaces its software.
 
 \section{Sudden Growth of 3D Printing}
 \paragraph{}
-In an article written by Forbes they did an analysis of the current market trend for 3D printing and were surprised to find that it is becoming one of the fastest growing emerging markets.
-"According to Wohlers Report 2014, the worldwide 3D printing industry is now expected to grow from \$3.07 billion in revenue in 2013 to \$12.8 billion by 2018, and exceed \$21 billion in worldwide revenue by 2020" \citep{forbes3D}.
-One reason that 3D printing has been reaching more people is the availability of the RepRap designs.
-Additionally, to build a 3D printer from a kit only requires basic hand tools and basic electronics skills which means that it has been opened up to a much broader audience.
+In an article written by Forbes, the market trend for 3D printing was analyzed.
+They determined that 3D printing is becoming one of the fastest growing emerging markets, stating that
+``The worldwide 3D printing industry is now expected to grow from \$3.07 billion in revenue in 2013 to \$12.8 billion by 2018, and exceed \$21 billion in worldwide revenue by 2020'' \citep{forbes3D}.
+3D printing may be reaching more people as a result of the availability of the RepRap designs.
+Additionally, building a 3D printer from a kit only requires basic hand tools and a moderate knowledge of electronics, which means that it has been opened up to a much broader audience.
 
-\section{Purpose of this Research}
+\section{Purpose of Research}
 \paragraph{}
-The purpose of this research is to construct a web based slicer and make it simple for a user, who knows hardly anything about 3D printing, to slice models and run their 3D printer.
-This will make 3D printing much more approachable for occasional users who are not prepared to spend thousands of dollars on a professional machine and software.
+The purpose of this research is to construct a web based slicer and simplify it for users who not well versed in 3D printing, so they are able to slice models and run their 3D printers.
+This will make 3D printing much more approachable for occasional users who are not prepared to spend thousands of dollars on a professional machine and expensive software.
 Additionally, this opens up opportunities for educators in STEM programs to teach students about 3D printing in a simple and practical way.
-Under normal circumstances this would not be a feasible project for a year-long Masters thesis.
-However, many of the technologies required to complete this project exist in varying states of completeness.
-Putting them together will be the subject of this study.
+Under normal circumstances, this would not be a feasible project for a year-long Masters thesis; however, many of the technologies required to complete this project exist in varying states of completeness.
+Combining them into a cohesive application will be the subject of this study.
 
 
 \section{Research Objectives}
 \paragraph{}
-This research had several milestones which had to be met for it to be considered complete.
-These milestones are in no particular order.
+This research encountered several milestones which had to be met for it to be considered complete.
+These milestones are listed in no particular order; however, several of them must be completed before allowing other milestones to be completed as detailed below.
 However, several of them must be completed before allowing other milestones to be completed as detailed below.
 
-\subsection{Wrap CuraEngine}
 \paragraph{}
 CuraEngine is an open-source slicing engine designed to take model files in .stl file format and convert them into G-code for 3D printing.
 For this project, wrapping this code and making it callable from the web is the heart of this application.
@@ -68,7 +67,7 @@ For this project, wrapping this code and making it callable from the web is the 
 \subsection{Design Intuitive Web Interface}
 \paragraph{}
 This project requires both an intuitive and easy to way to slice a model file for 3D printing.
-This would be done using Bootstrap and AngularJS because they are both scalable and flexible for almost any web design.
+This would be completed using Bootstrap and AngularJS because they are both scalable and flexible for almost any web design.
 These technologies also allow for small scale or even mobile use.
 
 \subsection{Run Beta Testing with Actual Users}
@@ -85,8 +84,8 @@ The goals of this test were to see if WebSlicer is both easy to use and useful t
 AstroPrint is an all-inclusive cloud operating system for 3D printers.
 It attempts to encompass the entire package of 3D printing to a dedicated Raspberry Pi, or similar computer system.
 It is also one of the only software platforms that currently exists that attempts to do web based slicing.
-Unfortunately, the AstroPrint software tries to accomplish too many tasks at once and has become somewhat like a Swiss army knife as it is capable of many tasks but can only do a few tasks well.
-Additionally, their cloud based slicing software, while being reasonably fast, lacks any support for reviewing the sliced model.
+Unfortunately, the AstroPrint software tries to accomplish too many tasks at once and has become somewhat like a Swiss army knife, being capable of many functions but only complete a few tasks well.
+Additionally, their cloud-based slicing software, while being reasonably fast, lacks any support for reviewing the sliced model.
 This review stage is critical for anyone who is printing something that will take more than a few hours to complete.
 
 \section{Thesis Map}
@@ -94,19 +93,19 @@ This review stage is critical for anyone who is printing something that will tak
 % ideally this should be an ordered list similar to the index except more broad and with descriptions
 \paragraph{}
 \begin{itemize}
-\item Chapter 2, Background and design choices.
+\item Chapter 2: Background and design choices.
 	\paragraph{}
 	This chapter discusses many of the external resources used and why they are relevant to this research.
-\item Chapter 3, Software architecture review.
+\item Chapter 3: Software architecture review.
 	\paragraph{}
-	Discussed here is a complete overview of the architecture of WebSlicer. It follows the user through the entire process of slicing while explaining briefly some of the details of what is really happening.
-\item Chapter 4, Client side in detail. 
+	Compiled here is a complete overview of the architecture of WebSlicer. It follows the user through the entire process of slicing while explaining briefly some of the details of what is really happening.
+\item Chapter 4: Client side in detail. 
 	\paragraph{}
 	Here is where all of the possible client interactions and application specific details are explained.
-\item Chapter 5, Server side in detail.
+\item Chapter 5: Server side in detail.
 	\paragraph{}
 	Details of exactly how a C++ executable is tied into a Java process are explained here as well as the exposed web API created for this research.
-\item Chapter 6, Discussion about usability testing and further improvements.
+\item Chapter 6: Discussion about usability testing and further improvements.
 	\paragraph{}
 	Included in this chapter are the formal results from closed beta testing and a discussion of the printer which inspired this research.
 \end{itemize}

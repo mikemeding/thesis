@@ -1,5 +1,10 @@
 \begin{thebibliography}{}
 
+\bibitem[\protect\astroncite{Brat Tech~LLC}{2016}]{angular-2016}
+Brat Tech~LLC, G. e.~a. (2016).
+\newblock {\em AngularJS}.
+\newblock Google, 1600 Amphitheatre Pkwy, Mountain View, CA 94043.
+
 \bibitem[\protect\astroncite{Columbus}{2015}]{forbes3D}
 Columbus, L. (2015).
 \newblock 2015 roundup of 3d printing market forecasts and estimates.
@@ -10,10 +15,20 @@ D'Aveni, R. (2015).
 \newblock The 3-d printing revolution.
 \newblock {\em Harvard Business Review}.
 
+\bibitem[\protect\astroncite{Fleury}{2016}]{wildfly-2016}
+Fleury, M. (2016).
+\newblock {\em Wildfly Application Server}.
+\newblock Red Hat.
+
 \bibitem[\protect\astroncite{Freeman}{2014}]{freeman-2014}
 Freeman, A. (2014).
 \newblock {\em Pro AngularJS}.
 \newblock Apress.
+
+\bibitem[\protect\astroncite{Gosling}{2016}]{java-2016}
+Gosling, J. (2016).
+\newblock {\em Java Enterprise Edition}.
+\newblock Sun Microsystems, Oracle.
 
 \bibitem[\protect\astroncite{Hitze}{2015}]{hitzeViewer-2015}
 Hitze, N. (2015).
@@ -24,11 +39,31 @@ Horvath, J. (2014).
 \newblock {\em Mastering 3D Printing}.
 \newblock Apress.
 
+\bibitem[\protect\astroncite{Häußge}{2016}]{octoprint-2016}
+Häußge, G. (2016).
+\newblock {\em OctoPrint}.
+\newblock Impressum, Goethestraße 5 63179 Obertshausen Deutschland.
+
 \bibitem[\protect\astroncite{Jones et~al.}{2011}]{reprap-2011}
 Jones, R., Haufe, P., Sells, E., Iravani, P., Olliver, V., Palmer, C., and
   Bowyer, A. (2011).
 \newblock Reprap – the replicating rapid prototyper.
 \newblock {\em Robotica}, 29:177--191.
+
+\bibitem[\protect\astroncite{Kuipers}{2016}]{curaengine-2016}
+Kuipers, T. (2016).
+\newblock {\em CuraEngine}.
+\newblock Ultimaker.
+
+\bibitem[\protect\astroncite{Mango}{2013}]{mango-2013}
+Mango, A. (2013).
+\newblock {\em Mobile First Bootstrap}.
+\newblock Packt Publishing.
+
+\bibitem[\protect\astroncite{Mark~Otto}{2016}]{bootstrap-2016}
+Mark~Otto, J.~T. (2016).
+\newblock {\em Bootstrap}.
+\newblock Twitter.
 
 \bibitem[\protect\astroncite{Pilgrim}{2013}]{pilgrim-2013}
 Pilgrim, P.~A. (2013).

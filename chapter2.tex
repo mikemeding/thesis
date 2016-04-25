@@ -5,59 +5,59 @@ This chapter discusses many of the external resources used and why they are rele
 
 \section{CuraEngine}
 \paragraph{}
-CuraEngine is the back end of a larger application called Cura.
-Cura is an open source 3D print slicer designed by Ultimaker and is part of their software suite for their Ultimaker line of 3D printers.
-It will be talked about extensively in latter portions of this paper as it is the main portion of the back end of WebSlicer.
+CuraEngine is the server side of a larger application called Cura.
+Cura is an open source 3D print slicer designed by Ultimaker that is part of the software suite for their Ultimaker line of 3D printers \citep{curaengine-2016}.
+As it is the main portion of the server side of WebSlicer, Cura will be discussed extensively in latter portions of this paper.
 
 \paragraph{}
-The reason for choosing to use CuraEngine as my main slicing engine is that it has the most clear separation between application and interface.
-Another option was to use Slicer which is much older and has better documentation but is unfortunately written on windows and would require a large amount of extra effort to get working properly for my needs.
-CuraEngine is also platform agnostic as it is written in C++ and uses one library called protobuf which is its main interface library for the Cura application.
+The reason for choosing to use CuraEngine as the slicing engine is that it has the most clear separation between application and interface.
+Another option was to use Slicer, which is much older and has better documentation, but is unfortunately written on Windows and would require a large amount of extra effort to get working properly for my needs.
+CuraEngine is also platform agnostic, as it is written in C++ and uses one library called protobuf, which is its main interface library for the Cura application.
 
 \section{Client Side Libraries}
 \paragraph{}
-When structuring a website for optimal layout and scalability there are few better options than using the combination of Bootstrap and AngularJS.
+When structuring a website for optimal layout and scalability, there are few better options than using the combination of Bootstrap and AngularJS.
 Bootstrap is a client side CSS library which includes most commonly used CSS options such as buttons and input fields and styles them all accordingly.
 AngularJS creates a client side environment to support higher level language constructs and features that are normally reserved for complex server side applications.
 
 \subsection{Bootstrap}
 \paragraph{}
-Bootstrap is one of the most popular CSS and JS frameworks for developing responsive and mobile projects on the web.
-Being responsive means that Bootstrap is capable of being dynamically displayed on many different size screens.
-When the screen size changes Bootstrap is capable of moving and resizing elements on the page without loosing any content or overlapping items.
-In addition it speeds up the process of developing web based applications as it removes the need to write heavy amounts of CSS to make an application look and preform nicely.
-Bootstrap also includes many standard features which most web developers use every day further simplifying the process of building a website.
+Bootstrap is one of the most popular CSS and JS frameworks for developing responsive and mobile projects on the web \citep{bootstrap-2016}.
+Being responsive means that Bootstrap is capable of being dynamically displayed on screens of varying sizes. 
+When the screen size changes, Bootstrap is capable of moving and resizing elements on the page without losing any content or overlapping items \citep{mango-2013}.
+In addition, it speeds up the process of developing web based applications, as it removes the need to write heavy amounts of CSS to make an application look and preform nicely.
+Bootstrap also includes many standard features which most web developers use every day, further simplifying the process of building a website.
 
 \subsection{AngularJS}
 \paragraph{}
-AngularJS is a framework which allows for easy development of dynamic web pages.
-It contains many ways to logically separate your code similar to popular object oriented programming languages like Java or C++.
-\citet{freeman-2014} states, "The goal of AngularJS is to bring the tools and capabilities that have been available only for server-side development to the web client and, in doing so, make it easier to develop, test, and maintain rich and complex web applications" (p. 48).
-Therefore, the combination of Bootstrap for the unified look, responsiveness, and mobile support combined with the power of AngularJS as a framework make it the easy choice for a web based application such as WebSlicer.
+AngularJS is a framework that allows for easy development of dynamic web pages \citep{angular-2016}.
+It contains many ways to logically separate code similar to popular object oriented programming languages like Java or C++.
+\citet{freeman-2014} states, ``the goal of AngularJS is to bring the tools and capabilities that have been available only for server-side development to the web client and, in doing so, make it easier to develop, test, and maintain rich and complex web applications'' (p. 48).
+Therefore, the use of Bootstrap for the unified look, responsiveness, and mobile support combined with the power of AngularJS as a framework, make it the easy choice for a web based application such as WebSlicer.
 
 \section{JavaEE}
 \paragraph{}
-JavaEE is a layer built on top of JavaSE the standard Java development environment.
-This additional layer provides many important architectural interfaces such as being able to put code into EJB containers or web containers for deployment of large applications which may have many of such containers. \cite{pilgrim-2013}
+JavaEE is a layer built on top of JavaSE the standard Java development environment \citep{java-2016}.
+This additional layer provides many important architectural interfaces, such as the ability to encapsulate code in EJB containers or web containers for deployment of large applications which may have many of such containers \citep{pilgrim-2013}.
 JavaEE also provides frameworks for working with RESTful web services which streamlines the creation of a useful application API.
 
 \paragraph{}
-There are many server side frameworks which have support for RESTful web services but most lack any kind of real scalability like that provided in JavaEE.
-Furthermore, JavaEE provides the ability to easily distribute your computing as more resources are needed.
-As this research may eventually scale to supporting many users it was logical to choose a framework which allowed for this kind of growth.
-Another reason for choosing JavaEE as a framework is that it provides the full platform cross compatibility which is standard in Java.
-Allowing for cross platform compatability would make it simple to link many computers that are running on different operating systems together further simplifying the prospect of scaling.
+There are many server side frameworks which have support for RESTful web services, but most lack real scalability like that provided in JavaEE.
+Furthermore, JavaEE provides the ability to easily distribute computing as more resources are needed.
+As this research may eventually scale to supporting many users, it was logical to choose a framework which allowed for this kind of growth.
+The use of JavaEE as a framework also provides the full platform cross compatibility which is standard in Java.
+Allowing for cross platform compatability would facilitate the process of linking many computers that are running on different operating systems together, further simplifying the prospect of scaling.
 
 \paragraph{}
-To run a JavaEE based application it must run in a web capable application container.
+To run a JavaEE based application, it must run in a web capable application container.
 This container must be placed on an application server which exposes it to the web under some context.
-For WebSlicer the application server WildFly was chosen for this task as it is well known for its reliability.
+For WebSlicer, the application server WildFly was chosen for this task as it is well known for its reliability \citep{wildfly-2016}.
 
 \section{OctoPrint}
 \paragraph{}
-OctoPrint is a small server that connects a Raspberry Pi to a 3D printer and serves printer info and files to the printer remotely.
-The Raspberry Pi serves a small webpage which allows you to easily keep track of the temperature of the printer and the current print progress.
-This interface allows for a web based connection between your remote g-code files and the local printer. \cite{mastering3Dprinting}
+OctoPrint is a small server that connects a Raspberry Pi to a 3D printer and serves printer info and files to the printer remotely \citep{octoprint-2016}.
+The Raspberry Pi serves a small webpage which allows the user to easily keep track of the temperature of the printer and the current print progress.
+This interface allows for a web based connection between your remote g-code files and the local printer \citep{mastering3Dprinting}.
 OctoPrint also contains its own API which makes for easy integration into other web applications.
 
 \paragraph{}
@@ -68,11 +68,11 @@ Additionally, users are required to include an API key to allow for other applic
  
 \section{G-Code Visualizer}
 \paragraph{}
-When building the g-code visualizer it seemed logical to find one which already existed and worked well to include in my project.
-I came across an open source project called gCodeViewer originally written by Nils Hitze which would work perfectly for my needs. \cite{hitzeViewer-2015}
+When building the G-code visualizer, it seemed logical to find one which already existed and worked well.
+gCodeViewer is an open source project originally written by Nils Hitze \citep{hitzeViewer-2015}.
 This project was written in pure JavaScript and would be seemingly easy to integrate with WebSlicer.
 
 \paragraph{}
-Unfortunately this could not have been farther from the truth as many of the libraries that were needed to make this code needed to be updated.
-Additionally, I wished to integrate this code into my existing AngularJS framework which turned out to be much more challenging than anticipated.
-This meant that what remained from the existing open source project was very small when all was said and done.
+Unfortunately, many of the libraries that were needed to make this code needed to be updated.
+Additionally, integrated into the existing AngularJS framework which was more challenging than anticipated.
+Thus, what ultimately remained from the existing open source project was very small.

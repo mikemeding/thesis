@@ -5,24 +5,23 @@
 \contentsline {paragraph}{}{3}
 \contentsline {section}{\numberline {1.2}Sudden Growth of 3D Printing}{3}
 \contentsline {paragraph}{}{3}
-\contentsline {section}{\numberline {1.3}Purpose of this Research}{3}
+\contentsline {section}{\numberline {1.3}Purpose of Research}{3}
 \contentsline {paragraph}{}{3}
 \contentsline {section}{\numberline {1.4}Research Objectives}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {subsection}{\numberline {1.4.1}Wrap CuraEngine}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {subsection}{\numberline {1.4.2}Design Intuitive Web Interface}{4}
+\contentsline {subsection}{\numberline {1.4.1}Design Intuitive Web Interface}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {subsection}{\numberline {1.4.3}Run Beta Testing with Actual Users}{4}
+\contentsline {subsection}{\numberline {1.4.2}Run Beta Testing with Actual Users}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {section}{\numberline {1.5}Related Work}{4}
-\contentsline {paragraph}{}{4}
+\contentsline {section}{\numberline {1.5}Related Work}{5}
+\contentsline {paragraph}{}{5}
 \contentsline {section}{\numberline {1.6}Thesis Map}{5}
 \contentsline {paragraph}{}{5}
 \contentsline {paragraph}{}{5}
 \contentsline {paragraph}{}{5}
 \contentsline {paragraph}{}{5}
-\contentsline {paragraph}{}{5}
+\contentsline {paragraph}{}{6}
 \contentsline {paragraph}{}{6}
 \contentsline {chapter}{\numberline {2}Libraries \& Existing Code}{7}
 \contentsline {paragraph}{}{7}

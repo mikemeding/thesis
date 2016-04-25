@@ -2,6 +2,19 @@
 % Encoding: UTF-8
 
 
+@Manual{angular-2016,
+  Title                    = {AngularJS},
+
+  Address                  = {1600 Amphitheatre Pkwy, Mountain View, CA 94043},
+  Author                   = {Brat Tech LLC, Google et al.},
+  Organization             = {Google},
+  Year                     = {2016},
+
+  Owner                    = {mike},
+  Timestamp                = {2016.04.24},
+  Url                      = {https://angularjs.org/}
+}
+
 @Article{forbes3D,
   Title                    = {2015 Roundup Of 3D Printing Market Forecasts And Estimates},
   Author                   = {Louis Columbus},
@@ -19,6 +32,17 @@
   Timestamp                = {2016.04.08}
 }
 
+@Manual{wildfly-2016,
+  Title                    = {Wildfly Application Server},
+  Author                   = {Marc Fleury},
+  Organization             = {Red Hat},
+  Year                     = {2016},
+
+  Owner                    = {mike},
+  Timestamp                = {2016.04.24},
+  Url                      = {www.wildfly.org}
+}
+
 @Book{freeman-2014,
   Title                    = {Pro AngularJS},
   Author                   = {Adam Freeman},
@@ -28,6 +52,31 @@
 
   Owner                    = {mike},
   Timestamp                = {2016.04.24}
+}
+
+@Manual{java-2016,
+  Title                    = {Java Enterprise Edition},
+  Author                   = {James Gosling},
+  Organization             = {Sun Microsystems, Oracle},
+  Year                     = {2016},
+
+  Owner                    = {mike},
+  Timestamp                = {2016.04.24}
+}
+
+@Manual{octoprint-2016,
+  Title                    = {OctoPrint},
+
+  Address                  = {Goethestraße 5
+63179 Obertshausen
+Deutschland},
+  Author                   = {Gina Häußge},
+  Organization             = {Impressum},
+  Year                     = {2016},
+
+  Owner                    = {mike},
+  Timestamp                = {2016.04.24},
+  Url                      = {octoprint.org}
 }
 
 @Electronic{hitzeViewer-2015,
@@ -70,6 +119,29 @@
   Issue                    = {Special Issue 01},
   Numpages                 = {15},
   Url                      = {http://journals.cambridge.org/article_S026357471000069X}
+}
+
+@Book{mango-2013,
+  Title                    = {Mobile First Bootstrap},
+  Author                   = {Alexandre Mango},
+  Editor                   = {Julien Renaux, Filipe Silva},
+  Publisher                = {Packt Publishing},
+  Year                     = {2013},
+
+  Doi                      = {ISBN 978-1-78328-579-2},
+  Owner                    = {mike},
+  Timestamp                = {2016.04.24}
+}
+
+@Manual{bootstrap-2016,
+  Title                    = {Bootstrap},
+  Author                   = {Mark Otto, Jacob Thornton},
+  Organization             = {Twitter},
+  Year                     = {2016},
+
+  Owner                    = {mike},
+  Timestamp                = {2016.04.24},
+  Url                      = {getbootstrap.com}
 }
 
 @Book{pilgrim-2013,

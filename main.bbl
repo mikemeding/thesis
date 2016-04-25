@@ -70,4 +70,9 @@ Pilgrim, P.~A. (2013).
 \newblock {\em Java EE 7 Developer Handbook}.
 \newblock Packt Publishing.
 
+\bibitem[\protect\astroncite{Vincent~Massol}{2005}]{massol-2005}
+Vincent~Massol, T.~O. (2005).
+\newblock {\em Maven: A Developer's Notebook}.
+\newblock O'Reilly Media.
+
 \end{thebibliography}

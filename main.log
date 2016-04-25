@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.2.3)  25 APR 2016 14:21
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.2.3)  25 APR 2016 15:45
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -2213,22 +2213,22 @@ File: ./diagrams/Server-Side-Structure.png Graphic file (type png)
 Package pdftex.def Info: ./diagrams/Server-Side-Structure.png used on input lin
 e 8.
 (pdftex.def)             Requested size: 433.62pt x 359.5947pt.
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+[23
+
+
+
+] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2013/08/26 1.5b listings language file
 ) (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2013/08/26 1.5b listings language file
-) [23
-
-
-
-] [24 <./diagrams/Server-Side-Structure.png>]
+) [24 <./diagrams/Server-Side-Structure.png>]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 <./diagrams/Deadlock-Diagram.png, id=123, 469.755pt x 298.2342pt>
 File: ./diagrams/Deadlock-Diagram.png Graphic file (type png)
 <use ./diagrams/Deadlock-Diagram.png>
-Package pdftex.def Info: ./diagrams/Deadlock-Diagram.png used on input line 77.
+Package pdftex.def Info: ./diagrams/Deadlock-Diagram.png used on input line 78.
 
 (pdftex.def)             Requested size: 433.62pt x 275.29349pt.
 [25] [26] [27 <./diagrams/Deadlock-Diagram.png>] [28]) [29]
@@ -2243,22 +2243,22 @@ Chapter 6.
 ]
 \openout2 = `bibliography.aux'.
 
-(./bibliography.tex (./main.bbl)) [31
+(./bibliography.tex (./main.bbl [31
 
 
 
-] (./main.aux (./cover.aux) (./acknowledgements.aux) (./contents.aux) (./chapte
-r1.aux) (./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.aux) (./
-chapter6.aux) (./bibliography.aux))
+])) [32] (./main.aux (./cover.aux) (./acknowledgements.aux) (./contents.aux) (.
+/chapter1.aux) (./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.a
+ux) (./chapter6.aux) (./bibliography.aux))
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 8243 strings out of 493304
- 114904 string characters out of 6139872
- 294752 words of memory out of 5000000
- 11383 multiletter control sequences out of 15000+600000
+ 8246 strings out of 493304
+ 114961 string characters out of 6139872
+ 293779 words of memory out of 5000000
+ 11386 multiletter control sequences out of 15000+600000
  12368 words of font info for 82 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  43i,11n,69p,410b,1749s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2268,10 +2268,10 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on main.pdf (42 pages, 895999 bytes).
+Output written on main.pdf (43 pages, 896860 bytes).
 PDF statistics:
- 171 PDF objects out of 1000 (max. 8388607)
- 113 compressed objects within 2 object streams
+ 175 PDF objects out of 1000 (max. 8388607)
+ 116 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  12831 words of extra memory for PDF output out of 14400 (max. 10000000)
 

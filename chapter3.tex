@@ -24,13 +24,13 @@ As shown in Figure \ref{fig:slicer-detailed-view}, the application will have 3 m
 
 \subsection{Web Interface}
 \paragraph{}
-The web interface includes a set of forms for collecting the users settings for their printer and the settings as they relate to printing the model itself.
-This interface also includes an interface so that the user may retain the files they have uploaded for future use.
-This does not include the actual slicing engine which must be driven and accessed independently.
+The web interface includes a set of forms for collecting the user's settings for their printer and the settings as they relate to printing the model itself.
+This interface also includes a method so the user may retain the files they have uploaded for future use.
+This does not include the actual slicing engine, which must be driven and accessed independently.
 
 \subsection{Slicing Engine}
 \paragraph{}
-The slicing engine is at the heart of this project. 
+The slicing engine rests at the core of this project as most of the computation time is spent preforming geometry calculations within the engine.
 Its purpose is taking uploaded .stl model files from the user and converting them into raw G-code through a process known as slicing.
 An application which is encapsulated and preforms slicing is known as as a slicing engine.
 The engine which carries out the raw geometry calculations for WebSlicer is CuraEngine which is written in C++.
@@ -39,13 +39,13 @@ Thus, this portion of the project required deploying the CuraEngine application 
 \subsection{Web Tool Path Viewer}
 \paragraph{}
 %expand this with more detail
-After configuring and generating the G-code representation for a 3D model, there still must be a way to review visually how the slicing engine actually will split up the model.
-This is done by loading the resulting gcode from the slicing engine into a web based visualizer.
+After configuring and generating the G-code representation for a 3D model, there must be a way to visually review how the slicing engine will divide the model.
+This is executed by loading the resulting G-code from the slicing engine into a web based visualizer.
 The user is then able to view each of the layers and the steps involved in creating each one in detail.
-From Figure \ref{fig:slicer-detailed-view} this process of changing settings, slicing, and reviewing can happen an arbitrary number of times before the user decides they are satisfied with the result.
+As displayed in Figure \ref{fig:slicer-detailed-view}, this process of changing settings, slicing, and reviewing can occur an arbitrary number of times before the user decides they are satisfied with the result.
 
 \section{Review and Usability Testing}
 \paragraph{}
-After running through all steps of the working procedure it was then necessary to test WebSlicer by running a small beta test. 
-This beta test consisted of a small group of users with varying familiarity with 3D printing to test how easy WebSlicer is to use through a series of simple tasks.
+After preforming all steps of the working procedure, it was then necessary to test WebSlicer by running a small beta test. 
+This beta test consisted of a small group of users with varying familiarity with 3D printing to test how simple WebSlicer is to use through a series of simple tasks.
 These simple tasks ranged from uploading a file to finding and adjusting the correct setting for a printer.

@@ -121,6 +121,17 @@ Deutschland},
   Url                      = {http://journals.cambridge.org/article_S026357471000069X}
 }
 
+@Manual{curaengine-2016,
+  Title                    = {CuraEngine},
+  Author                   = {Tim Kuipers},
+  Organization             = {Ultimaker},
+  Year                     = {2016},
+
+  Owner                    = {mike},
+  Timestamp                = {2016.04.24},
+  Url                      = {https://github.com/Ultimaker/CuraEngine}
+}
+
 @Book{mango-2013,
   Title                    = {Mobile First Bootstrap},
   Author                   = {Alexandre Mango},

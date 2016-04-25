@@ -30,8 +30,50 @@ This does not include the actual slicing engine, which must be driven and access
 
 \subsection{Slicing Engine}
 \paragraph{}
-The slicing engine rests at the core of this project as most of the computation time is spent preforming geometry calculations within the engine.
-Its purpose is taking uploaded .stl model files from the user and converting them into raw G-code through a process known as slicing.
+To comprehend the slicing engine it is vital to understand what G-code is.
+G-code consists of sequential machine instructions that command a 3D printer to move in a sequence of patters to build a three dimentional part \citep{gcode-2012}.
+Listing \ref{lst:gcode} shows a sample of G-code that results from slicing using CuraEngine.
+Comments in G-code are preceded by a semicolon and the first line denotes the type of G-code, we are only focusing on RepRap G-code in this case.
+Commands in G-code follow a standard pattern of a letter, either M or G, and a number which denotes the type of command.
+All subsequent items that are separated by spaces are arguments to the command.
+
+% JSON settings example listing
+\begin{lstlisting}[language=json, style=thesiscode , label={lst:gcode}, caption=A sample of G-code that results from slicing using CuraEngine.]
+{
+FLAVOR:RepRap
+M190 S110.000000
+M104 S245.000000
+M109 S245.000000
+G21 ;metric values
+G90 ;absolute positioning
+M82 ;set extruder to absolute mode
+M107 ;start with the fan off
+G28 X0 Y0 ;move X/Y to min endstops
+G28 Z0 ;move Z to min endstops
+G1 Z15.0 F9000 ;move the platform down 15mm
+G92 E0 ;zero the extruded length
+G1 F200 E3 ;extrude 3mm of feed stock
+G92 E0 ;zero the extruded length again
+G1 F9000
+;Put printing message on LCD screen
+M117 Printing...
+;Generated with Cura_SteamEngine master
+;LAYER_COUNT:158
+;LAYER:0
+M107
+G0 F7200.000000 X99.430 Y80.760 Z0.300
+G0 X102.806 Y78.243
+;TYPE:SKIRT
+G1 F1800.000 X103.337 Y78.033 E0.01074
+G1 X103.441 Y77.996 E0.01282
+G1 X103.842 Y77.875 E0.02070
+G1 X104.142 Y77.800 E0.02651
+}
+\end{lstlisting}
+
+\paragraph{}
+The slicing engine rests at the core of this project as most of the computation time is spent preforming geometry calculations and converting them to G-code.
+This process of converting from model to G-code is known as slicing.
 An application which is encapsulated and preforms slicing is known as as a slicing engine.
 The engine which carries out the raw geometry calculations for WebSlicer is CuraEngine which is written in C++.
 Thus, this portion of the project required deploying the CuraEngine application on a remote server and creating a RESTful API to interface with it.

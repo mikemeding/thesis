@@ -166,3 +166,16 @@
   Url                      = {http://uml.worldcat.org/title/java-ee-7-developer-handbook-develop-professional-applications-in-java-ee-7-with-this-essential-reference-guide/oclc/861537191&referer=brief_results}
 }
 
+@Book{massol-2005,
+  Title                    = {Maven: A Developer's Notebook},
+  Author                   = {Vincent Massol, Timothy O'Brien},
+  Editor                   = {Mike Loukides},
+  Publisher                = {O'Reilly Media},
+  Year                     = {2005},
+
+  Doi                      = {ISBN: 0-596-00750-7},
+  Owner                    = {mike},
+  Timestamp                = {2016.04.25},
+  Url                      = {https://books.google.com/books?hl=en&lr=&id=J3UzRrS5vOMC&oi=fnd&pg=PR5&dq=java+maven&ots=Gs07qisKTa&sig=6WZ5hSlmeegCrJUpxTp_4sV8HPw#v=onepage&q=java%20maven&f=false}
+}
+

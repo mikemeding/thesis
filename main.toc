@@ -1,59 +1,60 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}
 \contentsline {paragraph}{}{1}
 \contentsline {paragraph}{}{1}
-\contentsline {section}{\numberline {1.1}The RepRap Idea}{3}
-\contentsline {paragraph}{}{3}
-\contentsline {section}{\numberline {1.2}Sudden Growth of 3D Printing}{3}
-\contentsline {paragraph}{}{3}
+\contentsline {section}{\numberline {1.1}The RepRap Idea}{2}
+\contentsline {paragraph}{}{2}
+\contentsline {section}{\numberline {1.2}Sudden Growth of 3D Printing}{2}
+\contentsline {paragraph}{}{2}
 \contentsline {section}{\numberline {1.3}Purpose of Research}{3}
 \contentsline {paragraph}{}{3}
-\contentsline {section}{\numberline {1.4}Research Objectives}{4}
-\contentsline {paragraph}{}{4}
-\contentsline {paragraph}{}{4}
+\contentsline {section}{\numberline {1.4}Research Objectives}{3}
+\contentsline {paragraph}{}{3}
+\contentsline {paragraph}{}{3}
 \contentsline {subsection}{\numberline {1.4.1}Design Intuitive Web Interface}{4}
 \contentsline {paragraph}{}{4}
 \contentsline {subsection}{\numberline {1.4.2}Run Beta Testing with Actual Users}{4}
 \contentsline {paragraph}{}{4}
-\contentsline {section}{\numberline {1.5}Related Work}{5}
+\contentsline {section}{\numberline {1.5}Related Work}{4}
+\contentsline {paragraph}{}{4}
+\contentsline {section}{\numberline {1.6}Thesis Map}{4}
+\contentsline {paragraph}{}{4}
 \contentsline {paragraph}{}{5}
-\contentsline {section}{\numberline {1.6}Thesis Map}{5}
 \contentsline {paragraph}{}{5}
 \contentsline {paragraph}{}{5}
 \contentsline {paragraph}{}{5}
 \contentsline {paragraph}{}{5}
+\contentsline {chapter}{\numberline {2}Libraries \& Existing Code}{6}
+\contentsline {paragraph}{}{6}
+\contentsline {section}{\numberline {2.1}CuraEngine}{6}
 \contentsline {paragraph}{}{6}
 \contentsline {paragraph}{}{6}
-\contentsline {chapter}{\numberline {2}Libraries \& Existing Code}{7}
+\contentsline {section}{\numberline {2.2}Client Side Libraries}{7}
 \contentsline {paragraph}{}{7}
-\contentsline {section}{\numberline {2.1}CuraEngine}{7}
+\contentsline {subsection}{\numberline {2.2.1}Bootstrap}{7}
 \contentsline {paragraph}{}{7}
+\contentsline {subsection}{\numberline {2.2.2}AngularJS}{7}
 \contentsline {paragraph}{}{7}
-\contentsline {section}{\numberline {2.2}Client Side Libraries}{8}
+\contentsline {section}{\numberline {2.3}JavaEE}{8}
 \contentsline {paragraph}{}{8}
-\contentsline {subsection}{\numberline {2.2.1}Bootstrap}{8}
 \contentsline {paragraph}{}{8}
-\contentsline {subsection}{\numberline {2.2.2}AngularJS}{8}
 \contentsline {paragraph}{}{8}
-\contentsline {section}{\numberline {2.3}JavaEE}{9}
+\contentsline {section}{\numberline {2.4}OctoPrint}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {paragraph}{}{9}
+\contentsline {section}{\numberline {2.5}G-Code Visualizer}{9}
 \contentsline {paragraph}{}{9}
 \contentsline {paragraph}{}{9}
-\contentsline {paragraph}{}{9}
-\contentsline {section}{\numberline {2.4}OctoPrint}{9}
-\contentsline {paragraph}{}{9}
+\contentsline {chapter}{\numberline {3}Methodology}{10}
 \contentsline {paragraph}{}{10}
-\contentsline {section}{\numberline {2.5}G-Code Visualizer}{10}
+\contentsline {section}{\numberline {3.1}Research Design}{10}
 \contentsline {paragraph}{}{10}
+\contentsline {section}{\numberline {3.2}Working Procedure}{10}
 \contentsline {paragraph}{}{10}
-\contentsline {chapter}{\numberline {3}Methodology}{11}
-\contentsline {paragraph}{}{11}
-\contentsline {section}{\numberline {3.1}Research Design}{11}
-\contentsline {paragraph}{}{11}
-\contentsline {section}{\numberline {3.2}Working Procedure}{11}
-\contentsline {paragraph}{}{11}
 \contentsline {subsection}{\numberline {3.2.1}Web Interface}{11}
 \contentsline {paragraph}{}{11}
-\contentsline {subsection}{\numberline {3.2.2}Slicing Engine}{13}
-\contentsline {paragraph}{}{13}
+\contentsline {subsection}{\numberline {3.2.2}Slicing Engine}{11}
+\contentsline {paragraph}{}{11}
+\contentsline {paragraph}{}{12}
 \contentsline {subsection}{\numberline {3.2.3}Web Tool Path Viewer}{13}
 \contentsline {paragraph}{}{13}
 \contentsline {section}{\numberline {3.3}Review and Usability Testing}{13}
@@ -70,58 +71,61 @@
 \contentsline {paragraph}{}{15}
 \contentsline {section}{\numberline {4.2}WebSlicer AngularJS Structure}{15}
 \contentsline {paragraph}{}{15}
-\contentsline {subsection}{\numberline {4.2.1}app.js}{15}
-\contentsline {paragraph}{}{15}
+\contentsline {subsection}{\numberline {4.2.1}app.js}{16}
+\contentsline {paragraph}{}{16}
 \contentsline {subsection}{\numberline {4.2.2}index.html}{16}
 \contentsline {paragraph}{}{16}
-\contentsline {subsection}{\numberline {4.2.3}Settings}{17}
+\contentsline {subsection}{\numberline {4.2.3}Settings}{16}
+\contentsline {paragraph}{}{16}
 \contentsline {paragraph}{}{17}
-\contentsline {paragraph}{}{18}
-\contentsline {paragraph}{}{18}
+\contentsline {paragraph}{}{17}
 \contentsline {subsection}{\numberline {4.2.4}G-code Visualizer}{18}
 \contentsline {paragraph}{}{18}
-\contentsline {paragraph}{}{19}
-\contentsline {section}{\numberline {4.3}Key Challenges}{19}
-\contentsline {paragraph}{}{19}
+\contentsline {paragraph}{}{18}
+\contentsline {section}{\numberline {4.3}Key Challenges}{18}
+\contentsline {paragraph}{}{18}
 \contentsline {subsection}{\numberline {4.3.1}Visualizer Integration}{19}
 \contentsline {paragraph}{}{19}
 \contentsline {subsection}{\numberline {4.3.2}Interpolating Settings}{19}
 \contentsline {paragraph}{}{19}
-\contentsline {section}{\numberline {4.4}Other Planned Integrations}{20}
-\contentsline {paragraph}{}{20}
-\contentsline {subsection}{\numberline {4.4.1}OctoPrint}{20}
-\contentsline {paragraph}{}{20}
+\contentsline {section}{\numberline {4.4}Other Planned Integrations}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {subsection}{\numberline {4.4.1}OctoPrint}{19}
+\contentsline {paragraph}{}{19}
 \contentsline {subsection}{\numberline {4.4.2}Thingiverse \& YouMagine}{20}
 \contentsline {paragraph}{}{20}
-\contentsline {section}{\numberline {4.5}Issues \& Known Bugs}{21}
+\contentsline {section}{\numberline {4.5}Issues \& Known Bugs}{20}
+\contentsline {paragraph}{}{20}
+\contentsline {chapter}{\numberline {5}Server Side}{21}
 \contentsline {paragraph}{}{21}
-\contentsline {chapter}{\numberline {5}Server Side}{23}
+\contentsline {section}{\numberline {5.1}JavaEE Structure}{21}
+\contentsline {paragraph}{}{21}
+\contentsline {paragraph}{}{21}
+\contentsline {section}{\numberline {5.2}ProcessBuilder}{22}
+\contentsline {paragraph}{}{22}
+\contentsline {paragraph}{}{22}
+\contentsline {paragraph}{}{22}
+\contentsline {section}{\numberline {5.3}REST API}{23}
 \contentsline {paragraph}{}{23}
-\contentsline {section}{\numberline {5.1}JavaEE Structure}{23}
+\contentsline {section}{\numberline {5.4}Key Challenges}{23}
+\contentsline {subsection}{\numberline {5.4.1}ProcessBuilder Deadlock}{23}
 \contentsline {paragraph}{}{23}
-\contentsline {paragraph}{}{23}
-\contentsline {section}{\numberline {5.2}ProcessBuilder}{24}
+\contentsline {paragraph}{}{24}
+\contentsline {paragraph}{}{24}
+\contentsline {subsection}{\numberline {5.4.2}FileTracker Revamp}{24}
+\contentsline {paragraph}{}{24}
 \contentsline {paragraph}{}{24}
 \contentsline {paragraph}{}{25}
-\contentsline {paragraph}{}{25}
-\contentsline {section}{\numberline {5.3}REST API}{25}
-\contentsline {paragraph}{}{25}
-\contentsline {section}{\numberline {5.4}Key Challenges}{25}
-\contentsline {subsection}{\numberline {5.4.1}ProcessBuilder Deadlock}{25}
+\contentsline {section}{\numberline {5.5}Future Improvements}{25}
 \contentsline {paragraph}{}{25}
 \contentsline {paragraph}{}{26}
+\contentsline {section}{\numberline {5.6}Issues \& Known Bugs}{26}
 \contentsline {paragraph}{}{26}
-\contentsline {subsection}{\numberline {5.4.2}FileTracker Revamp}{27}
-\contentsline {paragraph}{}{27}
-\contentsline {paragraph}{}{27}
-\contentsline {paragraph}{}{28}
-\contentsline {section}{\numberline {5.5}Future Improvements}{28}
-\contentsline {paragraph}{}{28}
-\contentsline {paragraph}{}{29}
-\contentsline {section}{\numberline {5.6}Issues \& Known Bugs}{29}
-\contentsline {paragraph}{}{29}
-\contentsline {chapter}{\numberline {6}Discussion}{30}
-\contentsline {section}{\numberline {6.1}Usability Testing}{30}
-\contentsline {section}{\numberline {6.2}Data Gathering}{30}
-\contentsline {section}{\numberline {6.3}Design Updates \& Improvements}{30}
-\contentsline {section}{\numberline {6.4}Future Work}{30}
+\contentsline {chapter}{\numberline {6}Discussion}{27}
+\contentsline {section}{\numberline {6.1}Usability Testing}{27}
+\contentsline {section}{\numberline {6.2}Data Gathering}{27}
+\contentsline {section}{\numberline {6.3}Design Updates \& Improvements}{27}
+\contentsline {section}{\numberline {6.4}Future Work}{27}
+\contentsline {chapter}{\numberline {A}IRB Compliance Documents}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {section}{\numberline {A.1}Student Assent Form}{30}

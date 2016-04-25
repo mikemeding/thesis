@@ -33,6 +33,7 @@ Gosling, J. (2016).
 \bibitem[\protect\astroncite{Hitze}{2015}]{hitzeViewer-2015}
 Hitze, N. (2015).
 \newblock gcodeviewer.
+\newblock https://github.com/hudbrog/gCodeViewer.
 
 \bibitem[\protect\astroncite{Horvath}{2014}]{mastering3Dprinting}
 Horvath, J. (2014).
@@ -69,6 +70,11 @@ Mark~Otto, J.~T. (2016).
 Pilgrim, P.~A. (2013).
 \newblock {\em Java EE 7 Developer Handbook}.
 \newblock Packt Publishing.
+
+\bibitem[\protect\astroncite{Thornton}{2012}]{gcode-2012}
+Thornton, J. (2012).
+\newblock Linuxcnc g-code.
+\newblock http://gnipsel.com/linuxcnc/g-code/gen01.html.
 
 \bibitem[\protect\astroncite{Vincent~Massol}{2005}]{massol-2005}
 Vincent~Massol, T.~O. (2005).

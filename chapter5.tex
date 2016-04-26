@@ -1,7 +1,7 @@
 \chapter{Server Side}
 \paragraph{}
 This chapter discusses the server side of WebSlicer in detail. 
-Included with this is some nessasary background about JavaEE and some of its functions.
+Included with this is some necessary background about JavaEE and some of its functions.
 
 \begin{figure}[!ht]
   \centering
@@ -33,7 +33,8 @@ CuraOptions feeds the CuraEngine class with all of the parameters that it needs 
 It gathers the path to the appropriate settings file and includes all of the parameters needed to run the CuraEngine executable.
 
 % running CuraEngine from the command line example
-\begin{lstlisting}[language=bash, style=thesiscode, label={lst:curaengine-executable}, caption=An example of running CuraEngine C++ executable directly from the command line.]
+\lstsetconsole
+\begin{lstlisting}[language=sh, label={lst:curaengine-executable}, caption=An example of running CuraEngine C++ executable directly from the command line.]
 CuraEngine slice -v -j {settings.json} -g -e -o {output.gcode} -l {model-file.stl}
 \end{lstlisting}
 
@@ -46,7 +47,7 @@ StreamDrainer's task is to take the unneeded output from stdout and pipe it into
 
 \paragraph{}
 After CuraEngine has finished slicing the current file and PlatformExecutable has returned the REST API, which has been waiting, it unblocks and starts reading the output gcode file.
-This file is then packaged and sent back to the client as the response of the "/slice/\{clientId\}/\{modelId\}" command as shown in Table \ref{tab:restapi}.
+This file is then packaged and sent back to the client as the response of the ``/slice/\{clientId\}/\{modelId\}'' command as shown in Table \ref{tab:restapi}.
 
 \section{REST API}
 % my REST API and the reason that I structured it the way I did
@@ -58,10 +59,10 @@ This file is then packaged and sent back to the client as the response of the "/
       \hline
       GET & /ping & A simple ping endpoint used for testing. \\ \hline
       POST & /setupClient & Sets aside all needed files for a new client and return its unique ID. \\ \hline
-      POST & /importStl/\{clientId\} & Takes a MIME type file stream and imports the file to the clientId specificed in the URL. It also returns a unique identifier for the file. \\ \hline
-      POST & /importSettings/\{clientId\} & Similar to importStl this endpoint takes a settings JSON file and imports it to the specificed clientId \\ \hline
+      POST & /importStl/\{clientId\} & Takes a MIME type file stream and imports the file to the clientId specified in the URL. It also returns a unique identifier for the file. \\ \hline
+      POST & /importSettings/\{clientId\} & Similar to importStl this endpoint takes a settings JSON file and imports it to the specified clientId \\ \hline
       POST & /slice/\{clientId\}/\{modelId\} & This is the main slice function of the API. It combines all of the parameters specified by the calls before and returns a gcode file to the user. \\ \hline
-      POST & /testSlice & A test endpoint that requires no parameters and simply returns some arbitary gcode to the user. \\ \hline
+      POST & /testSlice & A test endpoint that requires no parameters and simply returns some arbitrary gcode to the user. \\ \hline
       GET & /getFiles/\{clientId\} & Returns all the model file names and their tracking ID's that are associated with a clientId. \\ \hline
     \end{tabularx}
   \caption{Documentation of all exposed endpoints of my RESTful API}
@@ -69,7 +70,15 @@ This file is then packaged and sent back to the client as the response of the "/
 \end{table}
 
 \paragraph{}
+The goal of the client is to satisfy all the requirements needed to run the ``/slice'' command from Table \ref{tab:restapi}.
+A typical call pattern to the API in begins with creating a user if one does not already exist.
+Creating a new user requires calling ``/setupClient'' and recording the returned unique user identifier.
+Using the recorded unique identifier the client must then upload a model file and settings file to the corresponding ``/importStl'' and ``/importSettings'' functions.
+This returns unique identifier strings for all settings and model files that the client uploads to the server.
+Finally, to run a slice, the client takes all acquired unique identifiers and places them into the call to ``/slice'' as shown in Table \ref{tab:restapi}.
+Upon successful completion of all aforementioned calls the user will be returned a G-code file in raw textual form.
 
+% add typical call pattern here
 
 \section{Key Challenges}
 \subsection{ProcessBuilder Deadlock}
@@ -85,9 +94,9 @@ The server side code uses Java's ProcessBuilder, which builds a system native ca
 This is suitable for small platform executables with limited I/O, but can become problematic when complex native calls such as CuraEngine are used.
 
 \paragraph{}
-ProcessBuilder executes its normal writes to stdout and the drainer pipes them into a file;however, the drainer must wait for a file pointer using the fp.available() function. 
+ProcessBuilder executes its normal writes to stdout and the drainer pipes them into a file; however, the drainer must wait for a file pointer using the fp.available() function. 
 This is a non-blocking function that only estimates the buffer size that it has for the file. 
-The check for file pointer availablity was determining whether this function returned something greater than 0 as an estimate before notifying the ProcessBuilder that it was ready;
+The check for file pointer availability was determining whether this function returned something greater than 0 as an estimate before notifying the ProcessBuilder that it was ready;
 however, the buffer size would often start as zero before allocation and, as this check was not part of a loop, it would stay stuck forever as the notify was missed.
 
 \paragraph{}
@@ -98,8 +107,8 @@ This solution is seemingly obvious yet it took many days to find and correct bec
 \subsection{FileTracker Revamp}
 \paragraph{}
 The first iteration of FileTracker was crude and not well planned out. 
-It tracked two hashmaps: one for model files and the other for settings files with no mind for the client who required access to those files. 
-This worked for testing, but experienced many pitfalls including the inablility to reuse files that already existed. 
+It tracked two hash maps: one for model files and the other for settings files with no mind for the client who required access to those files. 
+This worked for testing, but experienced many pitfalls including the inability to reuse files that already existed. 
 As soon as the client closed their session, those files were lost, which is a major inefficiency.
 
 \paragraph{}
@@ -113,7 +122,8 @@ The output.gcode and settings.json files are dynamically overwritten for every i
 The user has no access to these files and is only able to obtain their content through the web interface, which parses in and out of files.
 
 % listing of the file structure that FileTracker creates
-\begin{lstlisting}[language=html, style=thesiscode, label={lst:file-structure}, caption=WebSlicer's underlying file structure supported by FileTracker.]
+\lstsetxml
+\begin{lstlisting}[language=XML, label={lst:file-structure}, caption=WebSlicer's underlying file structure supported by FileTracker.]
 webslicer/
 - b1a2a69e-5893-4d7c-aa1f-d639fa3b4ed1/
   - fdmprinter.json -> /tmp/webslicer/common/fdmprinter.json

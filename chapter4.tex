@@ -68,7 +68,8 @@ As shown in Figure \ref{fig:settings-data-flow}, settings have a long path that 
 This data flow starts with loading a static JavaScript Object Notation (JSON) file, which describes the settings in a pattern as shown in Listing \ref{lst:json-settings}.
 
 % JSON settings example listing
-\begin{lstlisting}[language=json, style=thesiscode , label={lst:json-settings}, caption=A sample from a static settings file in JSON format.]
+\lstsetjava
+\begin{lstlisting}[language=json, label={lst:json-settings}, caption=A sample from a static settings file in JSON format.]
 {
     "setting": "layer_height",
     "default": 0.1,
@@ -80,7 +81,8 @@ This data flow starts with loading a static JavaScript Object Notation (JSON) fi
 \end{lstlisting}
 
 % HTML example for how ng-repeat works
-\begin{lstlisting}[language=HTML5, style=thesiscode, label={lst:html-repeat-example}, caption=An example of a ng-repeat looping construct in HTML5.]
+\lstsetxml
+\begin{lstlisting}[language=HTML5, label={lst:html-repeat-example}, caption=An example of a ng-repeat looping construct in HTML5.]
 <table class="table">
 	<tr><td>Action</td><td>Done</td></tr>
 	<tr ng-repeat="item in todos">

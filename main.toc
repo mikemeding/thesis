@@ -143,3 +143,14 @@
 \contentsline {section}{\numberline {A.3}WebSlicer Recruitment Email}{42}
 \contentsline {section}{\numberline {A.4}WebSlicer Survey}{44}
 \contentsline {section}{\numberline {A.5}WebSlicer Tasks}{48}
+\contentsline {chapter}{\numberline {B}Server Side Code Appendix}{57}
+\contentsline {paragraph}{}{57}
+\contentsline {section}{\numberline {B.1}config/ApplicationConfig.java}{57}
+\contentsline {section}{\numberline {B.2}config/CORSFilter}{57}
+\contentsline {section}{\numberline {B.3}cura/CuraEngine.java}{58}
+\contentsline {section}{\numberline {B.4}cura/CuraEngineOptions.java}{61}
+\contentsline {section}{\numberline {B.5}cura/StreamDrainer.java}{64}
+\contentsline {section}{\numberline {B.6}rest/SlicerAPI.java}{65}
+\contentsline {section}{\numberline {B.7}util/CuraEngineException.java}{71}
+\contentsline {section}{\numberline {B.8}util/FileTracker.java}{71}
+\contentsline {section}{\numberline {B.9}util/PlatformExecutable.java}{75}

@@ -1,6 +1,1030 @@
 \chapter{Server Side Code Appendix}
 \paragraph{}
+Included in this appendix is the full source code written to run WebSlicer on a Wildfly application server.
+The section names are the file locations as they exist from the top level directory.
 
-%\section{WebSlicer Tasks}
-%Participants in the usability study were given a series of tasks as described by the document that follows.
-%\includepdf[pages=-,scale=0.8,pagecommand={}\label{webslicer-email}]{irb-docs/WebSlicer-Tasks.pdf}
+% -----------------------------------------------------------------------------------------------------------------------------------------------------------
+% CONFIG CODE
+% -----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\section{config/ApplicationConfig.java}
+\lstsetjava
+\begin{lstlisting}[language=Java, label={lst:ApplicationConfig}, caption=A required file in JavaEE for declaring the default application path when deployed.]
+package com.partbuzz.slicer.config;
+
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+
+/**
+ * Created by mike on 1/9/16.
+ */
+@ApplicationPath("")
+public class ApplicationConfig extends Application {
+}
+\end{lstlisting}
+
+
+\section{config/CORSFilter}
+\lstsetjava
+\begin{lstlisting}[language=Java, label={lst:CORSFilter}, caption=As CuraEngine allows cross origin responses a filter is requred to allow access by default in WildFly.]
+package com.partbuzz.slicer.config;
+
+import java.io.IOException;
+
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.ext.Provider;
+
+/**
+ * @author mike
+ */
+@Provider
+public class CORSFilter implements ContainerResponseFilter {
+
+    @Override
+    public void filter(final ContainerRequestContext requestContext,
+                       final ContainerResponseContext cres) throws IOException {
+        cres.getHeaders().add("Access-Control-Allow-Origin", "*");
+        cres.getHeaders().add("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
+        cres.getHeaders().add("Access-Control-Allow-Credentials", "true");
+        cres.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+        cres.getHeaders().add("Access-Control-Max-Age", "1209600");
+    }
+
+}
+\end{lstlisting}
+
+% -----------------------------------------------------------------------------------------------------------------------------------------------------------
+% CURA CODE
+% -----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\section{cura/CuraEngine.java}
+\lstsetjava
+\begin{lstlisting}[language=Java, label={lst:CuraEngine}, caption=CuraEngine.java is the main code that preforms slicing throgh the CuraEngine C++ executable.]
+/*
+ * Copyright (c) 2016 Michael Meding -- All Rights Reserved.
+ */
+package com.partbuzz.slicer.cura;
+
+import com.partbuzz.slicer.util.CuraEngineException;
+import com.partbuzz.slicer.util.PlatformExecutable;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
+/**
+ * Invoke the CURA slicing engine.
+ * <p>
+ * SAMPLE BASH
+ * ../../CuraEngine-master/build/CuraEngine slice -v -j ultimaker2.json -g -e -o "output/test.gcode" -l ../../models/ControlPanel.stl
+ *
+ * @author mike
+ */
+public class CuraEngine extends PlatformExecutable {
+
+    private static final Logger log = Logger.getLogger(CuraEngine.class.getName());
+    private static final String CURAENGINE_PROG = "/usr/local/bin/CuraEngine";
+    private final CuraEngineOptions options;
+
+    public CuraEngine() {
+        this.options = new CuraEngineOptions();
+    }
+
+    public CuraEngineOptions options() {
+        return options;
+    }
+
+    public String output = "";
+
+    /**
+     * Setup a stream drainer.
+     *
+     * @param fp the input stream
+     * @return the stream drainer
+     * @throws java.io.IOException
+     */
+    protected static StreamDrainer setupStreamDrain(InputStream fp) throws IOException {
+        final StreamDrainer drainer = new StreamDrainer(fp);
+        // wait until we are draining
+        synchronized (drainer) {
+
+            log.info("starting thread");
+            Thread t = new Thread(drainer);
+            t.setDaemon(true);
+            t.start();
+
+            while (!drainer.hasStarted()) {
+                try {
+                    log.info("waiting for drainer thread");
+                    drainer.wait(500);
+                    log.info("drainer wait expired");
+                } catch (InterruptedException ex) {
+                    Thread.interrupted();
+                    throw new IOException("Unable to setup stream drainer");
+                }
+            }
+
+            log.info("drainer started");
+        }
+
+        return drainer;
+    }
+
+    /**
+     * Run the CURA engine.
+     *
+     * @throws CuraEngineException
+     */
+    public void execute() throws IOException {
+        checkPlatformExecutable(CURAENGINE_PROG);
+
+        List<String> arguments = new ArrayList<>();
+        arguments.add(CURAENGINE_PROG); // add base executable
+        arguments.addAll(options.getOptions()); // add all options in the correct order
+
+        for (String arg : arguments) {
+            log.info("cura argument: " + arg);
+        }
+
+        // Process builder options for command line execution
+        ProcessBuilder pb = new ProcessBuilder();
+//		pb.directory(basePath);
+        pb.redirectErrorStream(true);
+        pb.command(arguments);
+
+        // Create new thread and start execution
+        Process p = pb.start();
+        try {
+
+            // Setup drains for both output and error streams
+            StreamDrainer stdout = setupStreamDrain(p.getInputStream());
+//            StreamDrainer stderr = setupStreamDrain(p.getErrorStream());
+
+            int status = p.waitFor(); // wait for slice to finish
+
+            if (status == 0) {
+
+                // gather everything that is sent back from the command.
+                StringBuilder sb = new StringBuilder();
+                InputStream fp = p.getInputStream();
+                byte[] buffer = new byte[512];
+                while (fp.available() > 0) {
+                    int n = fp.read(buffer);
+                    sb.append(new String(buffer, 0, n));
+                }
+                output = sb.toString();
+                log.info(output); // just log the output for now
+                log.info("STDOUT:" + stdout.getText());
+                return;
+            } else {
+                throw new CuraEngineException("unable to parse gcode file");
+            }
+
+//            if (options.haveIgnoreErrors()) {
+//                log.warning(sb.toString());
+//            } else {
+//                throw new CuraEngineException(sb.toString());
+//            }
+
+
+        } catch (InterruptedException e) {
+            throw new IOException(e);
+        } finally {
+            cleanupResources(p);
+        }
+    }
+
+    /**
+     * After execute is called the standard out of the call is concatenated into output.
+     *
+     * @return
+     */
+    public String getOutput() {
+        return output;
+    }
+}
+\end{lstlisting}
+
+
+\section{cura/CuraEngineOptions.java}
+\lstsetjava
+\begin{lstlisting}[language=Java, label={lst:CuraEngineOptions}, caption=All arguments to the CuraEngine C++ executeable must be compiled before it can be executed. This code is the compiler for that argument list.]
+package com.partbuzz.slicer.cura;
+
+import com.partbuzz.slicer.util.CuraEngineException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by mike on 3/30/16.
+ */
+
+public class CuraEngineOptions {
+
+    private String settingsFileName;
+    private String outputFileName;
+    private String modelFileName;
+    private boolean verbose = false;
+    private boolean p_option = false;
+    private boolean g_option = false;
+    private boolean e_option = false;
+    private boolean ignoreErrors = false;
+
+    /**
+     * Set the verbose mode.
+     *
+     * @return the options
+     */
+    public CuraEngineOptions verbose() {
+        this.verbose = true;
+        return this;
+    }
+
+    /**
+     * Set the settings file. This is a JSON formatted file which includes all needed information for slicing the file.
+     *
+     * @param filename the settings filename
+     * @return the options
+     */
+    public CuraEngineOptions settingsFilename(String filename) {
+        this.settingsFileName = filename;
+        return this;
+    }
+
+    /**
+     * Set the output filename. The resulting gcode file name/location.
+     *
+     * @param filename the output filename
+     * @return the options
+     */
+    public CuraEngineOptions outputFilename(String filename) {
+        this.outputFileName = filename;
+        return this;
+    }
+
+    /**
+     * Set the model filename. This is the model to be sliced.
+     *
+     * @param filename
+     * @return options
+     */
+    public CuraEngineOptions modelFilename(String filename) {
+        this.modelFileName = filename;
+        return this;
+    }
+
+    /**
+     * This option is similar to verbose but instead of just logging the output to the screen it logs the output to the CuraEngine log files.
+     *
+     * @return the options
+     */
+    public CuraEngineOptions logProgress() {
+        this.p_option = true;
+        return this;
+    }
+
+    /**
+     * Switch setting focus to the current mesh group only.
+     * Used for one-at-a-time printing.
+     *
+     * @return the options
+     */
+    public CuraEngineOptions currentGroupOnly() {
+        g_option = true;
+        return this;
+    }
+
+    /**
+     * Adds a new extruder train for multi extrusion. For every time -e is included another extruder is added as on option to the slicer.
+     *
+     * @return the options
+     */
+    public CuraEngineOptions extruderTrainOption() {
+        e_option = true;
+        return this;
+    }
+
+    /**
+     * For debugging.
+     *
+     * @return the options
+     */
+    public CuraEngineOptions ignoreErrors() {
+        this.ignoreErrors = true;
+        return this;
+    }
+
+    public boolean haveIgnoreErrors() {
+        return ignoreErrors;
+    }
+
+    /*
+     * Get the options in the right sequence. To build a correct CuraEngine command line executable.
+     */
+    public List<String> getOptions() throws CuraEngineException {
+        List<String> list = new ArrayList<>();
+        list.add("slice"); // the main parameter of the CuraEngine executable.
+        if (verbose) {
+            list.add("-v");
+        }
+        if (p_option) {
+            list.add("-p");
+        }
+
+        if (settingsFileName == null) {
+            throw new CuraEngineException("no setting file defined");
+        } else {
+            list.add("-j");
+            list.add(settingsFileName);
+        }
+        if (g_option) {
+            list.add("-g");
+        }
+        if (e_option) {
+            list.add("-e");
+        }
+        if (outputFileName == null) {
+            throw new CuraEngineException("no output file defined");
+        } else {
+            list.add("-o");
+            list.add(outputFileName);
+        }
+        if (modelFileName == null) {
+            throw new CuraEngineException("no model file defined");
+        } else {
+            list.add("-l");
+            list.add(modelFileName);
+        }
+
+        return list;
+    }
+}
+\end{lstlisting}
+
+
+\section{cura/StreamDrainer.java}
+\lstsetjava
+\begin{lstlisting}[language=Java, label={lst:StreamDrainer}, caption=For ProcessBuilder to run correctly its output stream must be read from. This code spawns a separate thread to read and log this output stream.]
+package com.partbuzz.slicer.cura;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Drain an input stream into a buffer.
+ */
+class StreamDrainer implements Runnable {
+
+    private static final Logger log = Logger.getLogger(StreamDrainer.class.getName());
+    private final InputStream fp;
+    private final StringBuilder sb;
+    private boolean started;
+
+    public StreamDrainer(InputStream fp) {
+        this.fp = fp;
+        this.sb = new StringBuilder();
+        this.started = false;
+    }
+
+    public String getText() {
+        return sb.toString();
+    }
+
+    boolean hasStarted() {
+        return started;
+    }
+
+    @Override
+    public void run() {
+
+        // tell the invoker that we are draining
+        log.info("starting drainer thread");
+        synchronized (this) {
+            log.info("drainer thread  sync");
+
+            started = true;
+            notifyAll();
+
+            byte[] buffer = new byte[512];
+            try {
+                boolean reading = true;
+                int n;
+                do {
+                    n = fp.read(buffer);
+                    if (n > 0) {
+                        sb.append(new String(buffer, 0, n));
+                    }
+                } while (n >= 0);
+            } catch (IOException ex) {
+                Logger.getLogger("PlatformExecutor").log(Level.SEVERE, null, ex);
+            }
+            log.info("done with the drainer");
+        }
+    }
+}
+\end{lstlisting}
+
+% -----------------------------------------------------------------------------------------------------------------------------------------------------------
+% REST CODE
+% -----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\section{rest/SlicerAPI.java}
+\lstsetjava
+\begin{lstlisting}[language=Java, label={lst:SlicerAPI}, caption=The Wildfly application server hosts a public RESTful API which is where requests for slicing and data processing get sent to their corresponding methods.]
+package com.partbuzz.slicer.rest;
+
+import com.partbuzz.slicer.cura.CuraEngine;
+import com.partbuzz.slicer.util.CuraEngineException;
+import com.partbuzz.slicer.util.FileTracker;
+import os.io.FileHelper;
+import os.util.ExceptionHelper;
+import os.util.StringUtils;
+import os.util.json.DefaultJSONFactory;
+import os.util.json.JSONException;
+import os.util.json.JSONObject;
+
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.*;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Created by mike on 1/9/16.
+ */
+@Path("slicer")
+public class SlicerAPI {
+    private static final Logger log = Logger.getLogger(SlicerAPI.class.getName());
+    private final DefaultJSONFactory JSONFactory = DefaultJSONFactory.getInstance();
+
+    /**
+     * Simply returns 200 OK if called.
+     * <p>
+     *
+     * @param req
+     * @return
+     */
+    @GET
+    @Path("ping")
+    @Produces({MediaType.TEXT_PLAIN})
+    public Response ping(@Context HttpServletRequest req
+    ) {
+        log.info("ping called");
+        return Response.ok("PONG", MediaType.TEXT_PLAIN).build();
+    }
+
+    /**
+     * Add a new client to our database and file structure.
+     * This will set aside all of the files needed for a new client and link them correctly
+     *
+     * @param req
+     * @return The new uuid for that client so that we may track files
+     */
+    @POST
+    @Path("setupClient")
+    public Response setupClient(@Context HttpServletRequest req) {
+        try {
+            String uuid = FileTracker.setupNewClient();
+            JSONObject payload = new JSONObject();
+            payload.put("clientId", uuid);
+
+            return Response.ok().entity(payload).build();
+        } catch (CuraEngineException e) {
+            e.printStackTrace();
+            return Response.serverError().build();
+        }
+    }
+
+
+    /**
+     * Import an STL model file from the client
+     *
+     * @param req is the http request
+     * @return the names of the uploaded files or an error message
+     */
+    @POST
+    @Path("importStl/{clientId}")
+    public Response importStl(@Context HttpServletRequest req,
+                              @PathParam("clientId") String clientId) {
+        try {
+
+            ByteArrayDataSource bads = new ByteArrayDataSource(req.getInputStream(), req.getContentType());
+            MimeMultipart mmp = new MimeMultipart(bads);
+
+            // Read the raw file
+            String filename = "";
+            for (int i = 0; i < mmp.getCount(); i++) {
+                MimeBodyPart mbp = (MimeBodyPart) mmp.getBodyPart(i);
+
+                byte[] buffer = new byte[mbp.getSize()];
+                mbp.getInputStream().read(buffer);
+
+                // calculate a filename
+//                String md5Hex = StringUtils.encodeHexString(StringUtils.md5(buffer));
+//                filename = StringUtils.encode(md5Hex + "-" + mbp.getFileName());
+                filename = StringUtils.encode(mbp.getFileName());
+
+                // Save the file to disk
+                File file = new File(FileTracker.getModelPathById(clientId) + FileTracker.delimiter + filename);
+                FileOutputStream fp = new FileOutputStream(file);
+                fp.write(buffer);
+                fp.close();
+
+            }
+
+            // register our new model file
+            String fileId = FileTracker.registerModelFile(clientId, filename);
+
+            // build response message
+            JSONObject response = new JSONObject();
+            response.put("fileId", fileId);
+
+            return Response.ok().entity(response.toString()).build();
+        } catch (Exception e) {
+            return Response.ok().entity(ExceptionHelper.getStackTrace(e)).build();
+        }
+    }
+
+    /**
+     * Import a settings file from the client
+     *
+     * @param req is the http request
+     * @return the names of the uploaded files or an error message
+     */
+    @POST
+    @Path("importSettings/{clientId}")
+    public Response importSettings(@Context HttpServletRequest req,
+                                   @PathParam("clientId") String clientId) {
+        log.log(Level.INFO, "importing settings ");
+        StringBuilder sb = new StringBuilder();
+        try {
+            String line;
+
+            // parse input stream into a string
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()))) {
+                while ((line = br.readLine()) != null) {
+                    sb.append(line);
+                }
+            }
+            String data = sb.toString(); // finish parse
+
+            // Save to file
+            String settingsPath = FileTracker.getSettingsFullPath(clientId);
+
+            // write/overwrite file
+            try (PrintWriter out = new PrintWriter(settingsPath)) {
+                out.print(data);
+            }
+
+            return Response.ok().build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.serverError().entity("File write error").build();
+        }
+    }
+
+    /**
+     * Slice is the main function of this API. Given the parameters below it will return a formatted .gcode file
+     * to the user.
+     * <p>
+     * The parameters required are a .stl file ID and a .json settings file ID.
+     * These parameters are given when the above API methods are called. It is up to the client to track these ID's
+     * <p>
+     * SAMPLE JSON FORMAT
+     * {"modelId":"UUID","settingsId":"UUID"}
+     *
+     * @param req is the http request
+     * @return the names of the uploaded files or an error message
+     */
+    @POST
+    @Path("slice/{clientId}/{modelId}")
+    public Response slice(@Context HttpServletRequest req,
+                          @PathParam("clientId") String clientId, @PathParam("modelId") String modelId) {
+        try {
+            // SAMPLE COMMAND RESULT
+            // ../../CuraEngine-master/build/CuraEngine slice -v -j ultimaker2.json -g -e -o "output/test.gcode" -l ../../models/ControlPanel.stl
+
+            // create new CuraEngine platform executable
+            CuraEngine ce = new CuraEngine();
+            ce.options() // add options. order is irrelevant.
+                    .verbose()
+                    .currentGroupOnly()
+                    .extruderTrainOption()
+                    .logProgress()
+                    .settingsFilename(FileTracker.getSettingsFullPath(clientId))
+                    .outputFilename(FileTracker.getOutputFilePath(clientId))
+                    .modelFilename(FileTracker.getModelFullPath(clientId, modelId));
+            ce.execute();
+
+            // build response from output file and return it.
+            JSONObject response = new JSONObject();
+            byte[] raw = FileHelper.readContent(new File(FileTracker.getOutputFilePath(clientId)));
+            String gcode = new String(raw);
+            response.put("gcode", gcode);
+
+            return Response.ok().entity(response.toString()).build();
+        } catch (IOException e) {
+            return Response.serverError().entity(e.getMessage()).build();
+        }
+    }
+
+    /**
+     * This function is to run a full test slice with a sample model and return its gcode.
+     * Eliminates the need for a UI to run backend tests.
+     * @param req is the http request
+     * @return the names of the uploaded files or an error message
+     */
+    @POST
+    @Path("testSlice")
+    public Response testSlice(@Context HttpServletRequest req) {
+        try {
+            // create new CuraEngine platform executable
+            CuraEngine ce = new CuraEngine();
+            ce.options() // add options. order is irrelevant.
+                    .verbose()
+                    .currentGroupOnly()
+                    .extruderTrainOption()
+                    .logProgress()
+                    .settingsFilename("/tmp/webslicer/test/prusa_i3.json")
+                    .outputFilename("/tmp/webslicer/test/output.gcode")
+                    .modelFilename("/tmp/webslicer/test/testModel.stl");
+            ce.execute();
+
+            // build response from output file and return it.
+            JSONObject response = new JSONObject();
+            byte[] raw = FileHelper.readContent(new File("/tmp/webslicer/test/output.gcode"));
+            String gcode = new String(raw);
+            response.put("gcode", gcode);
+
+            return Response.ok().entity(response.toString()).build();
+        } catch (IOException e) {
+            return Response.serverError().entity(e.getMessage()).build();
+        }
+    }
+
+    /**
+     * Get all of the model file names and tracking ids associated with a client uuid.
+     *
+     * @param req
+     * @param clientId
+     * @return
+     */
+    @GET
+    @Path("getFiles/{clientId}")
+    @Produces("application/json")
+    public Response getFiles(@Context HttpServletRequest req,
+                             @PathParam("clientId") String clientId) {
+        HashMap filesMap = FileTracker.getAllModelFiles(clientId);
+        return Response.ok().entity(filesMap).build();
+    }
+
+    /**
+     * A util function to parse an input JSON stream and parses to a JSONObject
+     *
+     * @param req
+     * @return
+     */
+    private JSONObject parseJSONStream(HttpServletRequest req) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            String line;
+
+            // parse input stream into a string
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()))) {
+                while ((line = br.readLine()) != null) {
+                    sb.append(line);
+                }
+            }
+            String data = sb.toString();
+
+            log.info(data);
+
+            return JSONFactory.jsonObject(data);
+
+        } catch (IOException | JSONException e) {
+            log.severe(e.getMessage());
+            throw new JSONException("Stream parse error.");
+        }
+
+    }
+}
+\end{lstlisting}
+
+% -----------------------------------------------------------------------------------------------------------------------------------------------------------
+% UTIL CODE
+% -----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\section{util/CuraEngineException.java}
+\lstsetjava
+\begin{lstlisting}[language=Java, label={lst:CuraEngineException}, caption=This exception class gets thrown when any issue arises while CuraEngine is preforming a slice.]
+/*
+ * Copyright (c) 2016 Michael Meding -- All Rights Reserved.
+ */
+package com.partbuzz.slicer.util;
+
+import java.io.IOException;
+
+/**
+ * A CURA engine exception.
+ *
+ * @author mike
+ */
+public class CuraEngineException extends IOException {
+
+	public CuraEngineException() {
+	}
+
+	public CuraEngineException(String message) {
+		super(message);
+	}
+
+	public CuraEngineException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public CuraEngineException(Throwable cause) {
+		super(cause);
+	}
+
+}
+\end{lstlisting}
+
+\section{util/FileTracker.java}
+\lstsetjava
+\begin{lstlisting}[language=Java, label={lst:FileTracker}, caption=FileTracker tracks all of the files uploaded to the server to a series of hash maps. It also issues unique identifiers for each file that gets uploaded so that they may be tracked and accessed simply.]
+package com.partbuzz.slicer.util;
+
+import os.io.FileHelper;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+/**
+ * For tracking the associated files with a particular client id.
+ * FILE STRUCTURE
+ * /main---/(clientUUID)---output.gcode
+ * -settings.json
+ * -/models---(uuid-filename.stl)
+ * -(...stl)
+ * -...
+ * <p>
+ * -/common---fdmprinter.json
+ * -/presets---ultimaker.json
+ * -prusai3.json
+ * -...
+ * <p>
+ * Structure dictates file limit and will throw exceptions if # of files goes above limit.
+ * <p>
+ * Created by mike on 1/14/16.
+ */
+public class FileTracker {
+    //TODO: This really needs to come from a properties file (JNDI path to properties file)
+    public static String delimiter = File.separator;
+    public static String basePath = delimiter + "tmp" + delimiter + "webslicer";
+    public static String common = basePath + delimiter + "common";
+    public static String modelDir = "models";
+    public static String settingsFileName = "settings.json";
+    public static String fdmprinterFile = "fdmprinter.json";
+    public static String outputFile = "output.gcode";
+    private static Map<String, HashMap<String, String>> clientFilesMap = new HashMap<>();
+
+    /**
+     * Same as above only for the model file.
+     *
+     * @param clientId The id of the client in question
+     * @param fileId   The tracked filename which must be managed by client
+     * @return
+     */
+    public static String getModelFileName(String clientId, String fileId) {
+        return clientFilesMap.get(clientId).get(fileId);
+    }
+
+    /**
+     * Get the full path to a model file
+     *
+     * @param clientId
+     * @param fileId
+     * @return
+     */
+    public static String getModelFullPath(String clientId, String fileId) {
+        return basePath + delimiter + clientId + delimiter + modelDir + delimiter + getModelFileName(clientId, fileId);
+    }
+
+    /**
+     * Get the path to the model file directory
+     *
+     * @return
+     */
+    public static String getModelPathById(String clientId) {
+        return basePath + delimiter + clientId + delimiter + modelDir;
+    }
+
+    /**
+     * Return the entire hashmap of model files associated with a client
+     *
+     * @param clientId
+     * @return
+     */
+    public static HashMap<String, String> getAllModelFiles(String clientId) {
+        return clientFilesMap.get(clientId);
+    }
+
+    public static String getOutputFilePath(String clientId) {
+        return basePath + delimiter + clientId + delimiter + outputFile;
+    }
+
+    /**
+     * Register a new model file with our registry
+     *
+     * @param fileName
+     * @return
+     */
+    public static String registerModelFile(String clientId, String fileName) {
+        String uuid = UUID.randomUUID().toString(); // generate new tracking uuid
+        clientFilesMap.get(clientId).put(uuid, fileName); // store this filename using that new tracking uuid for that client
+        return uuid;
+    }
+
+    /**
+     * Gets the fully qualified path to the settings file for a specified client
+     *
+     * @param clientId
+     * @return
+     */
+    public static String getSettingsFullPath(String clientId) {
+        return basePath + delimiter + clientId + delimiter + settingsFileName;
+    }
+
+    /**
+     * Remove all files associated with a client and remove its hashmap tracking in our server
+     *
+     * @param clientId
+     */
+    public static void removeClient(String clientId) {
+        try {
+            FileHelper.delete(new File(basePath + delimiter + clientId));
+            clientFilesMap.remove(clientId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Completely remove model file from our disk
+     *
+     * @param clientId
+     * @param id
+     */
+    public static void removeModelFile(String clientId, String id) {
+        try {
+            FileHelper.delete(new File(getModelFullPath(clientId, id)));
+            clientFilesMap.get(clientId).remove(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Register and setup a new client with our registry.
+     *
+     * @return the new clients UUID.
+     */
+    public static String setupNewClient() throws CuraEngineException {
+
+        // generate new client uuid
+        String uuid = UUID.randomUUID().toString();
+
+        // Create empty file as clients home directory
+        if (!new File(basePath + delimiter + uuid + delimiter + modelDir).mkdirs()) {
+            throw new CuraEngineException("Could not create file path correctly");
+        }
+
+        // Symbolically link fdmprinter.json from common to this clients home directory
+        try {
+            Path targetPath = Paths.get(basePath + delimiter + uuid + delimiter + fdmprinterFile);
+            Path sourceFile = Paths.get(common + delimiter + fdmprinterFile);
+            Files.createSymbolicLink(targetPath, sourceFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Give our new client a file tracking hashmap
+        clientFilesMap.put(uuid, new HashMap<String, String>()); // initalize client with new empty hashmap
+
+        return uuid;
+    }
+
+}
+\end{lstlisting}
+
+\section{util/PlatformExecutable.java}
+\lstsetjava
+\begin{lstlisting}[language=Java, label={lst:PlatformExecutable}, caption=The PlatformExecutable class verifies if the local C++ executable is available and sets up the input and output pipes for CuraEngine if it is.]
+/*
+ * Copyright (c) 2016 Michael Meding -- All Right Reserved.
+ */
+package com.partbuzz.slicer.util;
+
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * See if an executable is present and runnable.
+ *
+ * @author mike
+ */
+public abstract class PlatformExecutable {
+
+	/**
+	 * Check if a particular executable exists
+	 *
+	 * @param path is the path
+	 */
+	protected static void checkPlatformExecutable(String path) {
+		File file = new File(path);
+		if (!(file.exists() && file.canExecute())) {
+			throw new UnsupportedOperationException(path + " is not supported on this platform");
+		}
+	}
+
+	/**
+	 * See if a port is in the valid range 0-65535
+	 *
+	 * @param port the port number
+	 */
+	protected static void checkPortNumberLegal(int port) {
+		if (port < 0 || port > 65535) {
+			throw new IllegalArgumentException("TCP/IP Port " + port + " illegal");
+		}
+	}
+
+	/**
+	 * Gather all the output a command may have sent back. Used if a system
+	 * command did not finish successfully.
+	 *
+	 * @param p is the process
+	 * @return the string
+	 */
+	protected static String gatherCommandOutput(Process p) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		InputStream fp = p.getInputStream();
+		byte[] buffer = new byte[512];
+		while (fp.available() > 0) {
+			int n = fp.read(buffer);
+			sb.append(new String(buffer, 0, n));
+		}
+
+		return sb.toString();
+	}
+
+	/**
+	 * Cleanup the external process resources
+	 *
+	 * @param p is the process
+	 */
+	protected static void cleanupResources(Process p) {
+		if (p == null) {
+			return;
+		}
+
+		close(p.getOutputStream());
+		close(p.getInputStream());
+		close(p.getErrorStream());
+		p.destroy();
+	}
+
+	private static void close(Closeable c) {
+		if (c != null) {
+			try {
+				c.close();
+			} catch (Throwable t) {
+				// ignore
+			}
+		}
+	}
+}
+\end{lstlisting}

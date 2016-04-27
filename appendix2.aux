@@ -1,37 +1,37 @@
 \relax 
-\@writefile{toc}{\contentsline {chapter}{\numberline {B}Server Side Code Appendix}{57}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}Server Side Code Appendix}{62}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {paragraph}{}{57}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.1}config/ApplicationConfig.java}{57}}
-\newlabel{lst:ApplicationConfig}{{B.1}{57}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.1}A required file in JavaEE for declaring the default application path when deployed.}{57}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.2}config/CORSFilter}{57}}
-\newlabel{lst:CORSFilter}{{B.2}{57}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.2}As CuraEngine allows cross origin responses a filter is requred to allow access by default in WildFly.}{57}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.3}cura/CuraEngine.java}{58}}
-\newlabel{lst:CuraEngine}{{B.3}{58}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.3}CuraEngine.java is the main code that preforms slicing throgh the CuraEngine C++ executable.}{58}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.4}cura/CuraEngineOptions.java}{61}}
-\newlabel{lst:CuraEngineOptions}{{B.4}{61}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.4}All arguments to the CuraEngine C++ executeable must be compiled before it can be executed. This code is the compiler for that argument list.}{61}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.5}cura/StreamDrainer.java}{64}}
-\newlabel{lst:StreamDrainer}{{B.5}{64}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.5}For ProcessBuilder to run correctly its output stream must be read from. This code spawns a separate thread to read and log this output stream.}{64}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.6}rest/SlicerAPI.java}{65}}
-\newlabel{lst:SlicerAPI}{{B.6}{65}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.6}The Wildfly application server hosts a public RESTful API which is where requests for slicing and data processing get sent to their corresponding methods.}{65}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.7}util/CuraEngineException.java}{71}}
-\newlabel{lst:CuraEngineException}{{B.7}{71}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.7}This exception class gets thrown when any issue arises while CuraEngine is preforming a slice.}{71}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.8}util/FileTracker.java}{71}}
-\newlabel{lst:FileTracker}{{B.8}{71}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.8}FileTracker tracks all of the files uploaded to the server to a series of hash maps. It also issues unique identifiers for each file that gets uploaded so that they may be tracked and accessed simply.}{71}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.9}util/PlatformExecutable.java}{75}}
-\newlabel{lst:PlatformExecutable}{{B.9}{75}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.9}The PlatformExecutable class verifies if the local C++ executable is available and sets up the input and output pipes for CuraEngine if it is.}{75}}
+\@writefile{toc}{\contentsline {paragraph}{}{62}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.1}config/ApplicationConfig.java}{62}}
+\newlabel{lst:ApplicationConfig}{{B.1}{62}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.1}A required file in JavaEE for declaring the default application path when deployed.}{62}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.2}config/CORSFilter}{62}}
+\newlabel{lst:CORSFilter}{{B.2}{62}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.2}As CuraEngine allows cross origin responses a filter is requred to allow access by default in WildFly.}{62}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.3}cura/CuraEngine.java}{63}}
+\newlabel{lst:CuraEngine}{{B.3}{63}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.3}CuraEngine.java is the main code that preforms slicing throgh the CuraEngine C++ executable.}{63}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.4}cura/CuraEngineOptions.java}{66}}
+\newlabel{lst:CuraEngineOptions}{{B.4}{66}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.4}All arguments to the CuraEngine C++ executeable must be compiled before it can be executed. This code is the compiler for that argument list.}{66}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.5}cura/StreamDrainer.java}{69}}
+\newlabel{lst:StreamDrainer}{{B.5}{69}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.5}For ProcessBuilder to run correctly its output stream must be read from. This code spawns a separate thread to read and log this output stream.}{69}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.6}rest/SlicerAPI.java}{70}}
+\newlabel{lst:SlicerAPI}{{B.6}{70}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.6}The Wildfly application server hosts a public RESTful API which is where requests for slicing and data processing get sent to their corresponding methods.}{70}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.7}util/CuraEngineException.java}{76}}
+\newlabel{lst:CuraEngineException}{{B.7}{76}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.7}This exception class gets thrown when any issue arises while CuraEngine is preforming a slice.}{76}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.8}util/FileTracker.java}{76}}
+\newlabel{lst:FileTracker}{{B.8}{76}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.8}FileTracker tracks all of the files uploaded to the server to a series of hash maps. It also issues unique identifiers for each file that gets uploaded so that they may be tracked and accessed simply.}{76}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.9}util/PlatformExecutable.java}{80}}
+\newlabel{lst:PlatformExecutable}{{B.9}{80}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {B.9}The PlatformExecutable class verifies if the local C++ executable is available and sets up the input and output pipes for CuraEngine if it is.}{80}}
 \@setckpt{appendix2}{
-\setcounter{page}{77}
+\setcounter{page}{82}
 \setcounter{equation}{0}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}

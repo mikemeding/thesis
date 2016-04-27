@@ -2,13 +2,14 @@
 \contentsline {figure}{\numberline {1-1}{\ignorespaces (a) High level view of the normal 3D printing process. (b) High level view of proposed new process using WebSlicer.}}{2}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3-1}{\ignorespaces High level view of how WebSlicer functions and how users will interact with it}}{10}
+\contentsline {figure}{\numberline {3-1}{\ignorespaces High level view of how WebSlicer functions and how users will interact with it}}{12}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4-1}{\ignorespaces Full AngularJS structure breakdown}}{15}
-\contentsline {figure}{\numberline {4-2}{\ignorespaces The flow of data through the application from beginning to end of client side user interaction}}{16}
+\contentsline {figure}{\numberline {4-1}{\ignorespaces Full AngularJS structure breakdown}}{18}
+\contentsline {figure}{\numberline {4-2}{\ignorespaces The flow of data through the application from beginning to end of client side user interaction}}{24}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5-1}{\ignorespaces The structure of the server side of WebSlicer}}{21}
-\contentsline {figure}{\numberline {5-2}{\ignorespaces Diagram of a deadlock issue that took weeks to resolve}}{24}
+\contentsline {figure}{\numberline {5-1}{\ignorespaces The structure of the server side of WebSlicer}}{26}
+\contentsline {figure}{\numberline {5-2}{\ignorespaces Diagram of a deadlock issue that took weeks to resolve}}{29}
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

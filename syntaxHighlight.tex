@@ -13,6 +13,19 @@
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 \definecolor{ULgray}{HTML}{ebebeb}
 
+\colorlet{punct}{red!60!black}
+ \definecolor{background}{HTML}{EEEEEE}
+ \definecolor{delim}{RGB}{20,105,176}
+ \colorlet{numb}{magenta!60!black}
+
+ \definecolor{editorLightGray}{cmyk}{0.05, 0.05, 0.05, 0.1}
+ \definecolor{editorGray}{cmyk}{0.6, 0.55, 0.55, 0.2}
+ \definecolor{editorPurple}{cmyk}{0.5, 1, 0, 0}
+ \definecolor{editorWhite}{cmyk}{0, 0, 0, 0}
+ \definecolor{editorBlack}{cmyk}{1, 1, 1, 1}
+ \definecolor{editorOrange}{cmyk}{0, 0.8, 1, 0}
+ \definecolor{editorBlue}{cmyk}{1, 0.6, 0, 0}
+ \definecolor{editorPink}{cmyk}{0, 1, 0, 0}
 
 
 %--------------------------------------------BASH-----------------------------------------------------
@@ -219,16 +232,67 @@
 }
 \newcommand{\lstsetjavascript}{
   \lstset{
-		language=JavaScript,
-		breaklines=true,
-		commentstyle=\textit,
-		basicstyle=\ttfamily,
-		keywordstyle=\bfseries,
-		stringstyle=\ttfamily,
-		showstringspaces=false,
-		frame=single,
-		tabsize=2
+		% language=JavaScript,
+		% breaklines=true,
+		% commentstyle=\textit,
+		% basicstyle=\ttfamily,
+		% keywordstyle=\bfseries,
+		% stringstyle=\ttfamily,
+		% showstringspaces=false,
+		% frame=single,
+		% tabsize=2
+    basicstyle=\footnotesize\color{red}\ttfamily, % standard font
+         numbers=left,               % line number position
+         numberstyle=\tiny,          % line number style
+         %stepnumber=2,               % distance between lines
+         % line number settings
+         numbersep=5pt,              % distance between number + text
+         tabsize=2,                  % tab size
+         extendedchars=true,         %
+         breaklines=true,            % line breaks
+     keywordstyle=\color{cyan},
+     identifierstyle=\color{Blue},
+         stringstyle=\color{BurntOrange}\ttfamily, % String color
+         showspaces=false,           % show spaces?
+         showtabs=false,             % show tabs?
+         xleftmargin=17pt,
+         frame=none,
+         framexleftmargin=17pt,
+         framexrightmargin=5pt,
+         framexbottommargin=4pt,
+%         backgroundcolor=\color{ULgray},
+         showstringspaces=false      % Space
   }
+}
+
+% ---------------------------------------- JSON -----------------------------------------------------
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
 }
 
 %-------------------------------------------XML-----------------------------------------------------

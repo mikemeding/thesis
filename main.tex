@@ -4,10 +4,10 @@
 \usepackage{amsmath}
 \usepackage{microtype}
 \usepackage{graphicx}
-\graphicspath{{./images/}}
-\graphicspath{{./diagrams/}}
-\graphicspath{{./irb-docs/}}
-\graphicspath{{./code/}}
+%\graphicspath{{./images/}}
+%\graphicspath{{diagrams/}}
+%\graphicspath{{irb-docs/}}
+%\graphicspath{{./code/}}
 \usepackage{multirow}
 \usepackage{rotating}
 \usepackage{natbib}
@@ -16,63 +16,11 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage[]{pdfpages}
-
 \usepackage{xcolor}
- \colorlet{punct}{red!60!black}
- \definecolor{background}{HTML}{EEEEEE}
- \definecolor{delim}{RGB}{20,105,176}
- \colorlet{numb}{magenta!60!black}
-
 \usepackage{color}
- \definecolor{editorLightGray}{cmyk}{0.05, 0.05, 0.05, 0.1}
- \definecolor{editorGray}{cmyk}{0.6, 0.55, 0.55, 0.2}
- \definecolor{editorPurple}{cmyk}{0.5, 1, 0, 0}
- \definecolor{editorWhite}{cmyk}{0, 0, 0, 0}
- \definecolor{editorBlack}{cmyk}{1, 1, 1, 1}
- \definecolor{editorOrange}{cmyk}{0, 0.8, 1, 0}
- \definecolor{editorBlue}{cmyk}{1, 0.6, 0, 0}
- \definecolor{editorPink}{cmyk}{0, 1, 0, 0}
+ 
 
 \usepackage{style}
-%\usepackage{listings}
-% JSON
-% \lstdefinelanguage{json}{
-%     basicstyle=\normalfont\ttfamily,
-%     numbers=left,
-%     numberstyle=\scriptsize,
-%     stepnumber=1,
-%     numbersep=8pt,
-%     showstringspaces=false,
-%     breaklines=true,
-%     frame=lines,
-%     backgroundcolor=\color{background},
-%     literate=
-%      *{0}{{{\color{numb}0}}}{1}
-%       {1}{{{\color{numb}1}}}{1}
-%       {2}{{{\color{numb}2}}}{1}
-%       {3}{{{\color{numb}3}}}{1}
-%       {4}{{{\color{numb}4}}}{1}
-%       {5}{{{\color{numb}5}}}{1}
-%       {6}{{{\color{numb}6}}}{1}
-%       {7}{{{\color{numb}7}}}{1}
-%       {8}{{{\color{numb}8}}}{1}
-%       {9}{{{\color{numb}9}}}{1}
-%       {:}{{{\color{punct}{:}}}}{1}
-%       {,}{{{\color{punct}{,}}}}{1}
-%       {\{}{{{\color{delim}{\{}}}}{1}
-%       {\}}{{{\color{delim}{\}}}}}{1}
-%       {[}{{{\color{delim}{[}}}}{1}
-%       {]}{{{\color{delim}{]}}}}{1},
-% }
-
-% % JavaScript
-% \lstdefinelanguage{JavaScript}{
-%   morekeywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
-%   morecomment=[s]{/*}{*/},
-%   morecomment=[l]//,
-%   morestring=[b]",
-%   morestring=[b]'
-% }
 
 % \lstdefinelanguage{HTML5}{
 %  language=html,
@@ -113,36 +61,6 @@
 %  },
 % }
 
-% \lstdefinestyle{thesiscode} {%
-%  % General design
-%  % backgroundcolor=\color{editorGray},
-%  basicstyle={\footnotesize\ttfamily},   
-%  frame=b,
-%  % line-numbers
-%  xleftmargin={0.75cm},
-%  numbers=left,
-%  stepnumber=1,
-%  firstnumber=1,
-%  numberfirstline=true,	
-%  % Code design
-%  identifierstyle=\color{black},
-%  keywordstyle=\color{blue}\bfseries,
-%  ndkeywordstyle=\color{editorGreen}\bfseries,
-%  stringstyle=\color{editorOcher}\ttfamily,
-%  commentstyle=\color{brown}\ttfamily,
-%  % Code
-%  language=HTML5,
-%  alsolanguage=JavaScript,
-%  alsolanguage=json,
-%  alsodigit={.:;},	
-%  tabsize=2,
-%  showtabs=false,
-%  showspaces=false,
-%  showstringspaces=false,
-%  extendedchars=true,
-%  breaklines=true,
-% }
-
 
 % use fancyhdr, to enable page style stuff (below)
 \usepackage{fancyhdr}
@@ -174,10 +92,11 @@
 \include{chapter5}
 \include{chapter6}
 \include{bibliography}
+
 \appendix
-%\include{appendix-stub} 	%I used an appendix stub file before I wrote the real appendix so the main file would build correctly.
 \include{appendix1}
 \include{appendix2}
+\include{appendix3}
 
 
 \end{document}

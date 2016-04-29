@@ -65,7 +65,7 @@ This file is then packaged and sent back to the client as the response of the ``
       POST & /testSlice & A test endpoint that requires no parameters and simply returns some arbitrary gcode to the user. \\ \hline
       GET & /getFiles/\{clientId\} & Returns all the model file names and their tracking ID's that are associated with a clientId. \\ \hline
     \end{tabularx}
-  \caption{Documentation of all exposed endpoints of my RESTful API}
+  \caption{Documentation of all exposed endpoints of the RESTful API}
   \label{tab:restapi}
 \end{table}
 
@@ -108,7 +108,7 @@ This solution is seemingly obvious yet it took many days to find and correct bec
 \paragraph{}
 The first iteration of FileTracker was crude and not well planned out. 
 It tracked two hash maps: one for model files and the other for settings files with no mind for the client who required access to those files. 
-This worked for testing, but experienced many pitfalls including the inability to reuse files that already existed. 
+This worked for testing, but incurred many pitfalls including the inability to reuse files that already existed. 
 As soon as the client closed their session, those files were lost, which is a major inefficiency.
 
 \paragraph{}
@@ -141,7 +141,7 @@ webslicer/
 
 \section{Future Improvements}
 \paragraph{}
-Currently, FileTracker does not take advantage of the presets within the common/presets/ folder as described by Listing \ref{lst:file-structure}. 
+Currently, FileTracker does not take advantage of the presets within the ``common/presets/'' folder as described by Listing \ref{lst:file-structure}. 
 These files contain the default settings for the corresponding printer, which are the ultimaker2 and a basic configuration of a prusa i3 variant. 
 Optimally, the user would select from one of these starting presets and then modify and save their own.
 This would allow users an optimal starting point while lowering the amount of starting knowledge and increasing the usability of WebSlicer.

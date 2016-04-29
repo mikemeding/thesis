@@ -20,7 +20,7 @@ This research also included running a closed beta test of the software and loggi
 \section{Working Procedure}
 \paragraph{}
 % this needs way more info
-As shown in Figure \ref{fig:slicer-detailed-view}, the application will have 3 major components that all need to work together in a cycle until the user decides that the output is what they desire.
+As shown in Figure \ref{fig:slicer-detailed-view}, the application has 3 major components that all need to work together in a cycle until the user decides that the output is what they desire.
 
 \subsection{Web Interface}
 \paragraph{}
@@ -39,7 +39,6 @@ All subsequent items that are separated by spaces are arguments to the command.
 
 % JSON settings example listing
 \begin{lstlisting}[language=json, style=thesiscode , label={lst:gcode}, caption=A sample of G-code that results from slicing using CuraEngine.]
-{
 FLAVOR:RepRap
 M190 S110.000000
 M104 S245.000000
@@ -68,7 +67,6 @@ G1 F1800.000 X103.337 Y78.033 E0.01074
 G1 X103.441 Y77.996 E0.01282
 G1 X103.842 Y77.875 E0.02070
 G1 X104.142 Y77.800 E0.02651
-}
 \end{lstlisting}
 
 \paragraph{}

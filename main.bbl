@@ -4,6 +4,7 @@
 Brat Tech~LLC, G. e.~a. (2016).
 \newblock {\em AngularJS}.
 \newblock Google, 1600 Amphitheatre Pkwy, Mountain View, CA 94043.
+\newblock Retrieved from https://angularjs.org/.
 
 \bibitem[\protect\astroncite{Columbus}{2015}]{forbes3D}
 Columbus, L. (2015).
@@ -19,6 +20,7 @@ D'Aveni, R. (2015).
 Fleury, M. (2016).
 \newblock {\em Wildfly Application Server}.
 \newblock Red Hat.
+\newblock Retrieved from www.wildfly.org.
 
 \bibitem[\protect\astroncite{Freeman}{2014}]{freeman-2014}
 Freeman, A. (2014).
@@ -29,6 +31,8 @@ Freeman, A. (2014).
 Gosling, J. (2016).
 \newblock {\em Java Enterprise Edition}.
 \newblock Sun Microsystems, Oracle.
+\newblock Retrieved from
+  http://www.oracle.com/technetwork/java/javaee/overview/index.html.
 
 \bibitem[\protect\astroncite{Hitze}{2015}]{hitzeViewer-2015}
 Hitze, N. (2015).
@@ -44,6 +48,7 @@ Horvath, J. (2014).
 Häußge, G. (2016).
 \newblock {\em OctoPrint}.
 \newblock Impressum, Goethestraße 5 63179 Obertshausen Deutschland.
+\newblock Retrieved from https://www.octoprint.org.
 
 \bibitem[\protect\astroncite{Jones et~al.}{2011}]{reprap-2011}
 Jones, R., Haufe, P., Sells, E., Iravani, P., Olliver, V., Palmer, C., and
@@ -55,6 +60,7 @@ Jones, R., Haufe, P., Sells, E., Iravani, P., Olliver, V., Palmer, C., and
 Kuipers, T. (2016).
 \newblock {\em CuraEngine}.
 \newblock Ultimaker.
+\newblock Retrieved from https://github.com/Ultimaker/CuraEngine.
 
 \bibitem[\protect\astroncite{Mango}{2013}]{mango-2013}
 Mango, A. (2013).
@@ -65,6 +71,7 @@ Mango, A. (2013).
 Mark~Otto, J.~T. (2016).
 \newblock {\em Bootstrap}.
 \newblock Twitter.
+\newblock Retrieved from http://www.getbootstrap.com.
 
 \bibitem[\protect\astroncite{Pilgrim}{2013}]{pilgrim-2013}
 Pilgrim, P.~A. (2013).

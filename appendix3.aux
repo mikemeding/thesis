@@ -1,16 +1,61 @@
 \relax 
-\@writefile{toc}{\contentsline {chapter}{\numberline {C}Client Side Code Appendix}{82}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {C}Client Side Code Appendix}{85}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {paragraph}{}{82}}
-\@writefile{toc}{\contentsline {section}{\numberline {C.1}app.js}{82}}
-\newlabel{lst:app}{{C.1}{82}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.1}Main app code where the angular module WebSlicer is defined. This is similar to a main function in C++.}{82}}
-\@writefile{toc}{\contentsline {section}{\numberline {C.2}index.html}{85}}
-\newlabel{lst:index}{{C.2}{85}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.2}As this is a single page web application this is the only HTML file. It contains all of the libraries needed to run all subsequent sections.}{85}}
+\@writefile{toc}{\contentsline {paragraph}{}{85}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.1}app.js}{85}}
+\newlabel{lst:app}{{C.1}{85}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.1}Main app code where the angular module WebSlicer is defined. This is similar to a main function in C++.}{85}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.2}index.html}{88}}
+\newlabel{lst:index}{{C.2}{88}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.2}As this is a single page web application this is the only HTML file. It contains all of the libraries needed to run all subsequent sections.}{88}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.3}visualizer/Worker.js}{93}}
+\newlabel{lst:Worker}{{C.3}{93}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.3}Workerjs is the core gcode to D3 line processor.}{93}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.4}visualizer/gcodeFactory.js}{104}}
+\newlabel{lst:gcodeFactory}{{C.4}{104}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.4}gcodeFactory.js is the main gcode header parsing code.}{104}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.5}visualizer/renderFactory.js}{110}}
+\newlabel{lst:renderFactory}{{C.5}{110}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.5}When render frames are requested this file compiles the lines of gcode from the worker and sets up the rest of the canvas frames.}{110}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.6}visualizer/viewer.js}{120}}
+\newlabel{lst:viewer}{{C.6}{120}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.6}This file takes in all requests for parsing gcode and for canvas frames to the main page.}{120}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.7}model/files/filesController.js}{122}}
+\newlabel{lst:filesController}{{C.7}{122}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.7}filesController.js handles all requests for uploading files to the server.}{122}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.8}model/files/filesDirective.js}{123}}
+\newlabel{lst:filesDirective}{{C.8}{123}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.8}This directive links together the template and controller for ease of use when integrating into the index.html page.}{123}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.9}model/files/filesTemplate.html}{123}}
+\newlabel{lst:filesTemplate}{{C.9}{123}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.9}HTML snippet which controls the structure of the file upload dialog.}{123}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.10}model/octoprint/octoprintController.js}{125}}
+\newlabel{lst:octoprintController}{{C.10}{125}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.10}The controller for the octoprint integration which was cut late in development.}{125}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.11}model/octoprint/octoprintDirective.js}{127}}
+\newlabel{lst:octoprintDirective}{{C.11}{127}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.11}This directive bound the controller and the template for easy and multi-use integration into the index page.}{127}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.12}model/octoprint/octoprintService.js}{127}}
+\newlabel{lst:octoprintService}{{C.12}{127}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.12}This file wrapped the octoprint API so that it could be easily integrated with the controller.}{127}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.13}model/octoprint/octoprintTemplate.html}{130}}
+\newlabel{lst:octoprintTemplate}{{C.13}{130}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.13}HTML structure which represents the view of the octoprint integration.}{130}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.14}model/profile/settingsController.js}{131}}
+\newlabel{lst:settingsController}{{C.14}{131}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.14}This code is the main controller which brings in the static settings files and converts them into settings items.}{131}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.15}model/profile/settingsTabDirective.js}{133}}
+\newlabel{lst:settingsTabDirective}{{C.15}{133}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.15}Each tab in the UI is represented as one of these directives.}{133}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.16}model/profile/settingsDirectiveTemplate.html}{134}}
+\newlabel{lst:settingsDirectiveTemplate}{{C.16}{134}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.16}This HTML snippet decides what kind of setting needs to be displayed and shows it.}{134}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.17}model/profile/json/basic.json}{134}}
+\newlabel{lst:basic}{{C.17}{134}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.17}A full static settings file. There were five more files like this but one is sufficient to show the structure of this code.}{134}}
 \@setckpt{appendix3}{
-\setcounter{page}{91}
+\setcounter{page}{139}
 \setcounter{equation}{0}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}
@@ -20,7 +65,7 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{3}
-\setcounter{section}{2}
+\setcounter{section}{17}
 \setcounter{subsection}{0}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
@@ -31,7 +76,7 @@
 \setcounter{parentequation}{0}
 \setcounter{r@tfl@t}{0}
 \setcounter{NAT@ctr}{16}
+\setcounter{lstnumber}{117}
 \setcounter{AM@survey}{0}
-\setcounter{lstnumber}{238}
-\setcounter{lstlisting}{2}
+\setcounter{lstlisting}{17}
 }

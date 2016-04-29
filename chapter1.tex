@@ -1,7 +1,8 @@
 \chapter{Introduction}
 \paragraph{}
 Over the past few years, 3D printing, has become immensely popular due in part to its reduction in cost and its easy availability.
-An enthusiast can now purchase a do it yourself (DIY) 3D printer kit for less than \$500 however, one major pitfall that remains is the software support which leaves much to be desired.
+An enthusiast can now purchase a do it yourself (DIY) 3D printer kit for less than \$500.
+However, one major pitfall that remains is the software support which leaves much to be desired.
 Most of the big name companies that used to hold all of the patents for 3D printers have retained the software patents but not the hardware patents. 
 This creates a gap in knowledge between building the printer and running it.
 This research has served as an exploration of what software existed in the open source for 3D slicing and using that software to build a web based 3D print slicer.
@@ -14,11 +15,11 @@ The first step in the process is to either create or download a model.
 Creating a model can be achieved with any standard 3D CAD software, such as AutoCAD or SolidWorks.
 Downloading pre-existing models from an online repository can be done from websites such as Thingiverse or YouMagine.
 Once a model file is obtained, it is time to “slice” the model.
-Slicing is the act of taking this model file and splitting it up into many thin layers that the 3D printer can understand.
+Slicing is the act of taking this model file and splitting it up into many thin layers that the 3D printer can then convert into motor movements.
 This process can only be executed by a dedicated slicing software which can often be complicated to use and difficult to install.
-Once the file has been sliced, the resulting file is a G-code file, which is simply a set of movement instructions that the printer head must follow.
+Once the file has been sliced, the resulting file is a G-code file, which is a set of movement instructions that the printer head must follow.
 This file is then loaded to an SD card or sent via a print server similar to the way that a normal 2D printer is networked.
-Once the G-code file has been loaded all, that is left is to hit print either manually using the printers interface for the SD card or by hitting print on the network interface for the file that was uploaded.
+Once the G-code file has been loaded, all that is left is to hit print either manually using the printer's interface for the SD card or by hitting print on the network interface for the file that was uploaded.
 
 %Diagram of the basic 3D printing process to aid in the above explanation.
 \begin{figure}[!ht]
@@ -30,7 +31,7 @@ Once the G-code file has been loaded all, that is left is to hit print either ma
 
 \section{The RepRap Idea}
 \paragraph{}
-The Replication Rapid-Prototyper Project (RepRap) is a movement with the goal of providing Open-source, diy 3D printers at low cost \citep{reprap-2011}.
+The Replication Rapid-Prototyper Project (RepRap) is a movement with the goal of providing open-source, DIY 3D printers at low cost \citep{reprap-2011}.
 RepRap printers are 3D printers with the additional ability to produce most of the parts necessary to assemble another identical printer.
 This idea also extends outside of hardware but to the software as well.
 Much of the software available for RepRap style printers are open source projects put together by the community.
@@ -49,16 +50,16 @@ Additionally, building a 3D printer from a kit only requires basic hand tools an
 The purpose of this research is to construct a web based slicer and simplify it for users who not well versed in 3D printing, so they are able to slice models and run their 3D printers.
 This will make 3D printing much more approachable for occasional users who are not prepared to spend thousands of dollars on a professional machine and expensive software.
 Additionally, this opens up opportunities for educators in STEM programs to teach students about 3D printing in a simple and practical way.
-Under normal circumstances, this would not be a feasible project for a year-long Masters thesis; however, many of the technologies required to complete this project exist in varying states of completeness.
-Combining them into a cohesive application will be the subject of this study.
+Many of the technologies required to complete this project exist in varying states of completeness.
+Thus, combining them into a cohesive application is the subject of this study.
 
 
 \section{Research Objectives}
 \paragraph{}
 This research encountered several milestones which had to be met for it to be considered complete.
 These milestones are listed in no particular order; however, several of them must be completed before allowing other milestones to be completed as detailed below.
-However, several of them must be completed before allowing other milestones to be completed as detailed below.
 
+\subsection{CuraEngine Integration}
 \paragraph{}
 CuraEngine is an open-source slicing engine designed to take model files in .stl file format and convert them into G-code for 3D printing.
 For this project, wrapping this code and making it callable from the web is the heart of this application.
@@ -91,21 +92,26 @@ This review stage is critical for anyone who is printing something that will tak
 % This is where a design for reading this research should be shown so that someone can easily figure out what they want to read about.
 % ideally this should be an ordered list similar to the index except more broad and with descriptions
 \paragraph{}
-\begin{itemize}
-\item Chapter 2: Background and design choices.
-	\paragraph{}
+\begin{description}
+\item [Chapter 2: Background and design choices.]
+
 	This chapter discusses many of the external resources used and why they are relevant to this research.
-\item Chapter 3: Software architecture review.
-	\paragraph{}
+
+\item [Chapter 3: Software architecture review.]
+	
 	Compiled here is a complete overview of the architecture of WebSlicer. It follows the user through the entire process of slicing while explaining briefly some of the details of what is really happening.
-\item Chapter 4: Client side in detail. 
-	\paragraph{}
+
+\item [Chapter 4: Client side in detail. ]
+	
 	Here is where all of the possible client interactions and application specific details are explained.
-\item Chapter 5: Server side in detail.
-	\paragraph{}
+
+\item [Chapter 5: Server side in detail.]
+	
 	Details of exactly how a C++ executable is tied into a Java process are explained here as well as the exposed web API created for this research.
-\item Chapter 6: Discussion about usability testing and further improvements.
-	\paragraph{}
+
+\item [Chapter 6: Discussion about usability testing and further improvements.]
+	
 	Included in this chapter are the formal results from closed beta testing and a discussion of the printer which inspired this research.
-\end{itemize}
+	
+\end{description}
 

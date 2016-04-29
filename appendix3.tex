@@ -388,3 +388,2273 @@ Included in this appendix is the full source code for the client side WebSlicer 
 </body>
 </html>
 \end{lstlisting}
+
+% ---------------------------------------------------------- VISUALIZER --------------------------------------------------------------------------
+\section{visualizer/Worker.js}
+\lstsetjavascript
+\begin{lstlisting}[language=JavaScript, label={lst:Worker}, caption=Workerjs is the core gcode to D3 line processor.]
+/**
+ * User: hudbrog (hudbrog@gmail.com)
+ * Date: 10/24/12
+ * Time: 12:18 PM
+ */
+
+var gcode;
+var firstReport;
+var z_heights = {};
+var model = [];
+var gCodeOptions = {
+    sortLayers: false,
+    purgeEmptyLayers: true,
+    analyzeModel: false
+};
+var max = {x: undefined, y: undefined, z: undefined};
+var min = {x: undefined, y: undefined, z: undefined};
+var modelSize = {x: undefined, y: undefined, z: undefined};
+var filamentByLayer = {};
+var filamentByExtruder = {};
+var totalFilament = 0;
+var printTime = 0;
+var printTimeByLayer = {};
+var layerHeight = 0;
+var layerCnt = 0;
+var speeds = {extrude: [], retract: [], move: []};
+var speedsByLayer = {extrude: {}, retract: {}, move: {}};
+var volSpeeds = [];
+var volSpeedsByLayer = {};
+var extrusionSpeeds = [];
+var extrusionSpeedsByLayer = {};
+
+
+var sendLayerToParent = function (layerNum, z, progress) {
+    self.postMessage({
+        "cmd": "returnLayer",
+        "msg": {
+            cmds: model[layerNum],
+            layerNum: layerNum,
+            zHeightObject: {zValue: z, layer: z_heights[z]},
+            isEmpty: false,
+            progress: progress
+        }
+    });
+};
+
+var sendMultiLayerToParent = function (layerNum, z, progress) {
+    var tmpModel = [];
+    var tmpZHeight = {};
+
+    for (var i = 0; i < layerNum.length; i++) {
+        tmpModel[layerNum[i]] = model[layerNum[i]];
+        tmpZHeight[layerNum[i]] = z_heights[z[i]];
+    }
+
+    self.postMessage({
+        "cmd": "returnMultiLayer",
+        "msg": {
+            model: tmpModel,
+            layerNum: layerNum,
+            zHeightObject: {zValue: z, layer: tmpZHeight},
+            isEmpty: false,
+            progress: progress
+        }
+    });
+};
+
+
+var sendSizeProgress = function (progress) {
+    self.postMessage({
+        "cmd": "analyzeProgress",
+        "msg": {
+            progress: progress,
+            printTime: printTime
+        }
+    });
+};
+
+var sendAnalyzeDone = function () {
+    self.postMessage({
+        "cmd": "analyzeDone",
+        "msg": {
+            max: max,
+            min: min,
+            modelSize: modelSize,
+            totalFilament: totalFilament,
+            filamentByLayer: filamentByLayer,
+            filamentByExtruder: filamentByExtruder,
+            printTime: printTime,
+            layerHeight: layerHeight,
+            layerCnt: layerCnt,
+            layerTotal: model.length,
+            speeds: speeds,
+            speedsByLayer: speedsByLayer,
+            volSpeeds: volSpeeds,
+            volSpeedsByLayer: volSpeedsByLayer,
+            printTimeByLayer: printTimeByLayer,
+            extrusionSpeeds: extrusionSpeeds,
+            extrusionSpeedsByLayer: extrusionSpeedsByLayer
+        }
+    });
+};
+
+var purgeLayers = function () {
+    var purge = true;
+    for (var i = 0; i < model.length; i++) {
+        purge = true;
+        if (!model[i])purge = true;
+        else {
+            for (var j = 0; j < model[i].length; j++) {
+                if (model[i][j].extrude)purge = false;
+            }
+        }
+        if (!purge) {
+            layerCnt += 1;
+        }
+    }
+//        self.postMessage('LayerCnt: ' + layerCnt);
+};
+
+
+var analyzeModel = function () {
+    var i, j;
+    var x_ok = false, y_ok = false;
+    var cmds;
+    var tmp1 = 0, tmp2 = 0;
+    var speedIndex = 0;
+    var type;
+    var printTimeAdd = 0;
+//        var moveTime=0;
+
+    for (i = 0; i < model.length; i++) {
+        cmds = model[i];
+        if (!cmds)continue;
+        for (j = 0; j < cmds.length; j++) {
+            x_ok = false;
+            y_ok = false;
+            if (typeof(cmds[j].x) !== 'undefined' && typeof(cmds[j].prevX) !== 'undefined' && typeof(cmds[j].extrude) !== 'undefined' && cmds[j].extrude && !isNaN(cmds[j].x)) {
+                max.x = parseFloat(max.x) > parseFloat(cmds[j].x) ? parseFloat(max.x) : parseFloat(cmds[j].x);
+                max.x = parseFloat(max.x) > parseFloat(cmds[j].prevX) ? parseFloat(max.x) : parseFloat(cmds[j].prevX);
+                min.x = parseFloat(min.x) < parseFloat(cmds[j].x) ? parseFloat(min.x) : parseFloat(cmds[j].x);
+                min.x = parseFloat(min.x) < parseFloat(cmds[j].prevX) ? parseFloat(min.x) : parseFloat(cmds[j].prevX);
+                x_ok = true;
+            }
+
+            if (typeof(cmds[j].y) !== 'undefined' && typeof(cmds[j].prevY) !== 'undefined' && typeof(cmds[j].extrude) !== 'undefined' && cmds[j].extrude && !isNaN(cmds[j].y)) {
+                max.y = parseFloat(max.y) > parseFloat(cmds[j].y) ? parseFloat(max.y) : parseFloat(cmds[j].y);
+                max.y = parseFloat(max.y) > parseFloat(cmds[j].prevY) ? parseFloat(max.y) : parseFloat(cmds[j].prevY);
+                min.y = parseFloat(min.y) < parseFloat(cmds[j].y) ? parseFloat(min.y) : parseFloat(cmds[j].y);
+                min.y = parseFloat(min.y) < parseFloat(cmds[j].prevY) ? parseFloat(min.y) : parseFloat(cmds[j].prevY);
+                y_ok = true;
+            }
+
+            if (typeof(cmds[j].prevZ) !== 'undefined' && typeof(cmds[j].extrude) !== 'undefined' && cmds[j].extrude && !isNaN(cmds[j].prevZ)) {
+                max.z = parseFloat(max.z) > parseFloat(cmds[j].prevZ) ? parseFloat(max.z) : parseFloat(cmds[j].prevZ);
+                min.z = parseFloat(min.z) < parseFloat(cmds[j].prevZ) ? parseFloat(min.z) : parseFloat(cmds[j].prevZ);
+            }
+
+            if ((typeof(cmds[j].extrude) !== 'undefined' && cmds[j].extrude == true) || cmds[j].retract != 0) {
+                totalFilament += cmds[j].extrusion;
+                if (!filamentByLayer[cmds[j].prevZ])filamentByLayer[cmds[j].prevZ] = 0;
+                filamentByLayer[cmds[j].prevZ] += cmds[j].extrusion;
+                if (cmds[j].extruder != null) {
+                    if (!filamentByExtruder[cmds[j].extruder])filamentByExtruder[cmds[j].extruder] = 0;
+                    filamentByExtruder[cmds[j].extruder] += cmds[j].extrusion;
+                }
+            }
+
+            if (x_ok && y_ok) {
+                printTimeAdd = Math.sqrt(Math.pow(parseFloat(cmds[j].x) - parseFloat(cmds[j].prevX), 2) + Math.pow(parseFloat(cmds[j].y) - parseFloat(cmds[j].prevY), 2)) / (cmds[j].speed / 60);
+            } else if (cmds[j].retract === 0 && cmds[j].extrusion !== 0) {
+                tmp1 = Math.sqrt(Math.pow(parseFloat(cmds[j].x) - parseFloat(cmds[j].prevX), 2) + Math.pow(parseFloat(cmds[j].y) - parseFloat(cmds[j].prevY), 2)) / (cmds[j].speed / 60);
+                tmp2 = Math.abs(parseFloat(cmds[j].extrusion) / (cmds[j].speed / 60));
+                printTimeAdd = tmp1 >= tmp2 ? tmp1 : tmp2;
+            } else if (cmds[j].retract !== 0) {
+                printTimeAdd = Math.abs(parseFloat(cmds[j].extrusion) / (cmds[j].speed / 60));
+            }
+
+            printTime += printTimeAdd;
+            if (typeof(printTimeByLayer[cmds[j].prevZ]) === 'undefined') {
+                printTimeByLayer[cmds[j].prevZ] = 0;
+            }
+            printTimeByLayer[cmds[j].prevZ] += printTimeAdd;
+
+            if (cmds[j].extrude && cmds[j].retract === 0) {
+                type = 'extrude';
+            } else if (cmds[j].retract !== 0) {
+                type = 'retract';
+            } else if (!cmds[j].extrude && cmds[j].retract === 0) {
+                type = 'move';
+            } else {
+                self.postMessage({cmd: 'unknown type of move'});
+                type = 'unknown';
+            }
+            speedIndex = speeds[type].indexOf(cmds[j].speed);
+            if (speedIndex === -1) {
+                speeds[type].push(cmds[j].speed);
+                speedIndex = speeds[type].indexOf(cmds[j].speed);
+            }
+            if (typeof(speedsByLayer[type][cmds[j].prevZ]) === 'undefined') {
+                speedsByLayer[type][cmds[j].prevZ] = [];
+            }
+            if (speedsByLayer[type][cmds[j].prevZ].indexOf(cmds[j].speed) === -1) {
+                speedsByLayer[type][cmds[j].prevZ][speedIndex] = cmds[j].speed;
+            }
+
+            if (cmds[j].extrude && cmds[j].retract === 0 && x_ok && y_ok) {
+                // we are extruding
+                var volPerMM = cmds[j].volPerMM;
+                volPerMM = parseFloat(volPerMM).toFixed(3);
+                var volIndex = volSpeeds.indexOf(volPerMM);
+                if (volIndex === -1) {
+                    volSpeeds.push(volPerMM);
+                    volIndex = volSpeeds.indexOf(volPerMM);
+                }
+                if (typeof(volSpeedsByLayer[cmds[j].prevZ]) === 'undefined') {
+                    volSpeedsByLayer[cmds[j].prevZ] = [];
+                }
+                if (volSpeedsByLayer[cmds[j].prevZ].indexOf(volPerMM) === -1) {
+                    volSpeedsByLayer[cmds[j].prevZ][volIndex] = volPerMM;
+                }
+
+                var extrusionSpeed = cmds[j].volPerMM * (cmds[j].speed / 60);
+                extrusionSpeed = parseFloat(extrusionSpeed).toFixed(3);
+                var volIndex = extrusionSpeeds.indexOf(extrusionSpeed);
+                if (volIndex === -1) {
+                    extrusionSpeeds.push(extrusionSpeed);
+                    volIndex = extrusionSpeeds.indexOf(extrusionSpeed);
+                }
+                if (typeof(extrusionSpeedsByLayer[cmds[j].prevZ]) === 'undefined') {
+                    extrusionSpeedsByLayer[cmds[j].prevZ] = [];
+                }
+                if (extrusionSpeedsByLayer[cmds[j].prevZ].indexOf(extrusionSpeed) === -1) {
+                    extrusionSpeedsByLayer[cmds[j].prevZ][volIndex] = extrusionSpeed;
+                }
+            }
+
+
+        }
+        sendSizeProgress(i / model.length * 100);
+
+    }
+    purgeLayers();
+
+    modelSize.x = Math.abs(max.x - min.x);
+    modelSize.y = Math.abs(max.y - min.y);
+    modelSize.z = Math.abs(max.z - min.z);
+    layerHeight = (max.z - min.z) / (layerCnt - 1);
+
+    sendAnalyzeDone();
+};
+
+var doParse = function () {
+    var argChar, numSlice;
+    model = [];
+    var sendLayer = undefined;
+    var sendLayerZ = 0;
+    var sendMultiLayer = [];
+    var sendMultiLayerZ = [];
+    var lastSend = 0;
+    //            console.time("parseGCode timer");
+    var reg = new RegExp(/^(?:G0|G1)\s/i);
+    var comment = new RegExp()
+    var j, layer = 0, extrude = false, prevRetract = {
+        e: 0,
+        a: 0,
+        b: 0,
+        c: 0
+    }, retract = 0, x, y, z = 0, f, prevZ = 0, prevX, prevY, lastF = 4000, prev_extrude = {
+        a: undefined,
+        b: undefined,
+        c: undefined,
+        e: undefined,
+        abs: undefined
+    }, extrudeRelative = false, volPerMM, extruder;
+    var dcExtrude = false;
+    var assumeNonDC = false;
+
+    for (var i = 0; i < gcode.length; i++) {
+        x = undefined;
+        y = undefined;
+        z = undefined;
+        volPerMM = undefined;
+        retract = 0;
+
+
+        extrude = false;
+        extruder = null;
+        prev_extrude["abs"] = 0;
+        gcode[i] = gcode[i].split(/[\(;]/)[0];
+
+        if (reg.test(gcode[i])) {
+            var args = gcode[i].split(/\s/);
+            for (j = 0; j < args.length; j++) {
+                //                        console.log(args);
+                //                        if(!args[j])continue;
+                switch (argChar = args[j].charAt(0).toLowerCase()) {
+                    case 'x':
+                        x = args[j].slice(1);
+
+                        break;
+                    case 'y':
+                        y = args[j].slice(1);
+
+                        break;
+                    case 'z':
+                        z = args[j].slice(1);
+                        z = Number(z);
+                        if (z == prevZ)continue;
+                        if (z_heights.hasOwnProperty(z)) {
+                            layer = z_heights[z];
+                        } else {
+                            layer = model.length;
+                            z_heights[z] = layer;
+                        }
+                        sendLayer = layer;
+                        sendLayerZ = z;
+                        prevZ = z;
+                        break;
+                    case 'e':
+                    case 'a':
+                    case 'b':
+                    case 'c':
+                        assumeNonDC = true;
+                        extruder = argChar;
+                        numSlice = parseFloat(args[j].slice(1)).toFixed(6);
+
+                        if (!extrudeRelative) {
+                            // absolute extrusion positioning
+                            prev_extrude["abs"] = parseFloat(numSlice) - parseFloat(prev_extrude[argChar]);
+
+                        } else {
+                            prev_extrude["abs"] = parseFloat(numSlice);
+                        }
+                        extrude = prev_extrude["abs"] > 0;
+                        if (prev_extrude["abs"] < 0) {
+                            prevRetract[extruder] = -1;
+                            retract = -1;
+                        }
+                        else if (prev_extrude["abs"] == 0) {
+                            //                                        if(prevRetract <0 )prevRetract=retract;
+                            retract = 0;
+                        } else if (prev_extrude["abs"] > 0 && prevRetract[extruder] < 0) {
+                            prevRetract[extruder] = 0;
+                            retract = 1;
+                        } else {
+                            //                                        prevRetract = retract;
+                            retract = 0;
+                        }
+                        prev_extrude[argChar] = numSlice;
+
+                        break;
+                    case 'f':
+                        numSlice = args[j].slice(1);
+                        lastF = numSlice;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (dcExtrude && !assumeNonDC) {
+                extrude = true;
+                prev_extrude["abs"] = Math.sqrt((prevX - x) * (prevX - x) + (prevY - y) * (prevY - y));
+            }
+            if (extrude && retract == 0) {
+                volPerMM = Number(prev_extrude['abs'] / Math.sqrt((prevX - x) * (prevX - x) + (prevY - y) * (prevY - y)));
+            }
+            if (!model[layer])model[layer] = [];
+            //if(typeof(x) !== 'undefined' || typeof(y) !== 'undefined' ||typeof(z) !== 'undefined'||retract!=0)
+            model[layer][model[layer].length] = {
+                x: Number(x),
+                y: Number(y),
+                z: Number(z),
+                extrude: extrude,
+                retract: Number(retract),
+                noMove: false,
+                extrusion: (extrude || retract) ? Number(prev_extrude["abs"]) : 0,
+                extruder: extruder,
+                prevX: Number(prevX),
+                prevY: Number(prevY),
+                prevZ: Number(prevZ),
+                speed: Number(lastF),
+                gcodeLine: Number(i),
+                volPerMM: typeof(volPerMM) === 'undefined' ? -1 : volPerMM
+            };
+            //{x: x, y: y, z: z, extrude: extrude, retract: retract, noMove: false, extrusion: (extrude||retract)?prev_extrude["abs"]:0, prevX: prevX, prevY: prevY, prevZ: prevZ, speed: lastF, gcodeLine: i};
+            if (typeof(x) !== 'undefined') prevX = x;
+            if (typeof(y) !== 'undefined') prevY = y;
+        } else if (gcode[i].match(/^(?:M82)/i)) {
+            extrudeRelative = false;
+        } else if (gcode[i].match(/^(?:G91)/i)) {
+            extrudeRelative = true;
+        } else if (gcode[i].match(/^(?:G90)/i)) {
+            extrudeRelative = false;
+        } else if (gcode[i].match(/^(?:M83)/i)) {
+            extrudeRelative = true;
+        } else if (gcode[i].match(/^(?:M101)/i)) {
+            dcExtrude = true;
+        } else if (gcode[i].match(/^(?:M103)/i)) {
+            dcExtrude = false;
+        } else if (gcode[i].match(/^(?:G92)/i)) {
+            var args = gcode[i].split(/\s/);
+            for (j = 0; j < args.length; j++) {
+                switch (argChar = args[j].charAt(0).toLowerCase()) {
+                    case 'x':
+                        x = args[j].slice(1);
+                        break;
+                    case 'y':
+                        y = args[j].slice(1);
+                        break;
+                    case 'z':
+                        z = args[j].slice(1);
+                        prevZ = z;
+                        break;
+                    case 'e':
+                    case 'a':
+                    case 'b':
+                    case 'c':
+                        numSlice = parseFloat(args[j].slice(1)).toFixed(3);
+                        extruder = argChar;
+                        if (!extrudeRelative)
+                            prev_extrude[argChar] = 0;
+                        else {
+                            prev_extrude[argChar] = numSlice;
+                        }
+//                            prevZ = z;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (!model[layer])model[layer] = [];
+            if (typeof(x) !== 'undefined' || typeof(y) !== 'undefined' || typeof(z) !== 'undefined')
+                model[layer][model[layer].length] = {
+                    x: parseFloat(x),
+                    y: parseFloat(y),
+                    z: parseFloat(z),
+                    extrude: extrude,
+                    retract: parseFloat(retract),
+                    noMove: true,
+                    extrusion: 0,
+                    extruder: extruder,
+                    prevX: parseFloat(prevX),
+                    prevY: parseFloat(prevY),
+                    prevZ: parseFloat(prevZ),
+                    speed: parseFloat(lastF),
+                    gcodeLine: parseFloat(i)
+                };
+        } else if (gcode[i].match(/^(?:G28)/i)) {
+            var args = gcode[i].split(/\s/);
+            for (j = 0; j < args.length; j++) {
+                switch (argChar = args[j].charAt(0).toLowerCase()) {
+                    case 'x':
+                        x = args[j].slice(1);
+                        break;
+                    case 'y':
+                        y = args[j].slice(1);
+                        break;
+                    case 'z':
+                        z = args[j].slice(1);
+                        z = Number(z);
+                        if (z === prevZ)continue;
+                        sendLayer = layer;
+                        sendLayerZ = z;//}
+                        if (z_heights.hasOwnProperty(z)) {
+                            layer = z_heights[z];
+                        } else {
+                            layer = model.length;
+                            z_heights[z] = layer;
+                        }
+                        prevZ = z;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            // G28 with no arguments
+            if (args.length == 1) {
+                //need to init values to default here
+            }
+            // if it's the first layer and G28 was without
+            if (layer == 0 && typeof(z) === 'undefined') {
+                z = 0;
+                if (z_heights.hasOwnProperty(z)) {
+                    layer = z_heights[z];
+                } else {
+                    layer = model.length;
+                    z_heights[z] = layer;
+                }
+                prevZ = z;
+            }
+//                x=0, y=0,z=0,prevZ=0, extrude=false;
+//                if(typeof(prevX) === 'undefined'){prevX=0;}
+//                if(typeof(prevY) === 'undefined'){prevY=0;}
+
+            if (!model[layer])model[layer] = [];
+//                if(typeof(x) !== 'undefined' || typeof(y) !== 'undefined' ||typeof(z) !== 'undefined'||retract!=0)
+            model[layer][model[layer].length] = {
+                x: Number(x),
+                y: Number(y),
+                z: Number(z),
+                extrude: extrude,
+                retract: Number(retract),
+                noMove: false,
+                extrusion: (extrude || retract) ? Number(prev_extrude["abs"]) : 0,
+                extruder: extruder,
+                prevX: Number(prevX),
+                prevY: Number(prevY),
+                prevZ: Number(prevZ),
+                speed: Number(lastF),
+                gcodeLine: Number(i)
+            };
+//                if(typeof(x) !== 'undefined' || typeof(y) !== 'undefined' ||typeof(z) !== 'undefined') model[layer][model[layer].length] = {x: x, y: y, z: z, extrude: extrude, retract: retract, noMove:false, extrusion: (extrude||retract)?prev_extrude["abs"]:0, prevX: prevX, prevY: prevY, prevZ: prevZ, speed: lastF, gcodeLine: parseFloat(i)};
+        }
+        if (typeof(sendLayer) !== "undefined") {
+//                sendLayerToParent(sendLayer, sendLayerZ, i/gcode.length*100);
+//                sendLayer = undefined;
+
+            if (i - lastSend > gcode.length * 0.02 && sendMultiLayer.length != 0) {
+                lastSend = i;
+                sendMultiLayerToParent(sendMultiLayer, sendMultiLayerZ, i / gcode.length * 100);
+                sendMultiLayer = [];
+                sendMultiLayerZ = [];
+            }
+            sendMultiLayer[sendMultiLayer.length] = sendLayer;
+            sendMultiLayerZ[sendMultiLayerZ.length] = sendLayerZ;
+            sendLayer = undefined;
+            sendLayerZ = undefined;
+        }
+    }
+
+    sendMultiLayerToParent(sendMultiLayer, sendMultiLayerZ, i / gcode.length * 100);
+};
+
+var parseGCode = function (message) {
+    gcode = message.gcode;
+    firstReport = message.options.firstReport;
+
+
+    doParse();
+    gcode = [];
+    self.postMessage({
+        "cmd": "returnModel",
+        "msg": {
+            model: model
+        }
+    });
+
+};
+
+var runAnalyze = function (message) {
+    analyzeModel();
+    model = [];
+    z_heights = [];
+    gcode = undefined;
+    firstReport = undefined;
+    z_heights = {};
+    model = [];
+    max = {x: undefined, y: undefined, z: undefined};
+    min = {x: undefined, y: undefined, z: undefined};
+    modelSize = {x: undefined, y: undefined, z: undefined};
+    filamentByLayer = {};
+    filamentByExtruder = {};
+    totalFilament = 0;
+    printTime = 0;
+    printTimeByLayer = {};
+    layerHeight = 0;
+    layerCnt = 0;
+    speeds = {extrude: [], retract: [], move: []};
+    speedsByLayer = {extrude: {}, retract: {}, move: {}};
+};
+var setOption = function (options) {
+    for (var opt in options) {
+        gCodeOptions[opt] = options[opt];
+    }
+};
+
+onmessage = function (e) {
+    var data = e.data;
+    // for some reason firefox doesn't garbage collect when something inside closures is deleted, so we delete and recreate whole object each time
+    switch (data.cmd) {
+        case 'parseGCode':
+            parseGCode(data.msg);
+            break;
+        case 'setOption':
+            setOption(data.msg);
+            break;
+        case 'analyzeModel':
+            runAnalyze(data.msg);
+            break;
+
+        default:
+            self.postMessage('Unknown command: ' + data.msg);
+    }
+
+};
+\end{lstlisting}
+
+\section{visualizer/gcodeFactory.js}
+\lstsetjavascript
+\begin{lstlisting}[language=JavaScript, label={lst:gcodeFactory}, caption=gcodeFactory.js is the main gcode header parsing code.]
+/**
+ * Originally written by: hudbrog (hudbrog@gmail.com)
+ * Angularized by: Mike Meding (mike@mikemeding.com)
+ */
+
+var testApp = angular.module('WebSlicer');
+
+testApp.factory('gcodeFactory', function () {
+    // ***** PRIVATE ******
+    var gcode, lines;
+    var z_heights = {};
+    var model = [];
+    var max = {x: undefined, y: undefined, z: undefined};
+    var min = {x: undefined, y: undefined, z: undefined};
+    var modelSize = {x: undefined, y: undefined, z: undefined};
+    var filamentByLayer = {};
+    var filamentByExtruder = {};
+    var printTimeByLayer;
+    var totalFilament = 0;
+    var printTime = 0;
+    var totalWeight = 0;
+    var layerHeight = 0;
+    var layerCnt = 0;
+    var layerTotal = 0;
+    var speeds = {};
+    var slicer = 'unknown';
+    var speedsByLayer = {};
+    var volSpeeds = {};
+    var volSpeedsByLayer = {};
+    var extrusionSpeeds = {};
+    var extrusionSpeedsByLayer = {};
+    var gCodeOptions = {
+        sortLayers: false,
+        purgeEmptyLayers: true,
+        analyzeModel: false,
+        filamentType: "ABS",
+        filamentDia: 1.75,
+        nozzleDia: 0.4
+    };
+
+    var prepareGCode = function () {
+        if (!lines)return;
+        gcode = [];
+        var i;
+        for (i = 0; i < lines.length; i++) {
+            if (lines[i].match(/^(G0|G1|G90|G91|G92|M82|M83|G28)/i))gcode.push(lines[i]);
+        }
+        lines = [];
+//        console.log("GCode prepared");
+    };
+
+    var sortLayers = function () {
+        var sortedZ = [];
+        var tmpModel = [];
+//        var cnt = 0;
+        for (var layer in z_heights) {
+            sortedZ[z_heights[layer]] = layer;
+//            cnt++;
+        }
+        sortedZ.sort(function (a, b) {
+            return a - b;
+        });
+        for (var i = 0; i < sortedZ.length; i++) {
+//            console.log("i is " + i +" and sortedZ[i] is " + sortedZ[i] + "and z_heights[] is " + z_heights[sortedZ[i]] );
+            if (typeof(z_heights[sortedZ[i]]) === 'undefined')continue;
+            tmpModel[i] = model[z_heights[sortedZ[i]]];
+        }
+        model = tmpModel;
+        delete tmpModel;
+    };
+
+    var purgeLayers = function () {
+        var purge = true;
+        if (!model) {
+            console.log("Something terribly wrong just happened.");
+            return;
+        }
+        for (var i = 0; i < model.length; i++) {
+            purge = true;
+            if (typeof(model[i]) === 'undefined')purge = true;
+            else {
+                for (var j = 0; j < model[i].length; j++) {
+                    if (model[i][j].extrude)purge = false;
+                }
+            }
+            if (purge) {
+                model.splice(i, 1);
+                i--;
+            }
+        }
+    };
+
+    var getParamsFromKISSlicer = function (gcode) {
+        var nozzle = gcode.match(/extrusion_width_mm\s*=\s*(\d*\.\d+)/m);
+        if (nozzle) {
+            gCodeOptions['nozzleDia'] = nozzle[1];
+        }
+        var filament = gcode.match(/fiber_dia_mm\s*=\s*(\d*\.\d+)/m);
+        if (filament) {
+            gCodeOptions['filamentDia'] = filament[1];
+        }
+    }
+
+    var getParamsFromSlic3r = function (gcode) {
+        var nozzle = gcode.match(/nozzle_diameter\s*=\s*(\d*\.\d+)/m);
+        if (nozzle) {
+            gCodeOptions['nozzleDia'] = nozzle[1];
+        }
+        var filament = gcode.match(/filament_diameter\s*=\s*(\d*\.\d+)/m);
+        if (filament) {
+            gCodeOptions['filamentDia'] = filament[1];
+        }
+    }
+
+    var getParamsFromSkeinforge = function (gcode) {
+
+        var nozzle = gcode.match(/nozzle_diameter\s*=\s*(\d*\.\d+)/m);
+        if (nozzle) {
+            gCodeOptions['nozzleDia'] = nozzle[1];
+        }
+        var filament = gcode.match(/Filament_Diameter_(mm)\s*:\s*(\d*\.\d+)/m);
+        if (filament) {
+            gCodeOptions['filamentDia'] = filament[1];
+        }
+    }
+
+    var getParamsFromMiracleGrue = function (gcode) {
+
+    }
+
+    var getParamsFromCura = function (gcode) {
+//        console.log("cura");
+        var profileString = gcode.match(/CURA_PROFILE_STRING:((?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4}))/m);
+        if (profileString) {
+            var raw = window.atob(profileString[1]);
+            var array = new Uint8Array(new ArrayBuffer(raw.length));
+
+            for (i = 0; i < raw.length; i++) {
+                array[i] = raw.charCodeAt(i);
+            }
+            var data = new Zlib.inflate(array.subarray(2, array.byteLength - 4));
+            var msg;
+            for (i = 0; i < data.length; i += 1) {
+                msg += String.fromCharCode(data[i]);
+            }
+            var nozzle = msg.match(/nozzle_size\s*=\s*(\d*\.\d+)/m);
+            if (nozzle) {
+                gCodeOptions['nozzleDia'] = nozzle[1];
+            }
+            var filament = msg.match(/filament_diameter\s*=\s*(\d*\.\d+)/m);
+            if (filament) {
+                gCodeOptions['filamentDia'] = filament[1];
+            }
+
+        }
+    }
+
+    var detectSlicer = function (gcode) {
+
+        if (gcode.match(/Slic3r/)) {
+            slicer = 'Slic3r';
+            getParamsFromSlic3r(gcode);
+        } else if (gcode.match(/KISSlicer/)) {
+            slicer = 'KISSlicer';
+            getParamsFromKISSlicer(gcode);
+        } else if (gcode.match(/skeinforge/)) {
+            slicer = 'skeinforge';
+            getParamsFromSkeinforge(gcode);
+        } else if (gcode.match(/CURA_PROFILE_STRING/)) {
+            slicer = 'cura';
+            getParamsFromCura(gcode);
+        } else if (gcode.match(/Miracle/)) {
+            slicer = 'makerbot';
+            getParamsFromMiracleGrue(gcode);
+        }
+
+    }
+
+
+// ***** PUBLIC *******
+    return {
+
+        loadString: function (gcode) {
+            model = [];
+            z_heights = [];
+            detectSlicer(gcode);
+        },
+        setModel: function (newModel) {
+            model = newModel;
+        },
+        getModel: function () {
+            return model;
+        },
+        setOption: function (options) {
+            for (var opt in options) {
+                gCodeOptions[opt] = options[opt];
+            }
+        },
+        processLayerFromWorker: function (msg) {
+            model[msg.layerNum] = msg.cmds;
+            z_heights[msg.zHeightObject.zValue] = msg.zHeightObject.layer;
+        },
+        processMultiLayerFromWorker: function (msg) {
+            for (var i = 0; i < msg.layerNum.length; i++) {
+                model[msg.layerNum[i]] = msg.model[msg.layerNum[i]];
+                z_heights[msg.zHeightObject.zValue[i]] = msg.layerNum[i];
+            }
+//            console.log(model);
+        },
+        processAnalyzeModelDone: function (msg) {
+            min = msg.min;
+            max = msg.max;
+            modelSize = msg.modelSize;
+            totalFilament = msg.totalFilament;
+            filamentByLayer = msg.filamentByLayer;
+            filamentByExtruder = msg.filamentByExtruder;
+            speeds = msg.speeds;
+            speedsByLayer = msg.speedsByLayer;
+            printTime = msg.printTime;
+            printTimeByLayer = msg.printTimeByLayer;
+            layerHeight = msg.layerHeight;
+            layerCnt = msg.layerCnt;
+            layerTotal = msg.layerTotal;
+            volSpeeds = msg.volSpeeds;
+            volSpeedsByLayer = msg.volSpeedsByLayer;
+            extrusionSpeeds = msg.extrusionSpeeds;
+            extrusionSpeedsByLayer = msg.extrusionSpeedsByLayer;
+
+            var density = 1;
+            if (gCodeOptions['filamentType'] === 'ABS') {
+                density = 1.04;
+            } else if (gCodeOptions['filamentType'] === 'PLA') {
+                density = 1.24;
+            }
+            totalWeight = density * 3.141 * gCodeOptions['filamentDia'] / 10 * gCodeOptions['filamentDia'] / 10 / 4 * totalFilament / 10;
+
+            gCodeOptions['wh'] = parseFloat(gCodeOptions['nozzleDia']) / parseFloat(layerHeight);
+            if (slicer === 'Slic3r' || slicer === 'cura') {
+                // slic3r stores actual nozzle diameter, but extrusion is usually slightly thicker, here we compensate for that
+                // kissslicer stores actual extrusion width - so no need for that.
+                gCodeOptions['wh'] = gCodeOptions['wh'] * 1.1;
+            }
+        },
+        getLayerFilament: function (z) {
+            return filamentByLayer[z];
+        },
+        getLayerSpeeds: function (z) {
+            return speedsByLayer[z] ? speedsByLayer[z] : {};
+        },
+        getModelInfo: function () {
+            return {
+                min: min,
+                max: max,
+                modelSize: modelSize,
+                totalFilament: totalFilament,
+                filamentByExtruder: filamentByExtruder,
+                speeds: speeds,
+                speedsByLayer: speedsByLayer,
+                printTime: printTime,
+                printTimeByLayer: printTimeByLayer,
+                totalWeight: totalWeight,
+                layerHeight: layerHeight,
+                layerCnt: layerCnt,
+                layerTotal: layerTotal,
+                volSpeeds: volSpeeds,
+                volSpeedsByLayer: volSpeedsByLayer,
+                extrusionSpeeds: extrusionSpeeds,
+                extrusionSpeedsByLayer: extrusionSpeedsByLayer
+            };
+        },
+        getGCodeLines: function (layer, fromSegments, toSegments) {
+            var i = 0;
+            var result = {first: model[layer][fromSegments].gcodeLine, last: model[layer][toSegments].gcodeLine};
+            return result;
+        },
+        getOptions: function () {
+            return gCodeOptions;
+        }
+    }
+});
+\end{lstlisting}
+
+\section{visualizer/renderFactory.js}
+\lstsetjavascript
+\begin{lstlisting}[language=JavaScript, label={lst:renderFactory}, caption=When render frames are requested this file compiles the lines of gcode from the worker and sets up the rest of the canvas frames.]
+/**
+ * Originally written by: hudbrog (hudbrog@gmail.com)
+ * Angularized by: Mike Meding (mike@mikemeding.com)
+ */
+
+var testApp = angular.module('WebSlicer');
+
+testApp.factory('renderFactory', function (gcodeFactory) {
+
+    // ***** PRIVATE ******
+    var canvas;
+    var ctx;
+    var zoomFactor = 3, zoomFactorDelta = 0.4;
+    var gridSizeX = 200, gridSizeY = 200, gridStep = 10;
+    var ctxHeight, ctxWidth;
+    var prevX = 0, prevY = 0;
+
+//    var colorGrid="#bbbbbb", colorLine="#000000";
+    var sliderHor, sliderVer;
+    var layerNumStore, progressStore = {from: 0, to: -1};
+    var lastX, lastY;
+    var dragStart, dragged;
+    var scaleFactor = 1.1;
+    var model;
+    var initialized = false;
+    var displayType = {speed: 1, expermm: 2, volpersec: 3};
+    var renderOptions = {
+        showMoves: true,
+        showRetracts: true,
+        colorGrid: "#bbbbbb",
+        extrusionWidth: 1,
+//        colorLine: ["#000000", "#aabb88",  "#ffe7a0", "#6e7700", "#331a00", "#44ba97", "#08262f", "#db0e00", "#ff9977"],
+        colorLine: ["#000000", "#45c7ba", "#a9533a", "#ff44cc", "#dd1177", "#eeee22", "#ffbb55", "#ff5511", "#777788", "#ff0000", "#ffff00"],
+        colorLineLen: 9,
+        colorMove: "#00ff00",
+        colorRetract: "#ff0000",
+        colorRestart: "#0000ff",
+        sizeRetractSpot: 2,
+        modelCenter: {x: 0, y: 0},
+        moveModel: true,
+        differentiateColors: true,
+        showNextLayer: false,
+        alpha: false,
+        actualWidth: false,
+        renderErrors: false,
+        renderAnalysis: false,
+        speedDisplayType: displayType.speed
+    };
+
+    var offsetModelX = 0, offsetModelY = 0;
+    var speeds = [];
+    var speedsByLayer = {};
+    var volSpeeds = [];
+    var volSpeedsByLayer = {};
+    var extrusionSpeeds = [];
+    var extrusionSpeedsByLayer = {};
+
+
+    var reRender = function () {
+        var gCodeOpts = gcodeFactory.getOptions();
+        var p1 = ctx.transformedPoint(0, 0);
+        var p2 = ctx.transformedPoint(canvas.width, canvas.height);
+        ctx.clearRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
+        drawGrid();
+        if (renderOptions['alpha']) {
+            ctx.globalAlpha = 0.6;
+        }
+        else {
+            ctx.globalAlpha = 1;
+        }
+        if (renderOptions['actualWidth']) {
+            renderOptions['extrusionWidth'] = gCodeOpts['filamentDia'] * gCodeOpts['wh'] / zoomFactor;
+        }
+        else {
+            renderOptions['extrusionWidth'] = gCodeOpts['filamentDia'] * gCodeOpts['wh'] / zoomFactor / 2;
+        }
+        if (renderOptions['showNextLayer'] && layerNumStore < model.length - 1) {
+            drawLayer(layerNumStore + 1, 0, this.getLayerNumSegments(layerNumStore + 1), true);
+        }
+        drawLayer(layerNumStore, progressStore.from, progressStore.to);
+    };
+
+    function trackTransforms(ctx) {
+        var svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
+        var xform = svg.createSVGMatrix();
+        ctx.getTransform = function () {
+            return xform;
+        };
+
+        var savedTransforms = [];
+        var save = ctx.save;
+        ctx.save = function () {
+            savedTransforms.push(xform.translate(0, 0));
+            return save.call(ctx);
+        };
+        var restore = ctx.restore;
+        ctx.restore = function () {
+            xform = savedTransforms.pop();
+            return restore.call(ctx);
+        };
+
+        var scale = ctx.scale;
+        ctx.scale = function (sx, sy) {
+            xform = xform.scaleNonUniform(sx, sy);
+            return scale.call(ctx, sx, sy);
+        };
+        var rotate = ctx.rotate;
+        ctx.rotate = function (radians) {
+            xform = xform.rotate(radians * 180 / Math.PI);
+            return rotate.call(ctx, radians);
+        };
+        var translate = ctx.translate;
+        ctx.translate = function (dx, dy) {
+            xform = xform.translate(dx, dy);
+            return translate.call(ctx, dx, dy);
+        };
+        var transform = ctx.transform;
+        ctx.transform = function (a, b, c, d, e, f) {
+            var m2 = svg.createSVGMatrix();
+            m2.a = a;
+            m2.b = b;
+            m2.c = c;
+            m2.d = d;
+            m2.e = e;
+            m2.f = f;
+            xform = xform.multiply(m2);
+            return transform.call(ctx, a, b, c, d, e, f);
+        };
+        var setTransform = ctx.setTransform;
+        ctx.setTransform = function (a, b, c, d, e, f) {
+            xform.a = a;
+            xform.b = b;
+            xform.c = c;
+            xform.d = d;
+            xform.e = e;
+            xform.f = f;
+            return setTransform.call(ctx, a, b, c, d, e, f);
+        };
+        var pt = svg.createSVGPoint();
+        ctx.transformedPoint = function (x, y) {
+            pt.x = x;
+            pt.y = y;
+            return pt.matrixTransform(xform.inverse());
+        }
+    }
+
+
+    var startCanvas = function () {
+        canvas = document.getElementById('canvas');
+        if (!canvas.getContext) {
+            throw "exception";
+        }
+
+        ctx = canvas.getContext('2d');
+        ctxHeight = canvas.height;
+        ctxWidth = canvas.width;
+        lastX = ctxWidth / 2;
+        lastY = ctxHeight / 2;
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        trackTransforms(ctx);
+
+        canvas.addEventListener('mousedown', function (evt) {
+            document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
+            lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
+            lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
+            dragStart = ctx.transformedPoint(lastX, lastY);
+            dragged = false;
+        }, false);
+        canvas.addEventListener('mousemove', function (evt) {
+            lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
+            lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
+            dragged = true;
+            if (dragStart) {
+                var pt = ctx.transformedPoint(lastX, lastY);
+                ctx.translate(pt.x - dragStart.x, pt.y - dragStart.y);
+                reRender();
+            }
+        }, false);
+        canvas.addEventListener('mouseup', function (evt) {
+            dragStart = null;
+            if (!dragged) zoom(evt.shiftKey ? -1 : 1);
+        }, false);
+        var zoom = function (clicks) {
+            var pt = ctx.transformedPoint(lastX, lastY);
+            ctx.translate(pt.x, pt.y);
+            var factor = Math.pow(scaleFactor, clicks);
+            ctx.scale(factor, factor);
+            ctx.translate(-pt.x, -pt.y);
+            reRender();
+        };
+        var handleScroll = function (evt) {
+            var delta;
+            if (evt.detail < 0 || evt.wheelDelta > 0)delta = zoomFactorDelta;
+            else delta = -1 * zoomFactorDelta;
+            if (delta) zoom(delta);
+            return evt.preventDefault() && false;
+        };
+        canvas.addEventListener('DOMMouseScroll', handleScroll, false);
+        canvas.addEventListener('mousewheel', handleScroll, false);
+
+    };
+
+    var drawGrid = function () {
+        var i;
+        ctx.strokeStyle = renderOptions["colorGrid"];
+        ctx.lineWidth = 1;
+        var offsetX = 0, offsetY = 0;
+        if (renderOptions["moveModel"]) {
+            offsetX = offsetModelX;
+            offsetY = offsetModelY;
+        }
+
+        ctx.beginPath();
+        for (i = 0; i <= gridSizeX; i += gridStep) {
+            ctx.moveTo(i * zoomFactor - offsetX, 0 - offsetY);
+            ctx.lineTo(i * zoomFactor - offsetX, -gridSizeY * zoomFactor - offsetY);
+        }
+        ctx.stroke();
+
+        ctx.beginPath();
+        for (i = 0; i <= gridSizeY; i += gridStep) {
+            ctx.moveTo(0 - offsetX, -i * zoomFactor - offsetY);
+            ctx.lineTo(gridSizeX * zoomFactor - offsetX, -i * zoomFactor - offsetY);
+        }
+        ctx.stroke();
+
+    };
+
+    var drawLayer = function (layerNum, fromProgress, toProgress, isNextLayer) {
+        var i, speedIndex = 0, prevZ = 0;
+        isNextLayer = typeof isNextLayer !== 'undefined' ? isNextLayer : false;
+        if (!isNextLayer) {
+            layerNumStore = layerNum;
+            progressStore = {from: fromProgress, to: toProgress};
+        }
+        if (!model || !model[layerNum])return;
+
+        var cmds = model[layerNum];
+        var x, y;
+
+        if (fromProgress > 0) {
+            prevX = cmds[fromProgress - 1].x * zoomFactor;
+            prevY = -cmds[fromProgress - 1].y * zoomFactor;
+        } else if (fromProgress === 0 && layerNum == 0) {
+            if (model[0] && typeof(model[0].x) !== 'undefined' && typeof(model[0].y) !== 'undefined') {
+                prevX = model[0].x * zoomFactor;
+                prevY = -model[0].y * zoomFactor;
+            } else {
+                prevX = 0;
+                prevY = 0;
+            }
+        } else if (typeof(cmds[0].prevX) !== 'undefined' && typeof(cmds[0].prevY) !== 'undefined') {
+            prevX = cmds[0].prevX * zoomFactor;
+            prevY = -cmds[0].prevY * zoomFactor;
+        } else {
+            if (model[layerNum - 1]) {
+                prevX = undefined;
+                prevY = undefined;
+                for (i = model[layerNum - 1].length - 1; i >= 0; i--) {
+                    if (typeof(prevX) === 'undefined' && model[layerNum - 1][i].x !== undefined)prevX = model[layerNum - 1][i].x * zoomFactor;
+                    if (typeof(prevY) === 'undefined' && model[layerNum - 1][i].y !== undefined)prevY = -model[layerNum - 1][i].y * zoomFactor;
+                }
+                if (typeof(prevX) === 'undefined')prevX = 0;
+                if (typeof(prevY) === 'undefined')prevY = 0;
+            } else {
+                prevX = 0;
+                prevY = 0;
+            }
+        }
+
+        prevZ = publicFunctions.getZ(layerNum);
+
+        for (i = fromProgress; i <= toProgress; i++) {
+            ctx.lineWidth = 1;
+
+            if (typeof(cmds[i]) === 'undefined')continue;
+
+            if (typeof(cmds[i].prevX) !== 'undefined' && typeof(cmds[i].prevY) !== 'undefined') {
+                prevX = cmds[i].prevX * zoomFactor;
+                prevY = -cmds[i].prevY * zoomFactor;
+            }
+
+            if (typeof(cmds[i].x) === 'undefined' || isNaN(cmds[i].x))x = prevX / zoomFactor;
+            else x = cmds[i].x;
+            if (typeof(cmds[i].y) === 'undefined' || isNaN(cmds[i].y))y = prevY / zoomFactor;
+            else y = -cmds[i].y;
+            if (renderOptions["differentiateColors"] && !renderOptions['showNextLayer'] && !renderOptions['renderAnalysis']) {
+
+                if (renderOptions['speedDisplayType'] === displayType.speed) {
+                    speedIndex = speeds['extrude'].indexOf(cmds[i].speed);
+                } else if (renderOptions['speedDisplayType'] === displayType.expermm) {
+                    speedIndex = volSpeeds.indexOf(cmds[i].volPerMM);
+                } else if (renderOptions['speedDisplayType'] === displayType.volpersec) {
+                    speedIndex = extrusionSpeeds.indexOf((cmds[i].volPerMM * cmds[i].speed / 60).toFixed(3));
+                } else {
+                    speedIndex = 0;
+                }
+
+                if (speedIndex === -1) {
+                    speedIndex = 0;
+                } else if (speedIndex > renderOptions["colorLineLen"] - 1) {
+                    speedIndex = speedIndex % (renderOptions["colorLineLen"] - 1);
+                }
+            } else if (renderOptions['showNextLayer'] && isNextLayer) {
+                speedIndex = 3;
+            } else if (renderOptions['renderErrors']) {
+                if (cmds[i].errType === 2) {
+                    speedIndex = 9;
+//                    console.log("l: " + layerNum + " c: " + i);
+                } else if (cmds[i].errType === 1) {
+                    speedIndex = 10;
+                } else {
+                    speedIndex = 0;
+                }
+            } else if (renderOptions['renderAnalysis']) {
+                if (layerNum !== 0)speedIndex = -1;
+                else speedIndex = 0;
+            } else {
+                speedIndex = 0;
+            }
+
+
+            if (!cmds[i].extrude && !cmds[i].noMove) {
+//                ctx.stroke();
+                if (cmds[i].retract == -1) {
+                    if (renderOptions["showRetracts"]) {
+
+                        ctx.strokeStyle = renderOptions["colorRetract"];
+                        ctx.fillStyle = renderOptions["colorRetract"];
+                        ctx.beginPath();
+                        ctx.arc(prevX, prevY, renderOptions["sizeRetractSpot"], 0, Math.PI * 2, true);
+                        ctx.stroke();
+                        ctx.fill();
+                    }
+                }
+                if (renderOptions["showMoves"]) {
+                    ctx.strokeStyle = renderOptions["colorMove"];
+                    ctx.beginPath();
+                    ctx.moveTo(prevX, prevY);
+                    ctx.lineTo(x * zoomFactor, y * zoomFactor);
+                    ctx.stroke();
+                }
+            }
+            else if (cmds[i].extrude) {
+                if (cmds[i].retract == 0) {
+                    if (speedIndex >= 0) {
+                        ctx.strokeStyle = renderOptions["colorLine"][speedIndex];
+                    } else if (speedIndex === -1) {
+                        var val = parseInt(cmds[i].errLevelB).toString(16);
+                        var crB = "#" + "00".substr(0, 2 - val.length) + val + '0000';
+                        val = parseInt(cmds[i].errLevelE).toString(16);
+                        var crE = "#" + "00".substr(0, 2 - val.length) + val + '0000';
+                        var gradient = ctx.createLinearGradient(prevX, prevY, x * zoomFactor, y * zoomFactor);
+                        if (cmds[i].errType === 1) {
+                            var limit = (1 - cmds[i].errDelimiter);
+                            if (limit >= 0.99) limit = 0.99;
+                            gradient.addColorStop(0, "#000000");
+                            gradient.addColorStop(limit, "#000000");
+                            gradient.addColorStop(limit + 0.01, crE);
+                            gradient.addColorStop(1, crE);
+                        } else if (cmds[i].errType === 2) {
+                            gradient.addColorStop(0, crB);
+                            var limit = cmds[i].errDelimiter;
+                            if (limit >= 0.99) limit = 0.99;
+                            gradient.addColorStop(limit, crB);
+                            gradient.addColorStop(limit + 0.01, "#000000");
+                            gradient.addColorStop(1, "#000000");
+                        } else {
+                            gradient.addColorStop(0, crB);
+                            gradient.addColorStop(1, crE);
+                        }
+                        ctx.strokeStyle = gradient;
+                    }
+                    ctx.lineWidth = renderOptions['extrusionWidth'];
+                    ctx.beginPath();
+                    ctx.moveTo(prevX, prevY);
+                    ctx.lineTo(x * zoomFactor, y * zoomFactor);
+                    ctx.stroke();
+                } else {
+                    if (renderOptions["showRetracts"]) {
+                        ctx.strokeStyle = renderOptions["colorRestart"];
+                        ctx.fillStyle = renderOptions["colorRestart"];
+                        ctx.beginPath();
+                        ctx.arc(prevX, prevY, renderOptions["sizeRetractSpot"], 0, Math.PI * 2, true);
+                        ctx.stroke();
+                        ctx.fill();
+                    }
+                }
+            }
+            prevX = x * zoomFactor;
+            prevY = y * zoomFactor;
+        }
+        ctx.stroke();
+    };
+
+
+// ***** PUBLIC *******
+    var publicFunctions = {
+        init: function () {
+            startCanvas();
+            initialized = true;
+            ctx.translate((canvas.width - gridSizeX * zoomFactor) / 2, gridSizeY * zoomFactor + (canvas.height - gridSizeY * zoomFactor) / 2);
+        },
+        setOption: function (options) {
+            for (var opt in options) {
+                if (options.hasOwnProperty(opt)) {
+                    renderOptions[opt] = options[opt];
+//                    console.log("Got a set option call: " + opt + " == " + options[opt]);
+                }
+            }
+            ;
+
+            if (initialized)reRender();
+        },
+        getOptions: function () {
+            return renderOptions;
+        },
+        debugGetModel: function () {
+            return model;
+        },
+        render: function (layerNum, fromProgress, toProgress) {
+            var gCodeOpts = gcodeFactory.getOptions();
+            if (!initialized)this.init();
+            if (!model) {
+                drawGrid();
+            } else {
+                if (layerNum < model.length) {
+                    var p1 = ctx.transformedPoint(0, 0);
+                    var p2 = ctx.transformedPoint(canvas.width, canvas.height);
+                    ctx.clearRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
+                    drawGrid();
+                    if (renderOptions['alpha']) {
+                        ctx.globalAlpha = 0.6;
+                    }
+                    else {
+                        ctx.globalAlpha = 1;
+                    }
+                    if (renderOptions['actualWidth']) {
+                        renderOptions['extrusionWidth'] = gCodeOpts['filamentDia'] * gCodeOpts['wh'] / zoomFactor;
+                    }
+                    else {
+                        renderOptions['extrusionWidth'] = gCodeOpts['filamentDia'] * gCodeOpts['wh'] / zoomFactor / 2;
+                    }
+                    if (renderOptions['showNextLayer'] && layerNum < model.length - 1) {
+                        drawLayer(layerNum + 1, 0, this.getLayerNumSegments(layerNum + 1), true);
+                    }
+                    drawLayer(layerNum, fromProgress, toProgress);
+                } else {
+                    console.log("Got request to render non-existent layer!!");
+                }
+            }
+        },
+        getModelNumLayers: function () {
+            return model ? model.length : 1;
+        },
+        getLayerNumSegments: function (layer) {
+            if (model) {
+                return model[layer] ? model[layer].length : 1;
+            } else {
+                return 1;
+            }
+        },
+        doRender: function (mdl, layerNum) {
+            var mdlInfo;
+            model = mdl;
+            prevX = 0;
+            prevY = 0;
+            if (!initialized)this.init();
+
+            mdlInfo = gcodeFactory.getModelInfo();
+            speeds = mdlInfo.speeds;
+            speedsByLayer = mdlInfo.speedsByLayer;
+            volSpeeds = mdlInfo.volSpeeds;
+            volSpeedsByLayer = mdlInfo.volSpeedsByLayer;
+            extrusionSpeeds = mdlInfo.extrusionSpeeds;
+            extrusionSpeedsByLayer = mdlInfo.extrusionSpeedsByLayer;
+            offsetModelX = (gridSizeX / 2 - (mdlInfo.min.x + mdlInfo.modelSize.x / 2)) * zoomFactor;
+            offsetModelY = (mdlInfo.min.y + mdlInfo.modelSize.y / 2) * zoomFactor - gridSizeY / 2 * zoomFactor;
+            if (ctx)ctx.translate(offsetModelX, offsetModelY);
+            var scaleF = mdlInfo.modelSize.x > mdlInfo.modelSize.y ? (canvas.width) / mdlInfo.modelSize.x / zoomFactor : (canvas.height) / mdlInfo.modelSize.y / zoomFactor;
+            var pt = ctx.transformedPoint(canvas.width / 2, canvas.height / 2);
+            var transform = ctx.getTransform();
+            var sX = scaleF / transform.a, sY = scaleF / transform.d;
+            ctx.translate(pt.x, pt.y);
+            ctx.scale(0.98 * sX, 0.98 * sY);
+            ctx.translate(-pt.x, -pt.y);
+            this.render(layerNum, 0, model[layerNum].length);
+        },
+        getZ: function (layerNum) {
+            if (!model && !model[layerNum]) {
+                return '-1';
+            }
+            var cmds = model[layerNum];
+            for (var i = 0; i < cmds.length; i++) {
+                if (cmds[i].prevZ !== undefined)return cmds[i].prevZ;
+            }
+            return '-1';
+        }
+
+    }
+    return publicFunctions;
+});
+\end{lstlisting}
+
+\section{visualizer/viewer.js}
+\lstsetjavascript
+\begin{lstlisting}[language=JavaScript, label={lst:viewer}, caption=This file takes in all requests for parsing gcode and for canvas frames to the main page.]
+/**
+ * Created by mike on 3/10/16.
+ */
+var app = angular.module('WebSlicer');
+
+app.controller('gcodeController', ['$rootScope','$scope', '$http', 'renderFactory', 'gcodeFactory', function ($rootScope ,$scope, $http, renderFactory, gcodeFactory) {
+    $scope.test = "working";
+
+    // define web worker
+    var worker = new Worker('viewer/Worker.js'); // no error checking for this
+
+    // define return listener for the worker
+    var processMessage = function (e) {
+        var data = e.data;
+        switch (data.cmd) {
+            case 'returnModel':
+                console.log('returnModel');
+                gcodeFactory.setModel(data.msg.model);
+
+                worker.postMessage({
+                        "cmd": "analyzeModel",
+                        "msg": {}
+                    }
+                );
+                break;
+            case 'analyzeDone':
+                console.log('analyzeDone');
+
+                gcodeFactory.processAnalyzeModelDone(data.msg);
+                renderFactory.doRender(gcodeFactory.getModel(), 0);
+                renderFactory.render(2, 0, 631);
+
+                break;
+            case 'returnLayer':
+                console.log('returnLayer');
+                gcodeFactory.processLayerFromWorker(data.msg);
+                break;
+            case 'returnMultiLayer':
+                console.log('returnMultiLayer');
+                gcodeFactory.processMultiLayerFromWorker(data.msg);
+                break;
+            case "analyzeProgress":
+                console.log('progress: ' + data.msg.progress);
+                break;
+            default:
+                console.log("default msg received" + data.cmd);
+        }
+    };
+    worker.addEventListener('message', processMessage, false);
+
+    $rootScope.render = function(gcodeString){
+        // split all lines
+        var lines = gcodeString.split(/\n/);
+
+        // post lines to worker for parsing
+        worker.postMessage({
+            "cmd": "parseGCode",
+            "msg": {
+                gcode: lines,
+                options: {
+                    firstReport: 5
+                }
+            }
+        });
+
+        gcodeFactory.loadString(gcodeString); // load basic string params (parse header)
+
+        delete lines; // be clean with our memory as these files are huge
+
+    };
+
+    // layer number and current progress
+    $scope.layerNumber = 2;
+    $scope.progress = 50;
+
+    $scope.$watch('layerNumber', function (newValue, oldValue) {
+        //console.log("layerNumber");
+        //console.log("newValue:" + newValue + ", oldValue:" + oldValue);
+        if (newValue) {
+            renderFactory.render($scope.layerNumber, 0, $scope.progress);
+        }
+    });
+    $scope.$watch('progress', function (newValue, oldValue) {
+        //console.log("progress");
+        //console.log("newValue:" + newValue + ", oldValue:" + oldValue);
+        if (newValue) {
+            renderFactory.render($scope.layerNumber, 0, $scope.progress);
+        }
+    });
+
+}]);
+\end{lstlisting}
+
+% ---------------------------------------------------------- FILES --------------------------------------------------------------------------
+\section{model/files/filesController.js}
+\lstsetjavascript
+\begin{lstlisting}[language=JavaScript, label={lst:filesController}, caption=filesController.js handles all requests for uploading files to the server.]
+/**
+ * Created by mike on 2/10/16.
+ */
+(function () {
+    var app = angular.module("WebSlicer");
+
+    app.controller("FilesController", ["$http", "$scope", "$rootScope", "Upload", "OctoprintService", function ($http, $scope, $rootScope, Upload, OctoprintService) {
+
+        $scope.modelFileId = '';
+
+        $scope.logMe = function (item) {
+            console.log(item);
+        };
+
+        // when the clientID changes we execute getting the file list
+        $scope.$watch("$root.clientId", function (newValue, oldValue) {
+            if (newValue !== "") {
+                $scope.getFileList();
+            }
+        });
+
+        /**
+         * Get the list of flies associated with a client.
+         */
+        $scope.getFileList = function () {
+            console.log($rootScope.clientId);
+            $http({
+                method: 'GET',
+                url: $rootScope.baseUrl + "/getFiles/" + $rootScope.clientId
+            }).then(function successCallback(response) {
+                //console.log(response);
+                $scope.modelFiles = [];
+                for (var key in response.data) {
+                    if (response.data.hasOwnProperty(key)) {
+                        $scope.modelFiles.push({"key": key, "value": response.data[key]});
+                    }
+                }
+
+            }, function errorCallback(response) {
+                console.error(response);
+            });
+        };
+
+            // upload on file select or drop
+        $scope.uploadFile = function (file, errFiles) {
+            var uploadUrl = $rootScope.baseUrl + "/importStl/" + $rootScope.clientId;
+            $scope.f = file;
+            $scope.errFile = errFiles && errFiles[0];
+
+            if (file) {
+                file.upload = Upload.upload({
+                    url: uploadUrl,
+                    data: {data: file}
+                });
+
+                file.upload.then(function (response) {
+
+                    $scope.getFileList(); // refresh the file list
+
+                }, function (response) {
+                    if (response.status > 0)
+                        $rootScope.errorMsg = response.status + ': ' + response.data;
+                }, function (evt) {
+                    file.progress = Math.min(100, parseInt(100.0 *
+                        evt.loaded / evt.total));
+                });
+            }
+        };
+    }]);
+})();
+\end{lstlisting}
+
+\section{model/files/filesDirective.js}
+\lstsetjavascript
+\begin{lstlisting}[language=JavaScript, label={lst:filesDirective}, caption=This directive links together the template and controller for ease of use when integrating into the index.html page.]
+/**
+ * Created by mike on 2/10/16.
+ */
+(function () {
+    var app = angular.module("WebSlicer");
+
+    app.directive('filecontrols', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'model/files/filesTemplate.html'
+        };
+    });
+})();
+\end{lstlisting}
+
+\section{model/files/filesTemplate.html}
+\lstsetxml
+\begin{lstlisting}[language=HTML, label={lst:filesTemplate}, caption=HTML snippet which controls the structure of the file upload dialog.]
+<div ng-controller="FilesController">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3>Slicer Controls</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="nav nav-pills nav-stacked">
+
+                <!--file chooser-->
+                <li role="presentation">
+
+                    <button class="btn btn-primary" type="file" ngf-select="uploadFile($file,$invalidFiles)"
+                            ngf-max-height="1000" ngf-max-size="2MB">
+                        Select File
+                    </button>
+
+                    <div ng-show="f.progress >= 0">
+                        <h3>{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}</h3>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="{{f.progress}}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100" style="width: {{f.progress}}%;">
+                                <!--<div class="progress-bar" role="progressbar" aria-valuenow="{{f.progress}}" aria-valuemin="0"-->
+                                <!--aria-valuemax="100">-->
+                                {{f.progress}}% Complete
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+
+                <!--current file list-->
+                <li role="presentation" ng-if="$root.clientId">
+                    <p>{{modelFileId}}</p>
+                    <select id="repeatSelect" ng-model="modelFileId"
+                        ng-options="item.value for item in modelFiles track by item.key">
+                    </select>
+                </li>
+
+                <!--slice button-->
+                <li role="presentation">
+                    <!--<button class="btn btn-primary" ng-click="getFileList()">Refresh file list</button>-->
+
+                    <button ng-show="$root.clientId" ng-if="!$root.busy" class="btn btn-primary"
+                            ng-click="doSlice(modelFileId)">
+                        Slice...
+                    </button>
+                    <i ng-if="$root.busy" class="fa fa-3x fa-cog fa-spin"></i>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</div>
+\end{lstlisting}
+
+% ---------------------------------------------------------- OCTOPRINT --------------------------------------------------------------------------
+
+\section{model/octoprint/octoprintController.js}
+\lstsetjavascript
+\begin{lstlisting}[language=JavaScript, label={lst:octoprintController}, caption=The controller for the octoprint integration which was cut late in development.]
+/**
+ * Created by mike on 1/28/16.
+ */
+(function () {
+    var app = angular.module("WebSlicer");
+    app.controller("OctoprintController", ["$http", "$scope", "$rootScope", "OctoprintService", function ($http, $scope, $rootScope, OctoprintService) {
+
+        // form collection scope variables
+        $scope.url = "";
+        $scope.port = "";
+        $scope.apiKey = "";
+        $scope.otherUrl = false;
+
+        // data objects to be displayed
+        $scope.octoprintStatus = {};
+        $scope.octoprintFiles = [];
+
+        // internal referance variables
+        $scope.displayOctoprintData = false;
+        $scope.connectionStatus = false;
+        $scope.connectedAddress = "";
+
+
+        var APIError = function (message, where) {
+            console.error(message);
+            if (where) {
+                console.error("from: " + where);
+            }
+            $scope.displayOctoprintData = false;
+        };
+
+        /**
+         * Settings object should look like this,
+         * {"url":"","port":"","apiKey":""}
+         *
+         * call get defaults with an api key for another example
+         * @returns {string}
+         */
+        $scope.connectOctoprint = function () {
+            // figure out if url requires port and preform address resolution
+            var address = OctoprintService.getDefaultAddress();
+            if ($scope.port && $scope.url !== address) {
+                address = $scope.url + ":" + $scope.port;
+            } else {
+                if ($scope.url) {
+                    address = $scope.url + ":5000";
+                }
+            }
+
+            console.log(address);
+            console.log("API Key: " + $scope.apiKey);
+            $scope.connectedAddress = address;
+
+
+            // wait and resolve promise from pinging new octoprint server
+            OctoprintService.connection(address, $scope.apiKey)
+                .then(function successCallback(response) {
+                    console.log(response);
+                    if (response.data.current.state === "Operational") {
+                        $scope.connectionStatus = true;
+
+                        // operational connection. make data requests
+                        $scope.getOctoprintStatus(); // get the current printer status
+                        $scope.getOctoprintFiles(); // get current list of files
+
+
+                    } else {
+                        APIError("Error: Printer not operational.");
+                        $scope.connectionStatus = false;
+                    }
+
+                }, function errorCallback(response) {
+                    APIError(response, "connectOctoprint");
+                });
+        };
+
+        /**
+         * Testing getting the files list from octoprint
+         */
+        $scope.getOctoprintFiles = function () {
+            OctoprintService.getFileList($scope.connectedAddress, $scope.apiKey)
+                .then(function successCallback(response) {
+                    console.log(response);
+                    if (response.data.files) {
+                        $scope.octoprintFiles = response.data.files;
+                        $scope.octoprintDataHere = true;
+                    }
+
+                }, function errorCallback(response) {
+                    APIError(response, "getOctoprintFiles");
+                });
+        };
+
+        /**
+         * Get a basic status message with the current printer temps and connection status
+         */
+        $scope.getOctoprintStatus = function () {
+            OctoprintService.getPrinterInfo($scope.connectedAddress, $scope.apiKey)
+                .then(function successCallback(response) {
+                    console.log(response);
+                    if (response.data) {
+                        $scope.octoprintStatus = response.data;
+                    }
+
+                }, function errorCallback(response) {
+                    APIError(response, "getOctoprintStatus");
+                });
+        };
+
+        /**
+         * Send the current gcode file to the octoprint server
+         */
+        $scope.postOctoprintFile = function () {
+            console.log($rootScope.gcode);
+
+            OctoprintService.uploadFile($scope.connectedAddress, $scope.apiKey, $rootScope.gcode)
+                .then(function successCallback(response) {
+                    console.log(response);
+                }, function errorCallback(response) {
+                    APIError(response, "postOctoprintFile");
+                });
+        }
+    }]);
+})();
+\end{lstlisting}
+
+\section{model/octoprint/octoprintDirective.js}
+\lstsetjavascript
+\begin{lstlisting}[language=JavaScript, label={lst:octoprintDirective}, caption=This directive bound the controller and the template for easy and multi-use integration into the index page.]
+/**
+ * Created by mike on 1/29/16.
+ */
+(function () {
+    var app = angular.module("WebSlicer");
+
+    app.directive('octoprint', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'model/octoprint/octoprintTemplate.html'
+        };
+    });
+})();
+\end{lstlisting}
+
+\section{model/octoprint/octoprintService.js}
+\lstsetjavascript
+\begin{lstlisting}[language=JavaScript, label={lst:octoprintService}, caption=This file wrapped the octoprint API so that it could be easily integrated with the controller.]
+/**
+ * Created by mike on 2/1/16.
+ */
+(function () {
+    var app = angular.module("WebSlicer");
+
+    app.service("OctoprintService", ["$http", function ($http) {
+
+        /**
+         * This just returns some basic info about the printer and displays it.
+         * @param url
+         * @param apiKey
+         * @returns {*}
+         */
+        this.connection = function (url, apiKey) {
+            return $http({
+                    method: 'GET',
+                    url: 'http://' + url + '/api/connection',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apiKey
+                    }
+                }
+            )
+        };
+
+        /**
+         * Gets the list of files currently uploaded to the octoprint local address
+         * @param url
+         * @param apiKey
+         * @returns {*}
+         */
+        this.getFileList = function (url, apiKey) {
+            return $http({
+                method: 'GET',
+                url: 'http://' + url + '/api/files',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey
+                }
+            })
+        };
+
+        /**
+         * Get the current status of the printer including current temps
+         * @param url
+         * @param apiKey
+         * @returns {*}
+         */
+        this.getPrinterInfo = function (url, apiKey) {
+            return $http({
+                method: 'GET',
+                url: 'http://' + url + '/api/printer',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey
+                }
+            })
+        };
+
+        /**
+         * Upload a new file to the octoprint server
+         *
+         * @param url
+         * @param apiKey
+         * @param file
+         */
+        this.uploadFile = function (url, apiKey, file) {
+            console.log('file is ');
+            console.dir(file);
+
+            // append form data (file parts) to request
+            var fd = new FormData();
+            fd.append('file', file);
+
+            // multipart/form-data post request
+            var uploadUrl = 'http://' + url + '/api/files/local';
+            return $http.post(uploadUrl, fd, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'x-api-key': apiKey
+                }
+            });
+
+        };
+
+        /**
+         * Load a filename from the local files list and start printing it right now
+         * @param url
+         * @param apiKey
+         * @param fileName
+         */
+        this.printFile = function (url, apiKey, fileName) {
+            console.error("functionality does not exist yet. printFile()");
+        };
+
+
+        /**
+         * Get the default connection params for OctoPi
+         *
+         * @param apiKey The OctoPrint api key.
+         * @returns {{url: string, port: string, apiKey: string}}
+         */
+        this.getDefaultAddress = function () {
+            return "octopi.local";
+        };
+    }]);
+})();
+\end{lstlisting}
+
+\section{model/octoprint/octoprintTemplate.html}
+\lstsetxml
+\begin{lstlisting}[language=HTML, label={lst:octoprintTemplate}, caption=HTML structure which represents the view of the octoprint integration.]
+<!--OctoPrint STATUS PANEL-->
+<div ng-controller="OctoprintController">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3>Connect OctoPrint</h3>
+        </div>
+        <div class="panel-body">
+            <form>
+                <div ng-show="otherUrl">
+                    <div class="form-group">
+                        <label for="ipAddress">OctoPrint IP Address</label>
+                        <input ng-model="url" type="text" class="form-control" id="ipAddress"
+                               placeholder="OctoPrint IP Address">
+                    </div>
+                    <div class="form-group">
+                        <label for="port">Port</label>
+                        <input ng-model="port" type="number" class="form-control" id="port"
+                               placeholder="port (default 5000)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="apiKey">API Key</label>
+                    <input ng-model="apiKey" type="text" class="form-control" id="apiKey" placeholder="API Key">
+                </div>
+                <button ng-click="connectOctoprint()" class="btn btn-default">Connect</button>
+                <button ng-click="otherUrl = !otherUrl" class="btn btn-primary">Custom Address?</button>
+            </form>
+
+            <!--TEMPERATURE-->
+            <div class="panel panel-data" ng-if="octoprintDataHere">
+                <h3>Printer Info</h3>
+                <h4>Nozzle Temp: <strong>{{octoprintStatus.temperature.tool0.actual}}</strong> &#8451;</h4>
+                <h4>Bed Temp: <strong>{{octoprintStatus.temperature.bed.actual}}</strong> &#8451;</h4>
+                <h3>Current Files</h3>
+                <h4 ng-repeat="file in octoprintFiles">{{file.name}}</h4>
+                <!--<button class="btn btn-success" ng-click="postOctoprintFile()" ng-if="gcode.gcode"></button>-->
+                <button class="btn btn-success" ng-click="postOctoprintFile()"></button>
+            </div>
+
+        </div>
+    </div>
+</div>
+\end{lstlisting}
+
+
+% ---------------------------------------------------------- PROFILE --------------------------------------------------------------------------
+
+\section{model/profile/settingsController.js}
+\lstsetjavascript
+\begin{lstlisting}[language=JavaScript, label={lst:settingsController}, caption=This code is the main controller which brings in the static settings files and converts them into settings items.]
+/**
+ * Created by mike on 9/25/15.
+ */
+(function () {
+    var app = angular.module("WebSlicer");
+
+    app.controller("SettingsController", ["$http", "$scope", "$rootScope", function ($http, $scope, $rootScope) {
+
+        $scope.showGcode = false;
+
+        /**
+         * Upload the settings as a formatted JSONObject to the server for slicing
+         */
+        $rootScope.importSettings = function () {
+            var data = buildSettingsObject();
+            return $http({
+                method: 'POST',
+                url: $rootScope.baseUrl + "/importSettings/" + $scope.clientId,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            })
+        };
+
+        function buildSettingsObject() {
+            /*
+             CONFIRMED WORKING SETTINGS
+             "wall_line_count",
+             "machine_start_gcode",
+             "machine_end_gcode",
+             "machine_width",
+             "machine_depth",
+             "machine_height",
+             "material_print_temperature",
+             "material_bed_temperature",
+             "material_diameter",
+             */
+
+            var overrideBlackList = [
+                "infill_line_distance",
+                "wall_line_count",
+                "machine_start_gcode",
+                "machine_end_gcode",
+                "machine_width",
+                "machine_depth",
+                "machine_height",
+                "machine_heated_bed",
+                "machine_head_with_fans_polygon",
+                "machine_center_is_zero",
+                "machine_nozzle_size",
+                "machine_nozzle_heat_up_speed",
+                "machine_nozzle_cool_down_speed",
+                "gantry_height",
+                "machine_use_extruder_offset_to_offset_coords",
+                "machine_gcode_flavor",
+                "machine_disallowed_areas",
+                "machine_platform_offset",
+                "machine_nozzle_tip_outer_diameter",
+                "machine_nozzle_head_distance",
+                "machine_nozzle_expansion_angle",
+                "material_print_temperature",
+                "material_bed_temperature",
+                "material_diameter",
+                "material_flow"
+            ];
+
+            var overrides = {};
+            var normal = {};
+
+            // build override object from all settings
+            for (var prop in $rootScope.settingsTracker) {
+                //console.log("obj." + prop + " = " + $rootScope.settingsTracker[prop]);
+                var temp = {};
+                for (var item in $rootScope.settingsTracker[prop]) {
+                    temp = {}; // clear object
+                    var name = $rootScope.settingsTracker[prop][item].setting;
+
+                    // construct item. (2D arrays are hateful. lucky this one is small)
+                    temp[name] = {"default": $rootScope.settingsTracker[prop][item].default};
+
+                    // if item is not in blacklist
+                    if (overrideBlackList.indexOf(name) === -1) {
+                        angular.extend(normal, temp);
+                    } else {
+                        angular.extend(overrides, temp);
+                    }
+                }
+
+                // Fixed settings that must exist
+                angular.extend(overrides, {"infill_sparse_density":{"default":100.0}});
+
+            }
+
+            var header = {
+                "id": "prusa_i3", "version": 1,
+                "name": $scope.name,
+                "manufacturer": "Other",
+                "author": "Other",
+                "icon": "icon_ultimaker2.png",
+                "platform": "prusai3_platform.stl",
+                "inherits": "fdmprinter.json", // this must come from a symbolic link in the directory.
+                "overrides": overrides
+            };
+
+            var output = angular.merge(header, normal);
+            console.log(output);
+            return output;
+        }
+
+    }]);
+})();
+\end{lstlisting}
+
+\section{model/profile/settingsTabDirective.js}
+\lstsetjavascript
+\begin{lstlisting}[language=JavaScript, label={lst:settingsTabDirective}, caption=Each tab in the UI is represented as one of these directives.]
+/**
+ * This is the directive which when given a json file as an argument will render the settings contained within as fields that can be edited.
+ * Those fields can then be compliled into a larger file to be sent to the main server
+ *
+ * Created by mike on 1/29/16.
+ */
+(function () {
+    var app = angular.module("WebSlicer");
+
+    app.directive('curasettings', function ($http, $rootScope) {
+
+        var linker = function (scope, element, attrs) {
+            // get the json file as specified by the directive
+            $http.get(attrs.src).success(function (data) {
+                // register all settings
+                if (!$rootScope.settingsTracker) {
+                    $rootScope.settingsTracker = {};
+                }
+                $rootScope.settingsTracker[attrs.src] = data;
+
+                scope.settings = data; // bind data to a local scope that we can reference easily
+            });
+        };
+
+        return {
+            restrict: 'E',
+            link: linker,
+            templateUrl: "model/profile/settingsDirectiveTemplate.html",
+            scope: {
+                src: '='
+            }
+        };
+    });
+})();
+\end{lstlisting}
+
+\section{model/profile/settingsDirectiveTemplate.html}
+\lstsetxml
+\begin{lstlisting}[language=HTML, label={lst:settingsDirectiveTemplate}, caption=This HTML snippet decides what kind of setting needs to be displayed and shows it.]
+<form>
+    <div class="form-group" ng-repeat="item in settings">
+        <!--<div ng-if="$index !=0">-->
+        <h4 ng-if="settings[$index].category !== settings[$index-1].category"><bold>{{settings[$index].category}}</bold></h4>
+        <!--</div>-->
+        <!--styling for float type input-->
+        <div ng-if="settings[$index].type === 'float' || settings[$index].type === 'int'">
+            <label for="{{settings[$index].setting}}">{{settings[$index].label}}</label>
+            <input type="number" class="form-control" id="{{settings[$index].setting}}"
+                   ng-model="settings[$index].default">
+        </div>
+        <!--styling for boolean inputs-->
+        <div ng-if="settings[$index].type === 'bool'">
+            <label><input type="checkbox" ng-model="settings[$index].default">
+                {{settings[$index].label}}</label>
+        </div>
+        <!--styling for list type inputs-->
+        <div ng-if="settings[$index].type === 'list'">
+            <label for="settings[$index].setting">{{settings[$index].label}}</label>
+            <select class="form-control" id="settings[$index].setting" ng-model="settings[$index].default">
+                <option ng-repeat="option in settings[$index].list">{{option}}</option>
+            </select>
+        </div>
+        <div ng-if="settings[$index].type === 'textarea'">
+            <label for="{{settings[$index].setting}}">{{settings[$index].label}}</label>
+            <textarea rows="20" class="form-control" id="{{settings[$index].setting}}"
+                      ng-model="settings[$index].default"></textarea>
+        </div>
+    </div>
+</form>
+\end{lstlisting}
+
+\section{model/profile/json/basic.json}
+\lstsetjava
+\begin{lstlisting}[language=json, label={lst:basic}, caption=A full static settings file. There were five more files like this but one is sufficient to show the structure of this code.]
+[
+  {
+    "setting": "layer_height",
+    "default": 0.1,
+    "type": "float",
+    "category": "Quality",
+    "label": "Layer Height (mm)",
+    "description": "Layer height in millimeters.\nThis is the most important setting to determine the quality of your print. Normal quality prints are 0.1mm, high quality is 0.06mm. You can go up to 0.25mm with an Ultimaker for very fast prints at low quality."
+  },
+  {
+    "setting": "wall_line_count",
+    "default": 2,
+    "type": "float",
+    "category": "Quality",
+    "label": "Shell Thickness In Lines",
+    "description": "Thickness of the outside shell in the horizontal direction.\nThis is used in combination with the nozzle size to define the number\nof perimeter lines and the thickness of those perimeter lines."
+  },
+  {
+    "setting": "retraction_enable",
+    "default": true,
+    "type": "bool",
+    "category": "Quality",
+    "label": "Enable Retraction",
+    "description": "Retract the filament when the nozzle is moving over a none-printed area. Details about the retraction can be configured in the advanced tab."
+  },
+  {
+    "setting": "solid_layer_thickness",
+    "default": 0.6,
+    "type": "float",
+    "category": "Fill",
+    "label": "Bottom/Top thickness (mm)",
+    "description": "This controls the thickness of the bottom and top layers, the amount of solid layers put down is calculated by the layer thickness and this value.\nHaving this value a multiple of the layer thickness makes sense. And keep it near your wall thickness to make an evenly strong part."
+  },
+  {
+    "setting": "infill_line_distance",
+    "default": 0.20,
+    "type": "float",
+    "category": "Fill",
+    "label": "Fill Density (%) Max = 1.0",
+    "description": "This controls how densely filled the insides of your print will be. For a solid part use 100%, for an empty part use 0%. A value around 20% is usually enough.\nThis won't affect the outside of the print and only adjusts how strong the part becomes."
+  },
+  {
+    "setting": "print_speed",
+    "default": 50,
+    "type": "float",
+    "category": "Speed and Temperature",
+    "label": "Print Speed (mm/s)",
+    "description": "Speed at which printing happens. A well adjusted Ultimaker can reach 150mm/s, but for good quality prints you want to print slower. Printing speed depends on a lot of factors. So you will be experimenting with optimal settings for this."
+  },
+  {
+    "setting": "material_print_temperature",
+    "default": 210,
+    "type": "int",
+    "category": "Speed and Temperature",
+    "label": "Printing Temperature (C)",
+    "description": "Temperature used for printing. Set at 0 to pre-heat yourself.\nFor PLA a value of 210C is usually used.\nFor ABS a value of 230C or higher is required."
+  },
+  {
+    "setting": "material_bed_temperature",
+    "default": 70,
+    "type": "int",
+    "category": "Speed and Temperature",
+    "label": "Bed Temperature (C)",
+    "description": "Temperature used for the heated printer bed. Set at 0 to pre-heat yourself."
+  },
+  {
+    "setting": "support",
+    "default": 0,
+    "type": "list",
+    "list": [
+      "None",
+      "Touching buildplate",
+      "Everywhere"
+    ],
+    "category": "Support",
+    "label": "Support Type",
+    "description": "Type of support structure build.\n\"Touching buildplate\" is the most commonly used support setting.\n\nNone does not do any support.\nTouching buildplate only creates support where the support structure will touch the build platform.\nEverywhere creates support even on top of parts of the model."
+  },
+  {
+    "setting": "platform_adhesion",
+    "default": 0,
+    "type": "list",
+    "list": [
+      "None",
+      "Brim",
+      "Raft"
+    ],
+    "category": "Support",
+    "label": "Platform Ashesion Type",
+    "description": "Different options that help in preventing corners from lifting due to warping.\nBrim adds a single layer thick flat area around your object which is easy to cut off afterwards, and it is the recommended option.\nRaft adds a thick raster below the object and a thin interface between this and your object.\n(Note that enabling the brim or raft disables the skirt)"
+  },
+  {
+    "setting": "material_diameter",
+    "default": 1.75,
+    "type": "float",
+    "category": "Filament",
+    "label": "Diameter (mm)",
+    "description": "Diameter of your filament, as accurately as possible.\nIf you cannot measure this value you will have to calibrate it, a higher number means less extrusion, a smaller number generates more extrusion."
+  },
+  {
+    "setting": "material_flow",
+    "default": 100,
+    "type": "float",
+    "category": "Filament",
+    "label": "Flow (%)",
+    "description": "Flow compensation, the amount of material extruded is multiplied by this value"
+  },
+  {
+    "setting": "machine_nozzle_size",
+    "default": 0.4,
+    "type": "float",
+    "category": "Machine",
+    "label": "Nozzle Size (mm)",
+    "description": "The nozzle size is very important, this is used to calculate the line width of the infill, and used to calculate the amount of outside wall lines and thickness for the wall thickness you entered in the print settings."
+  }
+]
+\end{lstlisting}
+

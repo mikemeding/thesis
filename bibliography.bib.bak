@@ -7,11 +7,12 @@
 
   Address                  = {1600 Amphitheatre Pkwy, Mountain View, CA 94043},
   Author                   = {Brat Tech LLC, Google et al.},
+  Note                     = {https://angularjs.org/},
   Organization             = {Google},
   Year                     = {2016},
 
   Owner                    = {mike},
-  Timestamp                = {2016.04.24},
+  Timestamp                = {2016.04.29},
   Url                      = {https://angularjs.org/}
 }
 
@@ -35,6 +36,7 @@
 @Manual{wildfly-2016,
   Title                    = {Wildfly Application Server},
   Author                   = {Marc Fleury},
+  Note                     = {www.wildfly.org},
   Organization             = {Red Hat},
   Year                     = {2016},
 
@@ -57,6 +59,7 @@
 @Manual{java-2016,
   Title                    = {Java Enterprise Edition},
   Author                   = {James Gosling},
+  Note                     = {http://www.oracle.com/technetwork/java/javaee/overview/index.html},
   Organization             = {Sun Microsystems, Oracle},
   Year                     = {2016},
 
@@ -69,6 +72,7 @@
 
   Address                  = {Goethestraße 5 63179 Obertshausen Deutschland},
   Author                   = {Gina Häußge},
+  Note                     = {octoprint.org},
   Organization             = {Impressum},
   Year                     = {2016},
 
@@ -80,9 +84,9 @@
 @Electronic{hitzeViewer-2015,
   Title                    = {gCodeViewer},
   Author                   = {Nils Hitze},
+  HowPublished             = {https://github.com/hudbrog/gCodeViewer},
   Month                    = {January},
   Organization             = {github},
-  Url                      = {https://github.com/hudbrog/gCodeViewer},
   Year                     = {2015},
 
   Owner                    = {mike},
@@ -122,6 +126,7 @@
 @Manual{curaengine-2016,
   Title                    = {CuraEngine},
   Author                   = {Tim Kuipers},
+  Note                     = {https://github.com/Ultimaker/CuraEngine},
   Organization             = {Ultimaker},
   Year                     = {2016},
 
@@ -145,6 +150,7 @@
 @Manual{bootstrap-2016,
   Title                    = {Bootstrap},
   Author                   = {Mark Otto, Jacob Thornton},
+  Note                     = {getbootstrap.com},
   Organization             = {Twitter},
   Year                     = {2016},
 
@@ -164,6 +170,16 @@
   Owner                    = {mike},
   Timestamp                = {2016.04.13},
   Url                      = {http://uml.worldcat.org/title/java-ee-7-developer-handbook-develop-professional-applications-in-java-ee-7-with-this-essential-reference-guide/oclc/861537191&referer=brief_results}
+}
+
+@Electronic{gcode-2012,
+  Title                    = {LinuxCNC G-code},
+  Author                   = {John Thornton},
+  HowPublished             = {http://gnipsel.com/linuxcnc/g-code/gen01.html},
+  Year                     = {2012},
+
+  Owner                    = {mike},
+  Timestamp                = {2016.04.25}
 }
 
 @Book{massol-2005,

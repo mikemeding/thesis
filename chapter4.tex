@@ -68,7 +68,7 @@ As shown in Figure \ref{fig:settings-data-flow}, settings have a long path that 
 This data flow starts with loading a static JavaScript Object Notation (JSON) file, which describes the settings in a pattern as shown in Listing \ref{lst:json-settings}.
 
 % JSON settings example listing
-\lstsetjava
+\lstsetjavascript
 \begin{lstlisting}[language=json, label={lst:json-settings}, caption=A sample from a static settings file in JSON format.]
 {
     "setting": "layer_height",
@@ -106,7 +106,8 @@ Thus, when the settings are submitted, there is no more interpolation needed, as
 
 \subsection{G-code Visualizer}
 \paragraph{}
-The G-code visualizer for WebSlicer is written using a combination of D3 and a JavaScript web worker.
+The G-code visualizer is a layer-by-layer G-code analyzer to aid in model slicing.
+It is written using a combination of D3 and a JavaScript web worker.
 From Figure \ref{fig:client-side-structure}, it can be seen that the controller for the visualizer is sent in a G-code file, which it splits up to two separate services.
 The controller completes an initial parse of the file, which places each one of the lines into its own entry in an array before exchanging it with gCodeFactory and Worker.
 Both of these files parse through this entire array, but do so at roughly the same time to expedite the process of visualizing.
@@ -167,4 +168,4 @@ however, this feature was terminated early on, as it would have required too muc
 As mentioned in prior sections, WebSlicer was designed with a minimum viable product in mind.
 Developing a working 3D print slicer for the web was the primary task and all other features needed to support this or extend this functionality.
 For this reason, there is no login or user database, which would normally be the first item to be developed for an application such as this.
-There is also no way to view any of the models in 3D which, for most users, makes the software significantly harder to use.
+There is also no way to view any of the models in 3D which, as discussed in latter sections of this thesis, makes the software harder to use.
